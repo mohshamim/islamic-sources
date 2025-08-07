@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tag } from "@/components/ui/tag";
 import { Separator } from "@/components/ui/separator";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Loader2 } from "lucide-react";
+import { HelpCircle, Plus } from "lucide-react";
+import Link from "next/link";
 
 interface Question {
   _id: string;
@@ -39,11 +41,7 @@ export default function QuestionsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  useEffect(() => {
-    fetchQuestions();
-  }, [selectedCategory, currentPage]);
-
-  const fetchQuestions = async () => {
+  const fetchQuestions = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -64,7 +62,11 @@ export default function QuestionsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCategory, currentPage]);
+
+  useEffect(() => {
+    fetchQuestions();
+  }, [fetchQuestions]);
 
   return (
     <MainLayout>
@@ -73,7 +75,8 @@ export default function QuestionsPage() {
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-4">Questions & Answers</h1>
           <p className="text-muted-foreground text-lg">
-            Find answers to common Islamic questions from qualified scholars and experts.
+            Find answers to common Islamic questions from qualified scholars and
+            experts.
           </p>
         </div>
 
@@ -127,7 +130,8 @@ export default function QuestionsPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Can't find what you're looking for? Submit your question to our scholars.
+                  Can&apos;t find what you&apos;re looking for? Submit your
+                  question to our scholars.
                 </p>
                 <Button className="w-full">Submit Question</Button>
               </CardContent>
@@ -139,9 +143,15 @@ export default function QuestionsPage() {
             {/* Filters */}
             <div className="flex flex-wrap items-center gap-4 mb-6">
               <span className="text-sm text-muted-foreground">Sort by:</span>
-              <Button variant="outline" size="sm">Latest</Button>
-              <Button variant="ghost" size="sm">Popular</Button>
-              <Button variant="ghost" size="sm">Most Viewed</Button>
+              <Button variant="outline" size="sm">
+                Latest
+              </Button>
+              <Button variant="ghost" size="sm">
+                Popular
+              </Button>
+              <Button variant="ghost" size="sm">
+                Most Viewed
+              </Button>
             </div>
 
             <Separator className="mb-6" />
@@ -183,7 +193,9 @@ export default function QuestionsPage() {
                     return (
                       <Button
                         key={pageNum}
-                        variant={currentPage === pageNum ? "default" : "outline"}
+                        variant={
+                          currentPage === pageNum ? "default" : "outline"
+                        }
                         size="sm"
                         onClick={() => setCurrentPage(pageNum)}
                       >
@@ -210,4 +222,4 @@ export default function QuestionsPage() {
       </div>
     </MainLayout>
   );
-} 
+}

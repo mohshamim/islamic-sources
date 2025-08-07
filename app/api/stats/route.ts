@@ -55,7 +55,7 @@ const staticQuestions = [
   },
   {
     _id: "2",
-    question: "Is it permissible to make dua through the Prophet or other righteous people?",
+    question: "Is it permissible to make dua through the Prophet (صلى الله عليه وسلم)?",
     answer: "No, it is not permissible to make dua through the Prophet (صلى الله عليه وسلم) or any other person, living or dead. This is a form of shirk (associating partners with Allah).",
     category: "Aqeedah",
     tags: ["dua", "shirk", "tawheed", "worship"],

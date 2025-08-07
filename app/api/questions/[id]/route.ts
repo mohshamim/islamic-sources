@@ -2,6 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Question from '@/models/Question';
 
+interface UpdateData {
+  question?: string;
+  answer?: string;
+  category?: string;
+  tags?: string[];
+  status?: string;
+  scholar?: string;
+}
+
 // GET single question by ID
 export async function GET(
   request: NextRequest,
@@ -45,7 +54,7 @@ export async function PUT(
     const body = await request.json();
     const { question, answer, category, tags, status, scholar } = body;
     
-    const updateData: any = {};
+    const updateData: UpdateData = {};
     if (question) updateData.question = question;
     if (answer) updateData.answer = answer;
     if (category) updateData.category = category;

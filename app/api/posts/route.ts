@@ -2,6 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Post from '@/models/Post';
 
+interface QueryFilter {
+  category?: string;
+  status?: string;
+  $or?: Array<{
+    title?: { $regex: string; $options: string };
+    excerpt?: { $regex: string; $options: string };
+    content?: { $regex: string; $options: string };
+  }>;
+}
+
 // GET all posts
 export async function GET(request: NextRequest) {
   try {
@@ -16,7 +26,7 @@ export async function GET(request: NextRequest) {
     
     const skip = (page - 1) * limit;
     
-    let query: any = {};
+    let query: QueryFilter = {};
     
     if (category) query.category = category;
     if (status) query.status = status;
@@ -62,7 +72,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { title, excerpt, content, category, tags, status, author } = body;
     
-    // Validate required fields
     if (!title || !excerpt || !content || !category) {
       return NextResponse.json(
         { error: 'Missing required fields' },
@@ -86,7 +95,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error creating post:', error);
     return NextResponse.json(
-      { error: 'Failed to create post', details: error.message },
+      { error: 'Failed to create post' },
       { status: 500 }
     );
   }

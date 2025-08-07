@@ -2,6 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Post from '@/models/Post';
 
+interface UpdateData {
+  title?: string;
+  excerpt?: string;
+  content?: string;
+  category?: string;
+  tags?: string[];
+  status?: string;
+  author?: string;
+}
+
 // GET single post by ID
 export async function GET(
   request: NextRequest,
@@ -45,7 +55,7 @@ export async function PUT(
     const body = await request.json();
     const { title, excerpt, content, category, tags, status, author } = body;
     
-    const updateData: any = {};
+    const updateData: UpdateData = {};
     if (title) updateData.title = title;
     if (excerpt) updateData.excerpt = excerpt;
     if (content) updateData.content = content;

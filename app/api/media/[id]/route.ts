@@ -2,6 +2,25 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Media from '@/models/Media';
 
+interface UpdateData {
+  title?: string;
+  description?: string;
+  type?: string;
+  category?: string;
+  tags?: string[];
+  status?: string;
+  fileUrl?: string;
+  fileName?: string;
+  fileSize?: number;
+  speaker?: string;
+  duration?: number;
+  thumbnail?: string;
+  dimensions?: {
+    width?: number;
+    height?: number;
+  };
+}
+
 // GET single media by ID
 export async function GET(
   request: NextRequest,
@@ -59,7 +78,7 @@ export async function PUT(
       dimensions
     } = body;
     
-    const updateData: any = {};
+    const updateData: UpdateData = {};
     if (title) updateData.title = title;
     if (description) updateData.description = description;
     if (type) updateData.type = type;

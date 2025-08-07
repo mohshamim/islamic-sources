@@ -2,6 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Media from '@/models/Media';
 
+interface QueryFilter {
+  category?: string;
+  status?: string;
+  type?: string;
+  $or?: Array<{
+    title?: { $regex: string; $options: string };
+    description?: { $regex: string; $options: string };
+  }>;
+}
+
 // GET all media
 export async function GET(request: NextRequest) {
   try {
@@ -10,18 +20,18 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
-    const type = searchParams.get('type');
     const category = searchParams.get('category');
     const status = searchParams.get('status');
+    const type = searchParams.get('type');
     const search = searchParams.get('search');
     
     const skip = (page - 1) * limit;
     
-    let query: any = {};
+    let query: QueryFilter = {};
     
-    if (type) query.type = type;
     if (category) query.category = category;
     if (status) query.status = status;
+    if (type) query.type = type;
     if (search) {
       query.$or = [
         { title: { $regex: search, $options: 'i' } },
@@ -77,8 +87,7 @@ export async function POST(request: NextRequest) {
       dimensions
     } = body;
     
-    // Validate required fields
-    if (!title || !type || !category || !fileUrl || !fileName) {
+    if (!title || !description || !type || !category || !fileUrl) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -93,8 +102,8 @@ export async function POST(request: NextRequest) {
       tags: tags || [],
       status: status || 'draft',
       fileUrl,
-      fileName,
-      fileSize,
+      fileName: fileName || 'Unknown',
+      fileSize: fileSize || 0,
       speaker,
       duration,
       thumbnail,
