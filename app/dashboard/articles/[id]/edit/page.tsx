@@ -14,19 +14,77 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { useState } from "react";
-import { ArrowLeft, Save, Eye, X, Plus } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Save, Eye, X, Plus, Loader2 } from "lucide-react";
 
 const categories = ["Fiqh", "Aqeedah", "Hadith", "Tafsir", "Seerah", "General"];
 
-export default function NewQuestion() {
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
+interface Article {
+  _id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  tags: string[];
+  status: string;
+  author: string;
+  readTime: number;
+  slug: string;
+}
+
+export default function EditArticle({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [article, setArticle] = useState<Article | null>(null);
+
+  const [title, setTitle] = useState("");
+  const [excerpt, setExcerpt] = useState("");
+  const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
   const [status, setStatus] = useState("draft");
-  const [scholar, setScholar] = useState("");
+  const [readTime, setReadTime] = useState(5);
+
+  useEffect(() => {
+    const loadArticle = async () => {
+      const { id } = await params;
+      fetchArticle(id);
+    };
+    loadArticle();
+  }, [params]);
+
+  const fetchArticle = async (id: string) => {
+    try {
+      const response = await fetch(`/api/articles/${id}`);
+      if (response.ok) {
+        const articleData = await response.json();
+        setArticle(articleData);
+        setTitle(articleData.title);
+        setExcerpt(articleData.excerpt);
+        setContent(articleData.content);
+        setCategory(articleData.category);
+        setTags(articleData.tags || []);
+        setStatus(articleData.status);
+        setReadTime(articleData.readTime || 5);
+      } else {
+        alert("Article not found");
+        router.push("/dashboard/articles");
+      }
+    } catch (error) {
+      console.error("Error fetching article:", error);
+      alert("Error loading article");
+      router.push("/dashboard/articles");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleAddTag = () => {
     if (newTag.trim() && !tags.includes(newTag.trim())) {
@@ -41,37 +99,52 @@ export default function NewQuestion() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSaving(true);
 
     try {
-      const response = await fetch("/api/questions", {
-        method: "POST",
+      const { id } = await params;
+      const response = await fetch(`/api/articles/${id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          question,
-          answer,
+          title,
+          excerpt,
+          content,
           category,
           tags,
           status,
-          scholar,
+          readTime: parseInt(readTime.toString()),
         }),
       });
 
       if (response.ok) {
-        const result = await response.json();
-        alert("Question created successfully!");
-        // Redirect to questions list
-        window.location.href = "/dashboard/questions";
+        alert("Article updated successfully!");
+        router.push("/dashboard/articles");
       } else {
         const error = await response.json();
         alert(`Error: ${error.error}`);
       }
     } catch (error) {
-      console.error("Error creating question:", error);
-      alert("Error creating question. Please try again.");
+      console.error("Error updating article:", error);
+      alert("Error updating article. Please try again.");
+    } finally {
+      setSaving(false);
     }
   };
+
+  if (loading) {
+    return (
+      <MainLayout>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex justify-center items-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin" />
+          </div>
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout>
@@ -79,19 +152,15 @@ export default function NewQuestion() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
-            <Link href="/dashboard/questions">
+            <Link href="/dashboard/articles">
               <Button variant="outline" size="sm">
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Questions
+                Back to Articles
               </Button>
             </Link>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Create New Question
-              </h1>
-              <p className="text-gray-600 mt-2">
-                Add a new Q&A with Islamic scholars
-              </p>
+              <h1 className="text-3xl font-bold text-gray-900">Edit Article</h1>
+              <p className="text-gray-600 mt-2">Update your Islamic article</p>
             </div>
           </div>
         </div>
@@ -100,34 +169,49 @@ export default function NewQuestion() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Question */}
+              {/* Title */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Question</CardTitle>
+                  <CardTitle>Article Title</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Textarea
-                    placeholder="Enter the question..."
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                    rows={4}
+                  <Input
+                    placeholder="Enter article title..."
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     className="text-lg"
                     required
                   />
                 </CardContent>
               </Card>
 
-              {/* Answer */}
+              {/* Excerpt */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Answer</CardTitle>
+                  <CardTitle>Excerpt</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Textarea
-                    placeholder="Write the scholarly answer here... You can use HTML tags for formatting."
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    rows={15}
+                    placeholder="Write a brief excerpt for the article..."
+                    value={excerpt}
+                    onChange={(e) => setExcerpt(e.target.value)}
+                    rows={3}
+                    required
+                  />
+                </CardContent>
+              </Card>
+
+              {/* Content */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Content</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Textarea
+                    placeholder="Write your article content here... You can use HTML tags for formatting."
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    rows={20}
                     className="font-mono"
                     required
                   />
@@ -180,16 +264,19 @@ export default function NewQuestion() {
                 </CardContent>
               </Card>
 
-              {/* Scholar */}
+              {/* Read Time */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Scholar</CardTitle>
+                  <CardTitle>Read Time (minutes)</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Input
-                    placeholder="Enter scholar name..."
-                    value={scholar}
-                    onChange={(e) => setScholar(e.target.value)}
+                    type="number"
+                    min="1"
+                    max="60"
+                    value={readTime}
+                    onChange={(e) => setReadTime(parseInt(e.target.value) || 5)}
+                    placeholder="5"
                   />
                 </CardContent>
               </Card>
@@ -244,14 +331,25 @@ export default function NewQuestion() {
                   <CardTitle>Actions</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <Button type="submit" className="w-full">
-                    <Save className="h-4 w-4 mr-2" />
-                    Save Question
+                  <Button type="submit" className="w-full" disabled={saving}>
+                    {saving ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Saving...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="h-4 w-4 mr-2" />
+                        Update Article
+                      </>
+                    )}
                   </Button>
-                  <Button type="button" variant="outline" className="w-full">
-                    <Eye className="h-4 w-4 mr-2" />
-                    Preview
-                  </Button>
+                  <Link href={`/articles/${article?.slug}`}>
+                    <Button type="button" variant="outline" className="w-full">
+                      <Eye className="h-4 w-4 mr-2" />
+                      View Article
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </div>

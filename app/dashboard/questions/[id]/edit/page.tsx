@@ -39,9 +39,9 @@ export default function EditQuestion({
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [question, setQuestion] = useState<Question | null>(null);
+  const [questionData, setQuestionData] = useState<Question | null>(null);
 
-  const [questionText, setQuestionText] = useState("");
+  const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState<string[]>([]);
@@ -62,13 +62,13 @@ export default function EditQuestion({
       const response = await fetch(`/api/questions/${id}`);
       if (response.ok) {
         const questionData = await response.json();
-        setQuestion(questionData);
-        setQuestionText(questionData.question);
+        setQuestionData(questionData);
+        setQuestion(questionData.question);
         setAnswer(questionData.answer);
         setCategory(questionData.category);
         setTags(questionData.tags || []);
         setStatus(questionData.status);
-        setScholar(questionData.scholar);
+        setScholar(questionData.scholar || "");
       } else {
         alert("Question not found");
         router.push("/dashboard/questions");
@@ -105,7 +105,7 @@ export default function EditQuestion({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          question: questionText,
+          question,
           answer,
           category,
           tags,
@@ -157,7 +157,7 @@ export default function EditQuestion({
               <h1 className="text-3xl font-bold text-gray-900">
                 Edit Question
               </h1>
-              <p className="text-gray-600 mt-2">Update your Islamic question</p>
+              <p className="text-gray-600 mt-2">Update your Q&A</p>
             </div>
           </div>
         </div>
@@ -174,10 +174,10 @@ export default function EditQuestion({
                 <CardContent>
                   <Textarea
                     placeholder="Enter the question..."
-                    value={questionText}
-                    onChange={(e) => setQuestionText(e.target.value)}
+                    value={question}
+                    onChange={(e) => setQuestion(e.target.value)}
+                    rows={4}
                     className="text-lg"
-                    rows={3}
                     required
                   />
                 </CardContent>
@@ -190,7 +190,7 @@ export default function EditQuestion({
                 </CardHeader>
                 <CardContent>
                   <Textarea
-                    placeholder="Provide a comprehensive answer to the question..."
+                    placeholder="Write the scholarly answer here... You can use HTML tags for formatting."
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
                     rows={15}
@@ -257,9 +257,6 @@ export default function EditQuestion({
                     value={scholar}
                     onChange={(e) => setScholar(e.target.value)}
                   />
-                  <p className="text-sm text-gray-500 mt-2">
-                    Leave empty to use "Anonymous Scholar"
-                  </p>
                 </CardContent>
               </Card>
 
@@ -326,7 +323,7 @@ export default function EditQuestion({
                       </>
                     )}
                   </Button>
-                  <Link href={`/questions/${question?.slug}`}>
+                  <Link href={`/questions/${questionData?.slug}`}>
                     <Button type="button" variant="outline" className="w-full">
                       <Eye className="h-4 w-4 mr-2" />
                       View Question

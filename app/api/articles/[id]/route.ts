@@ -5,12 +5,13 @@ import Article from '@/models/Article';
 // GET single article by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
     
-    const article = await Article.findById(params.id).lean();
+    const { id } = await params;
+    const article = await Article.findById(id).lean();
     
     if (!article) {
       return NextResponse.json(
@@ -20,7 +21,7 @@ export async function GET(
     }
     
     // Increment views
-    await Article.findByIdAndUpdate(params.id, { $inc: { views: 1 } });
+    await Article.findByIdAndUpdate(id, { $inc: { views: 1 } });
     
     return NextResponse.json(article);
   } catch (error) {
@@ -35,11 +36,12 @@ export async function GET(
 // PUT update article
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
     
+    const { id } = await params;
     const body = await request.json();
     const { title, excerpt, content, category, tags, status, author, readTime } = body;
     
@@ -53,20 +55,20 @@ export async function PUT(
     if (author) updateData.author = author;
     if (readTime) updateData.readTime = readTime;
     
-    const updatedArticle = await Article.findByIdAndUpdate(
-      params.id,
+    const article = await Article.findByIdAndUpdate(
+      id,
       updateData,
       { new: true, runValidators: true }
     );
     
-    if (!updatedArticle) {
+    if (!article) {
       return NextResponse.json(
         { error: 'Article not found' },
         { status: 404 }
       );
     }
     
-    return NextResponse.json(updatedArticle);
+    return NextResponse.json(article);
   } catch (error) {
     console.error('Error updating article:', error);
     return NextResponse.json(
@@ -79,12 +81,13 @@ export async function PUT(
 // DELETE article
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
     
-    const article = await Article.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const article = await Article.findByIdAndDelete(id);
     
     if (!article) {
       return NextResponse.json(

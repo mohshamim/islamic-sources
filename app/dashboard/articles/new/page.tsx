@@ -19,14 +19,15 @@ import { ArrowLeft, Save, Eye, X, Plus } from "lucide-react";
 
 const categories = ["Fiqh", "Aqeedah", "Hadith", "Tafsir", "Seerah", "General"];
 
-export default function NewQuestion() {
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
+export default function NewArticle() {
+  const [title, setTitle] = useState("");
+  const [excerpt, setExcerpt] = useState("");
+  const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
   const [status, setStatus] = useState("draft");
-  const [scholar, setScholar] = useState("");
+  const [readTime, setReadTime] = useState(5);
 
   const handleAddTag = () => {
     if (newTag.trim() && !tags.includes(newTag.trim())) {
@@ -43,33 +44,34 @@ export default function NewQuestion() {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/questions", {
+      const response = await fetch("/api/articles", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          question,
-          answer,
+          title,
+          excerpt,
+          content,
           category,
           tags,
           status,
-          scholar,
+          readTime: parseInt(readTime.toString()),
         }),
       });
 
       if (response.ok) {
         const result = await response.json();
-        alert("Question created successfully!");
-        // Redirect to questions list
-        window.location.href = "/dashboard/questions";
+        alert("Article created successfully!");
+        // Redirect to articles list
+        window.location.href = "/dashboard/articles";
       } else {
         const error = await response.json();
         alert(`Error: ${error.error}`);
       }
     } catch (error) {
-      console.error("Error creating question:", error);
-      alert("Error creating question. Please try again.");
+      console.error("Error creating article:", error);
+      alert("Error creating article. Please try again.");
     }
   };
 
@@ -79,18 +81,18 @@ export default function NewQuestion() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
-            <Link href="/dashboard/questions">
+            <Link href="/dashboard/articles">
               <Button variant="outline" size="sm">
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Questions
+                Back to Articles
               </Button>
             </Link>
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
-                Create New Question
+                Create New Article
               </h1>
               <p className="text-gray-600 mt-2">
-                Add a new Q&A with Islamic scholars
+                Add a new Islamic scholarly article
               </p>
             </div>
           </div>
@@ -100,34 +102,49 @@ export default function NewQuestion() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Question */}
+              {/* Title */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Question</CardTitle>
+                  <CardTitle>Article Title</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Textarea
-                    placeholder="Enter the question..."
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                    rows={4}
+                  <Input
+                    placeholder="Enter article title..."
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     className="text-lg"
                     required
                   />
                 </CardContent>
               </Card>
 
-              {/* Answer */}
+              {/* Excerpt */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Answer</CardTitle>
+                  <CardTitle>Excerpt</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Textarea
-                    placeholder="Write the scholarly answer here... You can use HTML tags for formatting."
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    rows={15}
+                    placeholder="Write a brief excerpt for the article..."
+                    value={excerpt}
+                    onChange={(e) => setExcerpt(e.target.value)}
+                    rows={3}
+                    required
+                  />
+                </CardContent>
+              </Card>
+
+              {/* Content */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Content</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Textarea
+                    placeholder="Write your article content here... You can use HTML tags for formatting."
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    rows={20}
                     className="font-mono"
                     required
                   />
@@ -180,16 +197,19 @@ export default function NewQuestion() {
                 </CardContent>
               </Card>
 
-              {/* Scholar */}
+              {/* Read Time */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Scholar</CardTitle>
+                  <CardTitle>Read Time (minutes)</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Input
-                    placeholder="Enter scholar name..."
-                    value={scholar}
-                    onChange={(e) => setScholar(e.target.value)}
+                    type="number"
+                    min="1"
+                    max="60"
+                    value={readTime}
+                    onChange={(e) => setReadTime(parseInt(e.target.value) || 5)}
+                    placeholder="5"
                   />
                 </CardContent>
               </Card>
@@ -246,7 +266,7 @@ export default function NewQuestion() {
                 <CardContent className="space-y-3">
                   <Button type="submit" className="w-full">
                     <Save className="h-4 w-4 mr-2" />
-                    Save Question
+                    Save Article
                   </Button>
                   <Button type="button" variant="outline" className="w-full">
                     <Eye className="h-4 w-4 mr-2" />

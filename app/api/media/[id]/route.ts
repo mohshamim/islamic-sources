@@ -5,12 +5,13 @@ import Media from '@/models/Media';
 // GET single media by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
     
-    const media = await Media.findById(params.id).lean();
+    const { id } = await params;
+    const media = await Media.findById(id).lean();
     
     if (!media) {
       return NextResponse.json(
@@ -20,7 +21,7 @@ export async function GET(
     }
     
     // Increment views
-    await Media.findByIdAndUpdate(params.id, { $inc: { views: 1 } });
+    await Media.findByIdAndUpdate(id, { $inc: { views: 1 } });
     
     return NextResponse.json(media);
   } catch (error) {
@@ -35,11 +36,12 @@ export async function GET(
 // PUT update media
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
     
+    const { id } = await params;
     const body = await request.json();
     const { 
       title, 
@@ -72,20 +74,20 @@ export async function PUT(
     if (thumbnail) updateData.thumbnail = thumbnail;
     if (dimensions) updateData.dimensions = dimensions;
     
-    const updatedMedia = await Media.findByIdAndUpdate(
-      params.id,
+    const media = await Media.findByIdAndUpdate(
+      id,
       updateData,
       { new: true, runValidators: true }
     );
     
-    if (!updatedMedia) {
+    if (!media) {
       return NextResponse.json(
         { error: 'Media not found' },
         { status: 404 }
       );
     }
     
-    return NextResponse.json(updatedMedia);
+    return NextResponse.json(media);
   } catch (error) {
     console.error('Error updating media:', error);
     return NextResponse.json(
@@ -98,12 +100,13 @@ export async function PUT(
 // DELETE media
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
     
-    const media = await Media.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const media = await Media.findByIdAndDelete(id);
     
     if (!media) {
       return NextResponse.json(
