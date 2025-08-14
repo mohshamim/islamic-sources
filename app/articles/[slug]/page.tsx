@@ -12,7 +12,8 @@ import { notFound } from "next/navigation";
 const articles = {
   "islamic-finance-principles": {
     title: "Islamic Finance: Principles and Practices",
-    excerpt: "Understanding the core principles of Islamic finance and how they differ from conventional banking.",
+    excerpt:
+      "Understanding the core principles of Islamic finance and how they differ from conventional banking.",
     content: `
       <h2>Introduction to Islamic Finance</h2>
       <p>Islamic finance represents a unique approach to financial services that adheres to Islamic law (Shariah) principles. Unlike conventional banking, Islamic finance operates on the basis of risk-sharing, asset-backed transactions, and the prohibition of interest (riba).</p>
@@ -90,12 +91,13 @@ const articles = {
     authorInfo: {
       avatar: "AH",
       credentials: "Islamic Finance Expert and Scholar",
-      bio: "Dr. Ahmed Hassan is a renowned expert in Islamic finance with over 20 years of experience in the field. He has published numerous articles and books on Islamic economics and finance."
-    }
+      bio: "Dr. Ahmed Hassan is a renowned expert in Islamic finance with over 20 years of experience in the field. He has published numerous articles and books on Islamic economics and finance.",
+    },
   },
   "family-values-islam": {
     title: "Family Values in Islamic Tradition",
-    excerpt: "Exploring the importance of family bonds and relationships in Islamic teachings and culture.",
+    excerpt:
+      "Exploring the importance of family bonds and relationships in Islamic teachings and culture.",
     content: `
       <h2>The Foundation of Islamic Family Values</h2>
       <p>Family is considered the cornerstone of Islamic society. The Quran and Hadith emphasize the importance of strong family bonds, mutual respect, and care for one another. Islamic teachings provide comprehensive guidance on family relationships and responsibilities.</p>
@@ -170,19 +172,20 @@ const articles = {
     authorInfo: {
       avatar: "UF",
       credentials: "Family Counselor and Islamic Scholar",
-      bio: "Umm Fatima is a family counselor with expertise in Islamic family dynamics. She has helped numerous families strengthen their relationships through Islamic principles."
-    }
-  }
+      bio: "Umm Fatima is a family counselor with expertise in Islamic family dynamics. She has helped numerous families strengthen their relationships through Islamic principles.",
+    },
+  },
 };
 
 interface ArticlePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const article = articles[await params.slug as keyof typeof articles];
+  const { slug } = await params;
+  const article = articles[slug as keyof typeof articles];
 
   if (!article) {
     notFound();
@@ -191,24 +194,28 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: "Articles", href: "/articles" },
-    { label: article.title }
+    { label: article.title },
   ];
 
   return (
     <MainLayout>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <BreadcrumbNav items={breadcrumbItems} />
-        
+
         <article className="max-w-4xl mx-auto">
           {/* Header */}
           <header className="mb-8">
             <div className="flex items-center gap-2 mb-4">
               <Tag variant="outline">{article.category}</Tag>
-              <span className="text-sm text-muted-foreground">{article.readTime}</span>
+              <span className="text-sm text-muted-foreground">
+                {article.readTime}
+              </span>
             </div>
             <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
-            <p className="text-xl text-muted-foreground mb-6">{article.excerpt}</p>
-            
+            <p className="text-xl text-muted-foreground mb-6">
+              {article.excerpt}
+            </p>
+
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Avatar>
@@ -216,13 +223,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 </Avatar>
                 <div>
                   <p className="font-medium">{article.author}</p>
-                  <p className="text-sm text-muted-foreground">{article.authorInfo.credentials}</p>
-                  <p className="text-sm text-muted-foreground">{article.date}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {article.authorInfo.credentials}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {article.date}
+                  </p>
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" size="sm">Share</Button>
-                <Button variant="outline" size="sm">Bookmark</Button>
+                <Button variant="outline" size="sm">
+                  Share
+                </Button>
+                <Button variant="outline" size="sm">
+                  Bookmark
+                </Button>
               </div>
             </div>
           </header>
@@ -243,11 +258,17 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   <Avatar className="h-16 w-16">
-                    <AvatarFallback className="text-lg">{article.authorInfo.avatar}</AvatarFallback>
+                    <AvatarFallback className="text-lg">
+                      {article.authorInfo.avatar}
+                    </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h4 className="font-semibold text-lg mb-2">{article.author}</h4>
-                    <p className="text-sm text-muted-foreground mb-2">{article.authorInfo.credentials}</p>
+                    <h4 className="font-semibold text-lg mb-2">
+                      {article.author}
+                    </h4>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      {article.authorInfo.credentials}
+                    </p>
                     <p className="text-sm">{article.authorInfo.bio}</p>
                   </div>
                 </div>
@@ -262,28 +283,36 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <Card>
                 <CardHeader>
                   <CardTitle className="text-base">
-                    <Link href="/articles/family-values-islam" className="hover:text-primary transition-colors">
+                    <Link
+                      href="/articles/family-values-islam"
+                      className="hover:text-primary transition-colors"
+                    >
                       Family Values in Islamic Tradition
                     </Link>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    Exploring the importance of family bonds and relationships in Islamic teachings and culture.
+                    Exploring the importance of family bonds and relationships
+                    in Islamic teachings and culture.
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader>
                   <CardTitle className="text-base">
-                    <Link href="/articles/mental-health-islam" className="hover:text-primary transition-colors">
+                    <Link
+                      href="/articles/mental-health-islam"
+                      className="hover:text-primary transition-colors"
+                    >
                       Mental Health and Islamic Spirituality
                     </Link>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    How Islamic practices and spirituality can contribute to mental well-being and peace of mind.
+                    How Islamic practices and spirituality can contribute to
+                    mental well-being and peace of mind.
                   </p>
                 </CardContent>
               </Card>
@@ -293,4 +322,4 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       </div>
     </MainLayout>
   );
-} 
+}

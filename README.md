@@ -1,37 +1,194 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Islamic Sources - Knowledge Platform
 
-## Getting Started
+A comprehensive Next.js web application for managing and displaying authentic Islamic knowledge, guided by the methodology of the Salaf (righteous predecessors).
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 🎯 Core Functionality
+- **Articles Management**: In-depth Islamic articles with categories and tags
+- **Posts System**: Daily Islamic guidance and wisdom posts
+- **Q&A Platform**: Questions answered by qualified scholars
+- **Media Library**: Audio, video, and PDF resources
+- **Dashboard**: Admin interface for content management
+
+### 🎨 Design & UX
+- **Modern UI**: Beautiful, responsive design with Tailwind CSS
+- **Dark Mode**: Toggle between light and dark themes
+- **Mobile First**: Optimized for all device sizes
+- **Smooth Animations**: Engaging user interactions and transitions
+- **Islamic Theme**: Culturally appropriate design elements
+
+### 🔧 Technical Features
+- **Next.js 15**: Latest React framework with App Router
+- **TypeScript**: Type-safe development
+- **MongoDB**: Scalable database with Mongoose ODM
+- **RESTful APIs**: Clean, organized API endpoints
+- **Authentication**: Secure user management system
+- **SEO Optimized**: Search engine friendly
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+- MongoDB database
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/islamic-sources.git
+   cd islamic-sources
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup**
+   Create a `.env.local` file in the root directory:
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   NEXTAUTH_SECRET=your_nextauth_secret
+   NEXTAUTH_URL=http://localhost:3000
+   ```
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 🏗️ Project Structure
+
+```
+islamic-sources/
+├── app/                    # Next.js App Router
+│   ├── api/               # API endpoints
+│   ├── dashboard/         # Admin dashboard
+│   ├── articles/          # Articles pages
+│   ├── posts/            # Posts pages
+│   ├── questions/        # Q&A pages
+│   └── media/            # Media pages
+├── components/            # Reusable UI components
+│   ├── ui/               # Base UI components
+│   ├── cards/            # Content cards
+│   └── layout/           # Layout components
+├── models/                # MongoDB schemas
+├── lib/                   # Utility functions
+└── public/                # Static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Deployment to Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Automatic Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin main
+   ```
 
-## Learn More
+2. **Connect to Vercel**
+   - Go to [vercel.com](https://vercel.com)
+   - Import your GitHub repository
+   - Vercel will automatically detect Next.js and configure the build
 
-To learn more about Next.js, take a look at the following resources:
+3. **Environment Variables**
+   Add your environment variables in Vercel dashboard:
+   - `MONGODB_URI`
+   - `NEXTAUTH_SECRET`
+   - `NEXTAUTH_URL` (your production URL)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Manual Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Build the project**
+   ```bash
+   npm run build
+   ```
 
-## Deploy on Vercel
+2. **Deploy to Vercel**
+   ```bash
+   npm install -g vercel
+   vercel --prod
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Vercel Configuration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-"# islamic-sources" 
+The project includes a `vercel.json` file with:
+- Build and development commands
+- API function timeouts
+- Security headers
+- Redirects and rewrites
+- Performance optimizations
+
+## 📱 Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+## 🎨 Customization
+
+### Colors & Theme
+The application uses CSS custom properties for easy theming:
+- Primary colors in `app/globals.css`
+- Islamic theme colors (gold, green, blue)
+- Dark mode support
+
+### Components
+- All UI components are in `components/ui/`
+- Custom components in `components/`
+- Responsive design utilities
+
+## 🔒 Security Features
+
+- XSS Protection
+- Content Security Policy
+- Secure headers
+- Input validation
+- MongoDB injection protection
+
+## 📊 Performance
+
+- Image optimization
+- Code splitting
+- Lazy loading
+- CDN ready
+- SEO optimized
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with Next.js and Tailwind CSS
+- Islamic knowledge from qualified scholars
+- Community contributions and feedback
+
+## 📞 Support
+
+For support and questions:
+- Create an issue on GitHub
+- Contact the development team
+- Check the documentation
+
+---
+
+**Made with ❤️ for the Ummah**
+
+*"Seek knowledge from the cradle to the grave" - Prophet Muhammad (ﷺ)* 

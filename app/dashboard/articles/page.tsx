@@ -1,6 +1,6 @@
 "use client";
 import { MainLayout } from "@/components/layout/main-layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -13,11 +13,11 @@ import {
   Eye,
   BookOpen,
   Calendar,
-  Tag,
   Loader2,
   Clock,
+  Tag,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 interface Article {
   _id: string;
@@ -46,11 +46,7 @@ export default function ArticlesManagement() {
     setCurrentPage(1);
   }, [searchTerm, filterStatus]);
 
-  useEffect(() => {
-    fetchArticles();
-  }, [searchTerm, filterStatus, currentPage]);
-
-  const fetchArticles = async () => {
+  const fetchArticles = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -69,7 +65,11 @@ export default function ArticlesManagement() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchTerm, filterStatus, currentPage]);
+
+  useEffect(() => {
+    fetchArticles();
+  }, [fetchArticles]);
 
   const handleDelete = async (id: string) => {
     if (

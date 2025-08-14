@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tag } from "@/components/ui/tag";
-import { Separator } from "@/components/ui/separator";
 
 // Dummy data for different media types
 const pdfs = [
@@ -16,7 +15,7 @@ const pdfs = [
     size: "2.4 MB",
     description: "Comprehensive guide covering all aspects of Islamic prayer",
     category: "Worship",
-    downloads: 1247
+    downloads: 1247,
   },
   {
     id: 2,
@@ -25,7 +24,7 @@ const pdfs = [
     size: "1.8 MB",
     description: "Detailed guidelines for fasting during Ramadan",
     category: "Ramadan",
-    downloads: 892
+    downloads: 892,
   },
   {
     id: 3,
@@ -34,7 +33,7 @@ const pdfs = [
     size: "3.2 MB",
     description: "Understanding Islamic banking and finance",
     category: "Finance",
-    downloads: 567
+    downloads: 567,
   },
   {
     id: 4,
@@ -43,8 +42,8 @@ const pdfs = [
     size: "4.1 MB",
     description: "Complete step-by-step guide for Hajj and Umrah",
     category: "Pilgrimage",
-    downloads: 2341
-  }
+    downloads: 2341,
+  },
 ];
 
 const audioFiles = [
@@ -55,7 +54,7 @@ const audioFiles = [
     duration: "3:45",
     description: "Beautiful recitation of the opening chapter of the Quran",
     category: "Quran",
-    plays: 15420
+    plays: 15420,
   },
   {
     id: 2,
@@ -64,7 +63,7 @@ const audioFiles = [
     duration: "25:30",
     description: "Friday sermon discussing family values in Islam",
     category: "Khutbah",
-    plays: 8234
+    plays: 8234,
   },
   {
     id: 3,
@@ -73,7 +72,7 @@ const audioFiles = [
     duration: "45:12",
     description: "Lecture on the golden age of Islamic civilization",
     category: "History",
-    plays: 5678
+    plays: 5678,
   },
   {
     id: 4,
@@ -82,8 +81,8 @@ const audioFiles = [
     duration: "18:20",
     description: "Collection of daily supplications and prayers",
     category: "Dua",
-    plays: 12345
-  }
+    plays: 12345,
+  },
 ];
 
 const videos = [
@@ -95,7 +94,7 @@ const videos = [
     description: "Step-by-step guide to performing ablution correctly",
     category: "Worship",
     views: 45678,
-    thumbnail: "wudu-guide.jpg"
+    thumbnail: "wudu-guide.jpg",
   },
   {
     id: 2,
@@ -105,7 +104,7 @@ const videos = [
     description: "Comprehensive biography of Prophet Muhammad",
     category: "History",
     views: 23456,
-    thumbnail: "prophet-life.jpg"
+    thumbnail: "prophet-life.jpg",
   },
   {
     id: 3,
@@ -115,7 +114,7 @@ const videos = [
     description: "Exploring beautiful Islamic architecture globally",
     category: "Culture",
     views: 18923,
-    thumbnail: "architecture.jpg"
+    thumbnail: "architecture.jpg",
   },
   {
     id: 4,
@@ -125,8 +124,8 @@ const videos = [
     description: "Complete overview of Islamic financial principles",
     category: "Finance",
     views: 15678,
-    thumbnail: "finance.jpg"
-  }
+    thumbnail: "finance.jpg",
+  },
 ];
 
 const images = [
@@ -136,7 +135,7 @@ const images = [
     caption: "The Blue Mosque in Istanbul, Turkey",
     category: "Architecture",
     views: 1234,
-    filename: "blue-mosque.jpg"
+    filename: "blue-mosque.jpg",
   },
   {
     id: 2,
@@ -144,7 +143,7 @@ const images = [
     caption: "Traditional Arabic calligraphy art",
     category: "Art",
     views: 856,
-    filename: "calligraphy.jpg"
+    filename: "calligraphy.jpg",
   },
   {
     id: 3,
@@ -152,7 +151,7 @@ const images = [
     caption: "Traditional lanterns during Ramadan",
     category: "Culture",
     views: 2341,
-    filename: "ramadan-lanterns.jpg"
+    filename: "ramadan-lanterns.jpg",
   },
   {
     id: 4,
@@ -160,7 +159,7 @@ const images = [
     caption: "Intricate geometric designs in Islamic art",
     category: "Art",
     views: 567,
-    filename: "geometric-patterns.jpg"
+    filename: "geometric-patterns.jpg",
   },
   {
     id: 5,
@@ -168,7 +167,7 @@ const images = [
     caption: "Pilgrims at the Kaaba during Hajj",
     category: "Pilgrimage",
     views: 3456,
-    filename: "hajj-pilgrims.jpg"
+    filename: "hajj-pilgrims.jpg",
   },
   {
     id: 6,
@@ -176,8 +175,8 @@ const images = [
     caption: "Traditional Islamic garden design",
     category: "Architecture",
     views: 789,
-    filename: "islamic-gardens.jpg"
-  }
+    filename: "islamic-gardens.jpg",
+  },
 ];
 
 export default function MediaPage() {
@@ -188,7 +187,8 @@ export default function MediaPage() {
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-4">Media Resources</h1>
           <p className="text-muted-foreground text-lg">
-            Access Islamic content in various formats including PDFs, audio lectures, videos, and images.
+            Access Islamic content in various formats including PDFs, audio
+            lectures, videos, and images.
           </p>
         </div>
 
@@ -204,11 +204,16 @@ export default function MediaPage() {
           <TabsContent value="pdfs" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {pdfs.map((pdf) => (
-                <Card key={pdf.id} className="hover:shadow-md transition-shadow">
+                <Card
+                  key={pdf.id}
+                  className="hover:shadow-md transition-shadow"
+                >
                   <CardHeader>
                     <div className="flex items-center justify-between mb-2">
                       <Tag variant="outline">{pdf.category}</Tag>
-                      <span className="text-xs text-muted-foreground">{pdf.size}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {pdf.size}
+                      </span>
                     </div>
                     <CardTitle className="text-lg">{pdf.title}</CardTitle>
                   </CardHeader>
@@ -232,11 +237,16 @@ export default function MediaPage() {
           <TabsContent value="audio" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {audioFiles.map((audio) => (
-                <Card key={audio.id} className="hover:shadow-md transition-shadow">
+                <Card
+                  key={audio.id}
+                  className="hover:shadow-md transition-shadow"
+                >
                   <CardHeader>
                     <div className="flex items-center justify-between mb-2">
                       <Tag variant="outline">{audio.category}</Tag>
-                      <span className="text-xs text-muted-foreground">{audio.duration}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {audio.duration}
+                      </span>
                     </div>
                     <CardTitle className="text-lg">{audio.title}</CardTitle>
                   </CardHeader>
@@ -252,7 +262,9 @@ export default function MediaPage() {
                         {audio.plays} plays
                       </span>
                       <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">Play</Button>
+                        <Button size="sm" variant="outline">
+                          Play
+                        </Button>
                         <Button size="sm">Download</Button>
                       </div>
                     </div>
@@ -266,17 +278,24 @@ export default function MediaPage() {
           <TabsContent value="video" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {videos.map((video) => (
-                <Card key={video.id} className="hover:shadow-md transition-shadow">
+                <Card
+                  key={video.id}
+                  className="hover:shadow-md transition-shadow"
+                >
                   <CardHeader>
                     <div className="flex items-center justify-between mb-2">
                       <Tag variant="outline">{video.category}</Tag>
-                      <span className="text-xs text-muted-foreground">{video.duration}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {video.duration}
+                      </span>
                     </div>
                     <CardTitle className="text-lg">{video.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="bg-muted h-32 rounded-md mb-4 flex items-center justify-center">
-                      <span className="text-muted-foreground">Video Thumbnail</span>
+                      <span className="text-muted-foreground">
+                        Video Thumbnail
+                      </span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-2">
                       By {video.speaker}
@@ -300,23 +319,32 @@ export default function MediaPage() {
           <TabsContent value="images" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {images.map((image) => (
-                <Card key={image.id} className="hover:shadow-md transition-shadow">
+                <Card
+                  key={image.id}
+                  className="hover:shadow-md transition-shadow"
+                >
                   <CardHeader>
                     <div className="flex items-center justify-between mb-2">
                       <Tag variant="outline">{image.category}</Tag>
-                      <span className="text-xs text-muted-foreground">{image.views} views</span>
+                      <span className="text-xs text-muted-foreground">
+                        {image.views} views
+                      </span>
                     </div>
                     <CardTitle className="text-lg">{image.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="bg-muted h-48 rounded-md mb-4 flex items-center justify-center">
-                      <span className="text-muted-foreground">Image Preview</span>
+                      <span className="text-muted-foreground">
+                        Image Preview
+                      </span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-4">
                       {image.caption}
                     </p>
                     <div className="flex space-x-2">
-                      <Button size="sm" variant="outline">View</Button>
+                      <Button size="sm" variant="outline">
+                        View
+                      </Button>
                       <Button size="sm">Download</Button>
                     </div>
                   </CardContent>
@@ -328,4 +356,4 @@ export default function MediaPage() {
       </div>
     </MainLayout>
   );
-} 
+}

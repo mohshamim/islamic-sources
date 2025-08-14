@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, Eye, X, Plus, Loader2 } from "lucide-react";
 
@@ -50,38 +50,41 @@ export default function EditPost({
   const [newTag, setNewTag] = useState("");
   const [status, setStatus] = useState("draft");
 
+  const fetchPost = useCallback(
+    async (id: string) => {
+      try {
+        const response = await fetch(`/api/posts/${id}`);
+        if (response.ok) {
+          const postData = await response.json();
+          setPost(postData);
+          setTitle(postData.title);
+          setExcerpt(postData.excerpt);
+          setContent(postData.content);
+          setCategory(postData.category);
+          setTags(postData.tags || []);
+          setStatus(postData.status);
+        } else {
+          alert("Post not found");
+          router.push("/dashboard/posts");
+        }
+      } catch (error) {
+        console.error("Error fetching post:", error);
+        alert("Error loading post");
+        router.push("/dashboard/posts");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [router]
+  );
+
   useEffect(() => {
     const loadPost = async () => {
       const { id } = await params;
       fetchPost(id);
     };
     loadPost();
-  }, [params]);
-
-  const fetchPost = async (id: string) => {
-    try {
-      const response = await fetch(`/api/posts/${id}`);
-      if (response.ok) {
-        const postData = await response.json();
-        setPost(postData);
-        setTitle(postData.title);
-        setExcerpt(postData.excerpt);
-        setContent(postData.content);
-        setCategory(postData.category);
-        setTags(postData.tags || []);
-        setStatus(postData.status);
-      } else {
-        alert("Post not found");
-        router.push("/dashboard/posts");
-      }
-    } catch (error) {
-      console.error("Error fetching post:", error);
-      alert("Error loading post");
-      router.push("/dashboard/posts");
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [params, fetchPost]);
 
   const handleAddTag = () => {
     if (newTag.trim() && !tags.includes(newTag.trim())) {

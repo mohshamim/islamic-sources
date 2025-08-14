@@ -1,6 +1,6 @@
 "use client";
 import { MainLayout } from "@/components/layout/main-layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -13,11 +13,11 @@ import {
   Eye,
   HelpCircle,
   Calendar,
-  Tag,
   Loader2,
-  User,
+  Clock,
+  Tag,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 interface Question {
   _id: string;
@@ -45,11 +45,7 @@ export default function QuestionsManagement() {
     setCurrentPage(1);
   }, [searchTerm, filterStatus]);
 
-  useEffect(() => {
-    fetchQuestions();
-  }, [searchTerm, filterStatus, currentPage]);
-
-  const fetchQuestions = async () => {
+  const fetchQuestions = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -68,7 +64,11 @@ export default function QuestionsManagement() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchTerm, filterStatus, currentPage]);
+
+  useEffect(() => {
+    fetchQuestions();
+  }, [fetchQuestions]);
 
   const handleDelete = async (id: string) => {
     if (
@@ -214,11 +214,7 @@ export default function QuestionsManagement() {
                           <span>{question.category}</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <User className="h-4 w-4" />
-                          <span>{question.scholar}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-4 w-4" />
+                          <Clock className="h-4 w-4" />
                           <span>
                             {new Date(question.createdAt).toLocaleDateString()}
                           </span>

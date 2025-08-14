@@ -1,6 +1,6 @@
 "use client";
 import { MainLayout } from "@/components/layout/main-layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -13,10 +13,11 @@ import {
   Eye,
   FileText,
   Calendar,
-  Tag,
   Loader2,
+  Clock,
+  Tag,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 interface Post {
   _id: string;
@@ -44,11 +45,7 @@ export default function PostsManagement() {
     setCurrentPage(1);
   }, [searchTerm, filterStatus]);
 
-  useEffect(() => {
-    fetchPosts();
-  }, [searchTerm, filterStatus, currentPage]);
-
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -67,10 +64,19 @@ export default function PostsManagement() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchTerm, filterStatus, currentPage]);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this post? This action cannot be undone.")) return;
+    if (
+      !confirm(
+        "Are you sure you want to delete this post? This action cannot be undone."
+      )
+    )
+      return;
 
     try {
       const response = await fetch(`/api/posts/${id}`, {
@@ -265,15 +271,15 @@ export default function PostsManagement() {
         {totalPages > 1 && (
           <div className="flex justify-center mt-8">
             <div className="flex gap-2">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
               >
                 Previous
               </Button>
-              
+
               {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                 const pageNum = i + 1;
                 return (
@@ -287,11 +293,13 @@ export default function PostsManagement() {
                   </Button>
                 );
               })}
-              
-              <Button 
-                variant="outline" 
+
+              <Button
+                variant="outline"
                 size="sm"
-                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                onClick={() =>
+                  setCurrentPage(Math.min(totalPages, currentPage + 1))
+                }
                 disabled={currentPage === totalPages}
               >
                 Next
@@ -299,7 +307,7 @@ export default function PostsManagement() {
             </div>
           </div>
         )}
-        
+
         {/* Results count */}
         <div className="text-center mt-4 text-sm text-gray-500">
           Showing {posts.length} of {totalPosts} posts

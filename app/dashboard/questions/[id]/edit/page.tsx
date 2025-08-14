@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, Eye, X, Plus, Loader2 } from "lucide-react";
 
@@ -49,15 +49,7 @@ export default function EditQuestion({
   const [status, setStatus] = useState("draft");
   const [scholar, setScholar] = useState("");
 
-  useEffect(() => {
-    const loadQuestion = async () => {
-      const { id } = await params;
-      fetchQuestion(id);
-    };
-    loadQuestion();
-  }, [params]);
-
-  const fetchQuestion = async (id: string) => {
+  const fetchQuestion = useCallback(async (id: string) => {
     try {
       const response = await fetch(`/api/questions/${id}`);
       if (response.ok) {
@@ -80,7 +72,15 @@ export default function EditQuestion({
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    const loadQuestion = async () => {
+      const { id } = await params;
+      fetchQuestion(id);
+    };
+    loadQuestion();
+  }, [params, fetchQuestion]);
 
   const handleAddTag = () => {
     if (newTag.trim() && !tags.includes(newTag.trim())) {

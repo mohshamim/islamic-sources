@@ -59,7 +59,6 @@ export default function NewQuestion() {
       });
 
       if (response.ok) {
-        const result = await response.json();
         alert("Question created successfully!");
         // Redirect to questions list
         window.location.href = "/dashboard/questions";

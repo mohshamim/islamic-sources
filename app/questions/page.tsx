@@ -8,8 +8,6 @@ import { Tag } from "@/components/ui/tag";
 import { Separator } from "@/components/ui/separator";
 import { useEffect, useState, useCallback } from "react";
 import { Loader2 } from "lucide-react";
-import { HelpCircle, Plus } from "lucide-react";
-import Link from "next/link";
 
 interface Question {
   _id: string;

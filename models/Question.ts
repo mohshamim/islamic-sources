@@ -50,7 +50,7 @@ QuestionSchema.pre('save', function(next) {
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
       .substring(0, 50)
-      .trim('-');
+      .trim();
   }
   
   next();

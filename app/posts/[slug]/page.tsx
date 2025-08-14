@@ -33,9 +33,9 @@ interface PostPageProps {
 
 export default async function PostPage({ params }: PostPageProps) {
   await dbConnect();
-  
+
   const { slug } = await params;
-  const post = await Post.findOne({ slug: slug, status: 'published' }).lean();
+  const post = await Post.findOne({ slug: slug, status: "published" }).lean() as Post | null;
 
   if (!post) {
     notFound();
@@ -44,43 +44,51 @@ export default async function PostPage({ params }: PostPageProps) {
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: "Posts", href: "/posts" },
-    { label: post.title }
+    { label: post.title },
   ];
 
   return (
     <MainLayout>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <BreadcrumbNav items={breadcrumbItems} />
-        
+
         <article className="max-w-4xl mx-auto">
           {/* Header */}
           <header className="mb-8">
             <div className="flex items-center gap-2 mb-4">
               <Tag variant="outline">{post.category}</Tag>
-              <span className="text-sm text-muted-foreground">{post.views} views</span>
+              <span className="text-sm text-muted-foreground">
+                {post.views} views
+              </span>
             </div>
             <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
             <p className="text-xl text-muted-foreground mb-6">{post.excerpt}</p>
-            
+
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Avatar>
-                  <AvatarFallback>{post.author.charAt(0).toUpperCase()}</AvatarFallback>
+                  <AvatarFallback>
+                    {post.author.charAt(0).toUpperCase()}
+                  </AvatarFallback>
                 </Avatar>
                 <div>
                   <p className="font-medium">{post.author}</p>
                   <p className="text-sm text-muted-foreground">
-                    {new Date(post.createdAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
+                    {new Date(post.createdAt).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </p>
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" size="sm">Share</Button>
-                <Button variant="outline" size="sm">Bookmark</Button>
+                <Button variant="outline" size="sm">
+                  Share
+                </Button>
+                <Button variant="outline" size="sm">
+                  Bookmark
+                </Button>
               </div>
             </div>
           </header>
@@ -116,7 +124,10 @@ export default async function PostPage({ params }: PostPageProps) {
               <Card>
                 <CardHeader>
                   <CardTitle className="text-base">
-                    <Link href="/posts" className="hover:text-primary transition-colors">
+                    <Link
+                      href="/posts"
+                      className="hover:text-primary transition-colors"
+                    >
                       View All Posts
                     </Link>
                   </CardTitle>
@@ -133,4 +144,4 @@ export default async function PostPage({ params }: PostPageProps) {
       </div>
     </MainLayout>
   );
-} 
+}

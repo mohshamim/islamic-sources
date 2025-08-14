@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     
     const skip = (page - 1) * limit;
     
-    let query: QueryFilter = {};
+    const query: QueryFilter = {};
     
     if (category) query.category = category;
     if (status) query.status = status;

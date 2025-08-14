@@ -30,26 +30,26 @@ export function ArticleCard({ article }: ArticleCardProps) {
 
   return (
     <Link href={`/articles/${article.slug}`}>
-      <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+      <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full bg-white dark:bg-card border border-gray-200 dark:border-border">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between mb-2">
             <Badge variant="secondary" className="text-xs">
               {article.category}
             </Badge>
-            <div className="flex items-center text-xs text-gray-500">
+            <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
               <Eye className="h-3 w-3 mr-1" />
               {article.views || 0}
             </div>
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 mb-2">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white line-clamp-2 mb-2">
             {article.title}
           </h3>
-          <p className="text-gray-600 text-sm line-clamp-3">
+          <p className="text-gray-600 dark:text-gray-200 text-sm line-clamp-3">
             {article.excerpt}
           </p>
         </CardHeader>
         <CardContent className="pt-0">
-          <div className="flex flex-wrap items-center justify-between text-xs text-gray-500 mb-3">
+          <div className="flex flex-wrap items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-3">
             <div className="flex items-center">
               <User className="h-3 w-3 mr-1" />
               {article.author}
@@ -78,7 +78,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
                 </Tag>
               ))}
             {article.tags && article.tags.length > 3 && (
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-gray-500 dark:text-gray-400">
                 +{article.tags.length - 3} more
               </span>
             )}

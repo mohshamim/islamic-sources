@@ -66,7 +66,6 @@ export default function NewPost() {
       });
 
       if (response.ok) {
-        const result = await response.json();
         alert('Post created successfully!');
         // Redirect to posts list
         window.location.href = '/dashboard/posts';

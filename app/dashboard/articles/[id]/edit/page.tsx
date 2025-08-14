@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, Eye, X, Plus, Loader2 } from "lucide-react";
 
@@ -52,15 +52,7 @@ export default function EditArticle({
   const [status, setStatus] = useState("draft");
   const [readTime, setReadTime] = useState(5);
 
-  useEffect(() => {
-    const loadArticle = async () => {
-      const { id } = await params;
-      fetchArticle(id);
-    };
-    loadArticle();
-  }, [params]);
-
-  const fetchArticle = async (id: string) => {
+  const fetchArticle = useCallback(async (id: string) => {
     try {
       const response = await fetch(`/api/articles/${id}`);
       if (response.ok) {
@@ -84,7 +76,15 @@ export default function EditArticle({
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    const loadArticle = async () => {
+      const { id } = await params;
+      fetchArticle(id);
+    };
+    loadArticle();
+  }, [params, fetchArticle]);
 
   const handleAddTag = () => {
     if (newTag.trim() && !tags.includes(newTag.trim())) {

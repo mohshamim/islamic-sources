@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tag } from "@/components/ui/tag";
 import { Separator } from "@/components/ui/separator";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Loader2 } from "lucide-react";
 
 interface Post {
@@ -37,11 +37,7 @@ export default function PostsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  useEffect(() => {
-    fetchPosts();
-  }, [selectedCategory, currentPage]);
-
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -62,7 +58,11 @@ export default function PostsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCategory, currentPage]);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
 
   return (
     <MainLayout>

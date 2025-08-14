@@ -61,7 +61,6 @@ export default function NewArticle() {
       });
 
       if (response.ok) {
-        const result = await response.json();
         alert("Article created successfully!");
         // Redirect to articles list
         window.location.href = "/dashboard/articles";

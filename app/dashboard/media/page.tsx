@@ -1,6 +1,6 @@
 "use client";
 import { MainLayout } from "@/components/layout/main-layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -12,16 +12,17 @@ import {
   Trash2,
   Eye,
   Music,
-  Calendar,
-  Tag,
-  Loader2,
-  Download,
-  Play,
-  FileText,
-  Image,
   Video,
+  FileText,
+  Image as ImageIcon,
+  Calendar,
+  Loader2,
+  Clock,
+  Play,
+  Tag,
+  Download,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 interface Media {
   _id: string;
@@ -37,12 +38,15 @@ interface Media {
   speaker?: string;
   duration?: number;
   thumbnail?: string;
-  dimensions?: { width: number; height: number };
-  downloads: number;
-  plays: number;
-  views: number;
+  dimensions?: {
+    width: number;
+    height: number;
+  };
   createdAt: string;
+  views: number;
   slug: string;
+  plays?: number;
+  downloads?: number;
 }
 
 export default function MediaManagement() {
@@ -59,11 +63,7 @@ export default function MediaManagement() {
     setCurrentPage(1);
   }, [searchTerm, filterStatus, filterType]);
 
-  useEffect(() => {
-    fetchMedia();
-  }, [searchTerm, filterStatus, filterType, currentPage]);
-
-  const fetchMedia = async () => {
+  const fetchMedia = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -83,7 +83,11 @@ export default function MediaManagement() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchTerm, filterStatus, filterType, currentPage]);
+
+  useEffect(() => {
+    fetchMedia();
+  }, [fetchMedia]);
 
   const handleDelete = async (id: string) => {
     if (
@@ -120,7 +124,7 @@ export default function MediaManagement() {
       case "pdf":
         return <FileText className="h-4 w-4" />;
       case "image":
-        return <Image className="h-4 w-4" />;
+        return <ImageIcon className="h-4 w-4" />;
       default:
         return <Music className="h-4 w-4" />;
     }

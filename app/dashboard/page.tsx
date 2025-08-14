@@ -10,11 +10,8 @@ import {
   HelpCircle,
   Music,
   Plus,
-  TrendingUp,
-  Users,
   Eye,
   Calendar,
-  Clock,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -66,24 +63,24 @@ export default function Dashboard() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/stats');
+      const response = await fetch("/api/stats");
       if (response.ok) {
         const data = await response.json();
         setStats(data);
       }
     } catch (error) {
-      console.error('Error fetching stats:', error);
+      console.error("Error fetching stats:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const getStatusColor = (status: string) => {
-    return status === 'published' ? 'text-green-600' : 'text-yellow-600';
+    return status === "published" ? "text-green-600" : "text-yellow-600";
   };
 
   const getStatusText = (status: string) => {
-    return status === 'published' ? 'Published' : 'Draft';
+    return status === "published" ? "Published" : "Draft";
   };
 
   if (loading) {
@@ -126,11 +123,15 @@ export default function Dashboard() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Questions</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Questions
+              </CardTitle>
               <HelpCircle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats?.totalQuestions || 0}</div>
+              <div className="text-2xl font-bold">
+                {stats?.totalQuestions || 0}
+              </div>
               <p className="text-xs text-muted-foreground">
                 +180.1% from last month
               </p>
@@ -139,11 +140,15 @@ export default function Dashboard() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Articles</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Articles
+              </CardTitle>
               <BookOpen className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats?.totalArticles || 0}</div>
+              <div className="text-2xl font-bold">
+                {stats?.totalArticles || 0}
+              </div>
               <p className="text-xs text-muted-foreground">
                 +19% from last month
               </p>
@@ -212,7 +217,10 @@ export default function Dashboard() {
             <CardContent>
               <div className="space-y-4">
                 {stats?.recentActivity.posts.map((post) => (
-                  <div key={post._id} className="flex items-center justify-between">
+                  <div
+                    key={post._id}
+                    className="flex items-center justify-between"
+                  >
                     <div className="flex-1">
                       <h4 className="text-sm font-medium text-gray-900 truncate">
                         {post.title}
@@ -253,14 +261,19 @@ export default function Dashboard() {
             <CardContent>
               <div className="space-y-4">
                 {stats?.recentActivity.questions.map((question) => (
-                  <div key={question._id} className="flex items-center justify-between">
+                  <div
+                    key={question._id}
+                    className="flex items-center justify-between"
+                  >
                     <div className="flex-1">
                       <h4 className="text-sm font-medium text-gray-900 truncate">
                         {question.question}
                       </h4>
                       <div className="flex items-center gap-4 text-xs text-gray-500 mt-1">
                         <span className={getStatusColor(question.status)}>
-                          {question.status === 'published' ? 'Answered' : 'Draft'}
+                          {question.status === "published"
+                            ? "Answered"
+                            : "Draft"}
                         </span>
                         <span className="flex items-center gap-1">
                           <Eye className="h-3 w-3" />
@@ -294,7 +307,10 @@ export default function Dashboard() {
             <CardContent>
               <div className="space-y-4">
                 {stats?.recentActivity.articles.map((article) => (
-                  <div key={article._id} className="flex items-center justify-between">
+                  <div
+                    key={article._id}
+                    className="flex items-center justify-between"
+                  >
                     <div className="flex-1">
                       <h4 className="text-sm font-medium text-gray-900 truncate">
                         {article.title}
@@ -335,14 +351,17 @@ export default function Dashboard() {
             <CardContent>
               <div className="space-y-4">
                 {stats?.recentActivity.media.map((media) => (
-                  <div key={media._id} className="flex items-center justify-between">
+                  <div
+                    key={media._id}
+                    className="flex items-center justify-between"
+                  >
                     <div className="flex-1">
                       <h4 className="text-sm font-medium text-gray-900 truncate">
                         {media.title}
                       </h4>
                       <div className="flex items-center gap-4 text-xs text-gray-500 mt-1">
                         <span className={getStatusColor(media.status)}>
-                          {media.status === 'published' ? 'Uploaded' : 'Draft'}
+                          {media.status === "published" ? "Uploaded" : "Draft"}
                         </span>
                         <span className="flex items-center gap-1">
                           <Eye className="h-3 w-3" />
@@ -368,4 +387,4 @@ export default function Dashboard() {
       </div>
     </MainLayout>
   );
-} 
+}

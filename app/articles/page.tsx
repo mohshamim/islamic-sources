@@ -10,57 +10,63 @@ const articles = [
   {
     slug: "islamic-finance-principles",
     title: "Islamic Finance: Principles and Practices",
-    excerpt: "Understanding the core principles of Islamic finance and how they differ from conventional banking. This comprehensive guide covers the fundamental concepts that govern Islamic financial transactions.",
+    excerpt:
+      "Understanding the core principles of Islamic finance and how they differ from conventional banking. This comprehensive guide covers the fundamental concepts that govern Islamic financial transactions.",
     author: "Dr. Ahmed Hassan",
     date: "Dec 14, 2024",
-    readTime: "12 min read",
-    category: "Finance"
+    readTime: 12,
+    category: "Finance",
   },
   {
     slug: "family-values-islam",
     title: "Family Values in Islamic Tradition",
-    excerpt: "Exploring the importance of family bonds and relationships in Islamic teachings and culture. Learn about the rights and responsibilities within the family structure.",
+    excerpt:
+      "Exploring the importance of family bonds and relationships in Islamic teachings and culture. Learn about the rights and responsibilities within the family structure.",
     author: "Umm Fatima",
     date: "Dec 11, 2024",
-    readTime: "10 min read",
-    category: "Family"
+    readTime: 10,
+    category: "Family",
   },
   {
     slug: "mental-health-islam",
     title: "Mental Health and Islamic Spirituality",
-    excerpt: "How Islamic practices and spirituality can contribute to mental well-being and peace of mind. Understanding the connection between faith and psychological health.",
+    excerpt:
+      "How Islamic practices and spirituality can contribute to mental well-being and peace of mind. Understanding the connection between faith and psychological health.",
     author: "Dr. Sarah Khan",
     date: "Dec 8, 2024",
-    readTime: "15 min read",
-    category: "Health"
+    readTime: 15,
+    category: "Health",
   },
   {
     slug: "prophet-muhammad-teachings",
     title: "The Life and Teachings of Prophet Muhammad (PBUH)",
-    excerpt: "A detailed exploration of the life, character, and teachings of Prophet Muhammad (peace be upon him) and their relevance in modern times.",
+    excerpt:
+      "A detailed exploration of the life, character, and teachings of Prophet Muhammad (peace be upon him) and their relevance in modern times.",
     author: "Sheikh Omar Abdullah",
     date: "Dec 6, 2024",
-    readTime: "20 min read",
-    category: "History"
+    readTime: 20,
+    category: "History",
   },
   {
     slug: "islamic-architecture",
     title: "The Beauty of Islamic Architecture",
-    excerpt: "Discover the principles and aesthetics of Islamic architecture, from geometric patterns to spiritual symbolism in mosque design.",
+    excerpt:
+      "Discover the principles and aesthetics of Islamic architecture, from geometric patterns to spiritual symbolism in mosque design.",
     author: "Dr. Fatima Al-Zahra",
     date: "Dec 4, 2024",
-    readTime: "14 min read",
-    category: "Culture"
+    readTime: 14,
+    category: "Culture",
   },
   {
     slug: "women-islamic-history",
     title: "Women in Islamic History: Scholars and Leaders",
-    excerpt: "Celebrating the contributions of women scholars, leaders, and figures throughout Islamic history and their lasting impact.",
+    excerpt:
+      "Celebrating the contributions of women scholars, leaders, and figures throughout Islamic history and their lasting impact.",
     author: "Dr. Aisha Rahman",
     date: "Dec 2, 2024",
-    readTime: "18 min read",
-    category: "History"
-  }
+    readTime: 18,
+    category: "History",
+  },
 ];
 
 const categories = [
@@ -72,7 +78,7 @@ const categories = [
   "Culture",
   "Education",
   "Spirituality",
-  "Science"
+  "Science",
 ];
 
 const authors = [
@@ -82,7 +88,7 @@ const authors = [
   "Dr. Sarah Khan",
   "Sheikh Omar Abdullah",
   "Dr. Fatima Al-Zahra",
-  "Dr. Aisha Rahman"
+  "Dr. Aisha Rahman",
 ];
 
 export default function ArticlesPage() {
@@ -93,7 +99,8 @@ export default function ArticlesPage() {
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-4">Islamic Articles</h1>
           <p className="text-muted-foreground text-lg">
-            In-depth scholarly articles covering various aspects of Islamic knowledge, history, and contemporary issues.
+            In-depth scholarly articles covering various aspects of Islamic
+            knowledge, history, and contemporary issues.
           </p>
         </div>
 
@@ -158,10 +165,18 @@ export default function ArticlesPage() {
             {/* Filters */}
             <div className="flex flex-wrap items-center gap-4 mb-6">
               <span className="text-sm text-muted-foreground">Sort by:</span>
-              <Button variant="outline" size="sm">Latest</Button>
-              <Button variant="ghost" size="sm">Popular</Button>
-              <Button variant="ghost" size="sm">Most Read</Button>
-              <Button variant="ghost" size="sm">Longest</Button>
+              <Button variant="outline" size="sm">
+                Latest
+              </Button>
+              <Button variant="ghost" size="sm">
+                Popular
+              </Button>
+              <Button variant="ghost" size="sm">
+                Most Read
+              </Button>
+              <Button variant="ghost" size="sm">
+                Longest
+              </Button>
             </div>
 
             <Separator className="mb-6" />
@@ -179,9 +194,15 @@ export default function ArticlesPage() {
                 <Button variant="outline" size="sm" disabled>
                   Previous
                 </Button>
-                <Button variant="outline" size="sm">1</Button>
-                <Button variant="ghost" size="sm">2</Button>
-                <Button variant="ghost" size="sm">3</Button>
+                <Button variant="outline" size="sm">
+                  1
+                </Button>
+                <Button variant="ghost" size="sm">
+                  2
+                </Button>
+                <Button variant="ghost" size="sm">
+                  3
+                </Button>
                 <Button variant="outline" size="sm">
                   Next
                 </Button>
@@ -192,4 +213,4 @@ export default function ArticlesPage() {
       </div>
     </MainLayout>
   );
-} 
+}

@@ -1,4 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import dbConnect from '@/lib/db';
+import Post from '@/models/Post';
+import Question from '@/models/Question';
+import Article from '@/models/Article';
+import Media from '@/models/Media';
 
 // Temporary static data while we fix database connection
 const staticPosts = [
@@ -164,13 +169,17 @@ const staticMedia = [
   }
 ];
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    // Get counts for each content type
-    const postsCount = staticPosts.length;
-    const questionsCount = staticQuestions.length;
-    const articlesCount = staticArticles.length;
-    const mediaCount = staticMedia.length;
+    await dbConnect();
+    
+    // Get counts
+    const [postsCount, questionsCount, articlesCount, mediaCount] = await Promise.all([
+      Post.countDocuments(),
+      Question.countDocuments(),
+      Article.countDocuments(),
+      Media.countDocuments()
+    ]);
     
     // Get recent activity (last 5 items from each type)
     const recentPosts = staticPosts.slice(0, 5);
