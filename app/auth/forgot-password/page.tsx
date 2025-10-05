@@ -49,7 +49,7 @@ export default function ForgotPassword() {
               Reset your password
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-              Enter your email address and we'll send you a password reset link
+              Enter your email address and we&apos;ll send you a password reset link
             </p>
           </div>
           <Card>
@@ -64,7 +64,7 @@ export default function ForgotPassword() {
                     <p className="text-sm font-medium">Password reset email sent!</p>
                   </div>
                   <p className="text-sm text-gray-600">
-                    Check your email inbox for a password reset link. If you don't see it, check your spam folder.
+                    Check your email inbox for a password reset link. If you don&apos;t see it, check your spam folder.
                   </p>
                   <Link href="/auth/signin">
                     <Button className="w-full" variant="outline">

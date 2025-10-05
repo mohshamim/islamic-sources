@@ -88,7 +88,7 @@ export function CourseCard({
         
         {course.objectives && course.objectives.length > 0 && (
           <div className="mb-4">
-            <h4 className="text-sm font-medium text-gray-900 mb-2">What you'll learn:</h4>
+            <h4 className="text-sm font-medium text-gray-900 mb-2">What you&apos;ll learn:</h4>
             <ul className="text-xs text-gray-600 space-y-1">
               {course.objectives.slice(0, 3).map((objective, index) => (
                 <li key={index} className="flex items-start gap-2">
