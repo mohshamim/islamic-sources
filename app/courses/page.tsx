@@ -161,7 +161,7 @@ export default async function CoursesPage({ searchParams }: CoursesPageProps) {
             <div className="text-center py-12">
               <h3 className="text-lg font-medium text-gray-900 mb-2">No courses found</h3>
               <p className="text-gray-600">
-                {searchParams.search 
+                {params.search 
                   ? 'Try adjusting your search terms or filters.'
                   : 'No courses are available at the moment.'
                 }
