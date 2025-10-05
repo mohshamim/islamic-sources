@@ -4,15 +4,11 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import {
   Menu,
   X,
   Search,
   BookOpen,
-  HelpCircle,
-  FileText,
-  Music,
   User,
   Moon,
   Sun,
@@ -55,13 +51,6 @@ export function Navbar({ isScrolled }: NavbarProps) {
     }
   };
 
-  const navigation = [
-    { name: "Articles", href: "/articles", icon: BookOpen },
-    { name: "Posts", href: "/posts", icon: FileText },
-    { name: "Questions", href: "/questions", icon: HelpCircle },
-    { name: "Media", href: "/media", icon: Music },
-  ];
-
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -87,22 +76,8 @@ export function Navbar({ isScrolled }: NavbarProps) {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="flex items-center space-x-2 text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-white/80 transition-colors duration-200 group"
-              >
-                <item.icon className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-                <span className="font-medium">{item.name}</span>
-              </Link>
-            ))}
-          </div>
-
           {/* Search Bar */}
-          <div className="hidden lg:flex items-center space-x-4 flex-1 max-w-md mx-8">
+          <div className="hidden lg:flex items-center space-x-4 flex-1 max-w-xl ml-auto mr-8">
             <form onSubmit={handleSearch} className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
@@ -116,7 +91,7 @@ export function Navbar({ isScrolled }: NavbarProps) {
           </div>
 
           {/* Right Side Actions */}
-          <div className="flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-4">
             {/* Dark Mode Toggle */}
             <Button
               variant="ghost"
@@ -175,20 +150,8 @@ export function Navbar({ isScrolled }: NavbarProps) {
 
             {/* Mobile Navigation */}
             <div className="px-4 space-y-2">
-              {navigation.map((item) => (
-                                 <Link
-                   key={item.name}
-                   href={item.href}
-                   onClick={() => setIsMenuOpen(false)}
-                   className="flex items-center space-x-3 px-4 py-3 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/20 hover:text-gray-700 dark:hover:text-white/90 rounded-lg transition-colors duration-200"
-                 >
-                  <item.icon className="w-5 h-5" />
-                  <span className="font-medium">{item.name}</span>
-                </Link>
-              ))}
-
               {/* Mobile Dashboard Link */}
-                             <Link
+              <Link
                  href="/dashboard"
                  onClick={() => setIsMenuOpen(false)}
                  className="flex items-center space-x-3 px-4 py-3 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/20 rounded-lg transition-colors duration-200"

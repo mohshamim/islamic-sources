@@ -4,6 +4,7 @@ import Post from '@/models/Post';
 import Question from '@/models/Question';
 import Article from '@/models/Article';
 import Media from '@/models/Media';
+import { fallbackStats } from '@/lib/fallback-data';
 
 // Temporary static data while we fix database connection
 const staticPosts = [
@@ -231,10 +232,9 @@ export async function GET() {
     });
   } catch (error) {
     console.error('Error fetching stats:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch statistics' },
-      { status: 500 }
-    );
+    
+    // Return fallback stats when database is not available
+    return NextResponse.json(fallbackStats);
   }
 }
 

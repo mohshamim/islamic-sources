@@ -1,647 +1,290 @@
-"use client";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { PostCard } from "@/components/cards/post-card";
-import { QuestionCard } from "@/components/cards/question-card";
-import { ArticleCard } from "@/components/cards/article-card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import {
   BookOpen,
-  HelpCircle,
   FileText,
+  HelpCircle,
+  Download,
   ArrowRight,
-  Users,
-  TrendingUp,
-  ChevronRight,
   Sparkles,
-  Globe,
-  Shield,
-  Heart,
+  Eye,
+  Calendar,
   User,
+  TrendingUp,
 } from "lucide-react";
-import { useEffect, useState } from "react";
-
-interface Post {
-  _id: string;
-  title: string;
-  excerpt: string;
-  category: string;
-  tags: string[];
-  author: string;
-  views: number;
-  slug: string;
-  createdAt: string;
-}
-
-interface Question {
-  _id: string;
-  question: string;
-  answer: string;
-  category: string;
-  tags: string[];
-  scholar: string;
-  views: number;
-  slug: string;
-  createdAt: string;
-}
-
-interface Article {
-  _id: string;
-  title: string;
-  excerpt: string;
-  category: string;
-  tags: string[];
-  author: string;
-  readTime: number;
-  views: number;
-  slug: string;
-  createdAt: string;
-}
-
-interface Stats {
-  counts: {
-    posts: number;
-    questions: number;
-    articles: number;
-    media: number;
-    total: number;
-  };
-  views: {
-    total: number;
-    posts: number;
-    questions: number;
-    articles: number;
-  };
-}
+import mockData from "@/lib/mock-data.json";
 
 export default function HomePage() {
-  const [latestPosts, setLatestPosts] = useState<Post[]>([]);
-  const [featuredArticles, setFeaturedArticles] = useState<Article[]>([]);
-  const [popularQuestions, setPopularQuestions] = useState<Question[]>([]);
-  const [stats, setStats] = useState<Stats | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Create a timeout controller for all fetch calls
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
-
-        // Fetch latest posts with timeout
-        const postsResponse = await fetch(
-          "/api/posts?limit=3&status=published",
-          { signal: controller.signal }
-        );
-        const postsData = await postsResponse.json();
-        setLatestPosts(postsData.posts || []);
-
-        // Fetch featured articles with timeout
-        const articlesResponse = await fetch(
-          "/api/articles?limit=3&status=published",
-          { signal: controller.signal }
-        );
-        const articlesData = await articlesResponse.json();
-        setFeaturedArticles(articlesData.articles || []);
-
-        // Fetch popular questions with timeout
-        const questionsResponse = await fetch(
-          "/api/questions?limit=3&status=published",
-          { signal: controller.signal }
-        );
-        const questionsData = await questionsResponse.json();
-        setPopularQuestions(questionsData.questions || []);
-
-        // Fetch stats with timeout
-        const statsResponse = await fetch("/api/stats", {
-          signal: controller.signal,
-        });
-        if (statsResponse.ok) {
-          const statsData = await statsResponse.json();
-          setStats(statsData);
-        }
-
-        clearTimeout(timeoutId);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        // Use dummy data as fallback when APIs fail
-        setLatestPosts([
-          {
-            _id: "1",
-            title: "The Importance of Following the Sunnah in Daily Life",
-            excerpt:
-              "How to implement the teachings of the Prophet in our everyday activities and interactions.",
-            category: "General",
-            tags: ["sunnah", "prophet", "daily life"],
-            author: "Shaykh Muhammad bin Salih al-Uthaymeen",
-            views: 1120,
-            slug: "sunnah-daily-life",
-            createdAt: "2025-08-06",
-          },
-          {
-            _id: "2",
-            title: "The Methodology of the Salaf in Seeking Knowledge",
-            excerpt:
-              "How the righteous predecessors approached Islamic knowledge and the proper way to seek religious education.",
-            category: "General",
-            tags: ["knowledge", "methodology", "salaf"],
-            author: "Shaykh Muhammad bin Salih al-Uthaymeen",
-            views: 890,
-            slug: "salaf-methodology",
-            createdAt: "2025-08-06",
-          },
-          {
-            _id: "3",
-            title: "The Importance of Following the Salaf",
-            excerpt:
-              "Understanding the significance of following the righteous predecessors and their methodology in understanding Islam.",
-            category: "Aqeedah",
-            tags: ["salaf", "aqeedah", "methodology"],
-            author: "Shaykh Abdul Aziz bin Baz",
-            views: 1250,
-            slug: "following-salaf",
-            createdAt: "2025-08-06",
-          },
-        ]);
-        setFeaturedArticles([
-          {
-            _id: "1",
-            title: "The Life and Methodology of Imam Ahmad bin Hanbal",
-            excerpt:
-              "A detailed biography of one of the greatest scholars of Islam and his contributions to Islamic knowledge.",
-            category: "Seerah",
-            tags: ["imam ahmad", "hanbali", "scholars"],
-            author: "Shaykh Abdul Aziz bin Baz",
-            readTime: 8,
-            views: 1670,
-            slug: "imam-ahmad-hanbal",
-            createdAt: "2025-08-06",
-          },
-          {
-            _id: "2",
-            title: "The Importance of Following the Sunnah in Daily Life",
-            excerpt:
-              "How to implement the teachings of the Prophet in our everyday activities and interactions.",
-            category: "General",
-            tags: ["sunnah", "prophet", "daily life"],
-            author: "Shaykh Muhammad bin Salih al-Uthaymeen",
-            readTime: 6,
-            views: 1120,
-            slug: "sunnah-daily-life",
-            createdAt: "2025-08-06",
-          },
-          {
-            _id: "3",
-            title: "The Correct Understanding of Tawheed",
-            excerpt:
-              "A comprehensive explanation of the three categories of Tawheed and their importance in Islamic belief.",
-            category: "Aqeedah",
-            tags: ["tawheed", "monotheism", "aqeedah"],
-            author: "Shaykh Muhammad bin Abdul Wahhab",
-            readTime: 8,
-            views: 2105,
-            slug: "understanding-tawheed",
-            createdAt: "2025-08-06",
-          },
-        ]);
-        setPopularQuestions([
-          {
-            _id: "1",
-            question: "What is the correct way to perform ablution (wudu)?",
-            answer:
-              "The correct way to perform ablution involves washing the hands, mouth, nose, face, arms, head, ears, and feet in the specific order mentioned in the Sunnah.",
-            category: "Fiqh",
-            tags: ["wudu", "ablution", "prayer"],
-            scholar: "Shaykh Muhammad bin Salih al-Uthaymeen",
-            views: 1890,
-            slug: "correct-ablution",
-            createdAt: "2025-08-06",
-          },
-          {
-            _id: "2",
-            question:
-              "How should we deal with non-Muslims according to Islamic teachings?",
-            answer:
-              "Islam teaches us to treat non-Muslims with kindness, justice, and respect while maintaining our Islamic identity and values.",
-            category: "General",
-            tags: ["non-muslims", "relationships", "ethics"],
-            scholar: "Shaykh Abdul Aziz bin Baz",
-            views: 1560,
-            slug: "dealing-non-muslims",
-            createdAt: "2025-08-06",
-          },
-          {
-            _id: "3",
-            question:
-              "What are the conditions for a valid marriage contract in Islam?",
-            answer:
-              "A valid marriage contract requires the consent of both parties, witnesses, a mahr (dowry), and the absence of any prohibitions.",
-            category: "Fiqh",
-            tags: ["marriage", "contract", "mahr"],
-            scholar: "Shaykh Muhammad bin Abdul Wahhab",
-            views: 1340,
-            slug: "valid-marriage-contract",
-            createdAt: "2025-08-06",
-          },
-        ]);
-        setStats({
-          counts: {
-            posts: 3,
-            questions: 3,
-            articles: 3,
-            media: 3,
-            total: 12,
-          },
-          views: {
-            total: 5670,
-            posts: 3260,
-            questions: 4790,
-            articles: 4895,
-          },
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const features = [
-    {
-      icon: BookOpen,
-      title: "Authentic Sources",
-      description: "Content verified by qualified Islamic scholars and experts",
-      color: "text-islamic-green",
-    },
-    {
-      icon: Shield,
-      title: "Reliable Information",
-      description: "Accurate Islamic knowledge based on Quran and Sunnah",
-      color: "text-islamic-blue",
-    },
-    {
-      icon: Heart,
-      title: "Community Driven",
-      description: "Questions and answers from the Muslim community",
-      color: "text-islamic-gold",
-    },
-    {
-      icon: Globe,
-      title: "Global Access",
-      description: "Available worldwide in multiple languages",
-      color: "text-primary",
-    },
-  ];
-
-  const categories = [
-    {
-      name: "Fiqh",
-      icon: BookOpen,
-      count: 45,
-      color: "bg-blue-100 text-blue-800",
-    },
-    {
-      name: "Aqeedah",
-      icon: Shield,
-      count: 32,
-      color: "bg-green-100 text-green-800",
-    },
-    {
-      name: "Hadith",
-      icon: FileText,
-      count: 28,
-      color: "bg-purple-100 text-purple-800",
-    },
-    {
-      name: "Tafsir",
-      icon: BookOpen,
-      count: 23,
-      color: "bg-orange-100 text-orange-800",
-    },
-    {
-      name: "Seerah",
-      icon: Users,
-      count: 19,
-      color: "bg-red-100 text-red-800",
-    },
-    {
-      name: "General",
-      icon: HelpCircle,
-      count: 67,
-      color: "bg-gray-100 text-gray-800",
-    },
-  ];
-
-  if (loading) {
-    return (
-      <MainLayout>
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading Islamic knowledge...</p>
-          </div>
-        </div>
-      </MainLayout>
-    );
-  }
-
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="relative section-padding bg-gradient-to-br from-card via-background to-secondary overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-        <div className="container mx-auto container-padding relative z-10">
+      <section className="relative py-16 bg-gradient-to-br from-green-50 via-white to-amber-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6 animate-fade-in-up">
+            <div className="inline-flex items-center space-x-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-4 py-2 rounded-full mb-6">
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">
-                Trusted Islamic Knowledge Platform
+                🌿 Authentic Islamic Learning Platform
               </span>
             </div>
 
-            <h1 className="text-responsive-xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-              Discover Authentic{" "}
-              <span className="text-gradient">Islamic Knowledge</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+              Learn Islam with{" "}
+              <span className="text-green-600 dark:text-green-400">Authentic Sources</span>
               <br />
               From Qualified Scholars
             </h1>
 
-            <p className="text-responsive-base text-gray-600 dark:text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Access verified Islamic articles, answers to religious questions,
-              and authentic sources from renowned scholars. Your gateway to
-              understanding Islam through reliable knowledge.
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+              Join our comprehensive Islamic learning platform featuring structured courses, 
+              expert instruction, and authentic knowledge from qualified scholars.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            <div className="flex justify-center">
               <Link href="/articles">
                 <Button
                   size="lg"
-                  className="bg-primary hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+                  className="bg-green-600 hover:bg-green-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
                 >
                   <BookOpen className="w-5 h-5 mr-2" />
-                  Explore Articles
+                  Start Learning
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
-
-              <Link href="/questions">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-2 hover:bg-primary hover:text-white transition-all duration-200"
-                >
-                  <HelpCircle className="w-5 h-5 mr-2" />
-                  Ask Questions
-                </Button>
-              </Link>
             </div>
-
-            {/* Stats */}
-            {stats && (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
-                {[
-                  {
-                    label: "Articles",
-                    value: stats.counts.articles,
-                    icon: BookOpen,
-                  },
-                  { label: "Posts", value: stats.counts.posts, icon: FileText },
-                  {
-                    label: "Questions",
-                    value: stats.counts.questions,
-                    icon: HelpCircle,
-                  },
-                  {
-                    label: "Media",
-                    value: stats.counts.media,
-                    icon: TrendingUp,
-                  },
-                ].map((stat, index) => (
-                  <div
-                    key={stat.label}
-                    className="text-center animate-fade-in-up"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-2">
-                      <stat.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                      {stat.value}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-200">
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="section-padding bg-white dark:bg-card">
-        <div className="container mx-auto container-padding">
-          <div className="text-center mb-16">
-            <h2 className="text-responsive-lg font-bold text-gray-900 dark:text-white mb-4">
-              Why Choose Islamic Sources?
-            </h2>
-            <p className="text-gray-600 dark:text-gray-200 max-w-2xl mx-auto">
-              We provide authentic, reliable Islamic knowledge through a
-              comprehensive platform designed for seekers of truth and wisdom.
-            </p>
-          </div>
+      {/* Main Content Area - Two Column Layout */}
+      <section className="py-8 bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            {/* Left Column - Main Content (2/3 width) */}
+            <div className="lg:col-span-2 space-y-6">
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <Card
-                key={feature.title}
-                className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group"
-              >
-                <CardContent className="p-6">
-                  <div
-                    className={`w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}
-                  >
-                    <feature.icon className={`w-8 h-8 ${feature.color}`} />
+              {/* Trending Questions */}
+              <Card className="bg-white dark:bg-gray-800">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <HelpCircle className="w-6 h-6 text-green-600" />
+                      <CardTitle className="text-2xl">🔥 Trending Questions</CardTitle>
+                    </div>
+                    <Link href="/questions">
+                      <Button variant="ghost" size="sm" className="text-green-600 hover:text-green-700">
+                        More
+                      </Button>
+                    </Link>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-200 text-sm leading-relaxed">
-                    {feature.description}
-                  </p>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {mockData.questions.slice(0, 5).map((question) => (
+                    <div key={question.id} className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-0">
+                      <Link href={`/questions/${question.id}`} className="block hover:bg-gray-50 dark:hover:bg-gray-700/50 p-3 rounded-lg transition-colors">
+                        <h3 className="font-medium text-gray-900 dark:text-white mb-2 hover:text-green-600 dark:hover:text-green-400">
+                          {question.question}
+                        </h3>
+                        <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+                          <Badge className="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">
+                            {question.category}
+                          </Badge>
+                          <div className="flex items-center space-x-3">
+                            <div className="flex items-center space-x-1">
+                              <Eye className="w-4 h-4" />
+                              <span>{question.views.toLocaleString()}</span>
+                            </div>
+                            <span className="text-xs">{new Date(question.date).toLocaleDateString()}</span>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Categories Section */}
-      <section className="section-padding bg-gradient-to-r from-muted via-card to-muted">
-        <div className="container mx-auto container-padding">
-          <div className="text-center mb-16">
-            <h2 className="text-responsive-lg font-bold text-gray-900 dark:text-white mb-4">
-              Explore by Category
-            </h2>
-            <p className="text-gray-600 dark:text-gray-200 max-w-2xl mx-auto">
-              Navigate through different areas of Islamic knowledge and find
-              content that matches your interests and learning goals.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {categories.map((category) => (
-              <Link
-                key={category.name}
-                href={`/${category.name.toLowerCase()}`}
-              >
-                <Card className="text-center border-0 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
-                  <CardContent className="p-4">
-                    <div
-                      className={`w-12 h-12 ${category.color} rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <category.icon className="w-6 h-6" />
-                    </div>
-                    <h3 className="font-medium text-gray-900 dark:text-white mb-1">
-                      {category.name}
-                    </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-300">
-                      {category.count} items
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Latest Content Sections */}
-      <section className="section-padding bg-white dark:bg-card">
-        <div className="container mx-auto container-padding">
-          {loading ? (
-            <div className="text-center py-20">
-              <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-gray-600 dark:text-gray-200">
-                Loading content...
-              </p>
-            </div>
-          ) : (
-            <>
               {/* Featured Articles */}
-              <div className="mb-16">
-                <div className="flex items-center justify-between mb-8">
-                  <div>
-                    <h2 className="text-responsive-lg font-bold text-gray-900 dark:text-white mb-2">
-                      Featured Articles
-                    </h2>
-                    <p className="text-gray-600 dark:text-gray-200">
-                      In-depth Islamic knowledge and insights
-                    </p>
+              <Card className="bg-white dark:bg-gray-800">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <BookOpen className="w-6 h-6 text-blue-600" />
+                      <CardTitle className="text-2xl">📰 Featured Articles</CardTitle>
+                    </div>
+                    <Link href="/articles">
+                      <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
+                        More
+                      </Button>
+                    </Link>
                   </div>
-                  <Link href="/articles">
-                    <Button variant="outline" className="group">
-                      View All
-                      <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {mockData.articles.map((article) => (
+                    <div key={article.id} className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-0">
+                      <Link href={`/articles/${article.id}`} className="block hover:bg-gray-50 dark:hover:bg-gray-700/50 p-3 rounded-lg transition-colors">
+                        <div className="flex items-center justify-between mb-2">
+                          <Badge className="bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                            {article.category}
+                          </Badge>
+                          <span className="text-xs text-gray-500">{article.readTime} read</span>
+                        </div>
+                        <h3 className="font-medium text-gray-900 dark:text-white mb-2 hover:text-blue-600 dark:hover:text-blue-400">
+                          {article.title}
+                        </h3>
+                        <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
+                          <div className="flex items-center space-x-2">
+                            <User className="w-3 h-3" />
+                            <span>{article.author}</span>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <div className="flex items-center space-x-1">
+                              <Eye className="w-3 h-3" />
+                              <span>{article.views.toLocaleString()}</span>
+                            </div>
+                            <span>{new Date(article.date).toLocaleDateString()}</span>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+
+            </div>
+
+            {/* Right Column - Sidebar (1/3 width) */}
+            <div className="space-y-6">
+              
+              {/* Books Section */}
+              <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-700 border-green-200 dark:border-gray-600">
+                <CardHeader>
+                  <div className="flex items-center space-x-2">
+                    <BookOpen className="w-6 h-6 text-green-600 dark:text-green-400" />
+                    <CardTitle className="text-2xl text-green-800 dark:text-green-300">📚 Books</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {mockData.media.filter(m => m.type === "PDF").slice(0, 3).map((book) => (
+                    <div key={book.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                      <div className="flex space-x-3">
+                        <div className="w-16 h-20 bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900 dark:to-amber-800 rounded flex items-center justify-center">
+                          <BookOpen className="w-8 h-8 text-amber-600 dark:text-amber-300" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-sm text-gray-900 dark:text-white mb-1 line-clamp-2 hover:text-green-600 dark:hover:text-green-400 cursor-pointer">
+                            {book.title}
+                          </h4>
+                          <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{book.category}</p>
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-gray-500">{book.size}</span>
+                            <div className="flex items-center space-x-1 text-green-600">
+                              <Download className="w-3 h-3" />
+                              <span>{book.downloads.toLocaleString()}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  <Link href="/media">
+                    <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
+                      View All Books
+                      <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </Link>
-                </div>
+                </CardContent>
+              </Card>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {featuredArticles.map((article) => (
-                    <ArticleCard key={article._id} article={article} />
-                  ))}
-                </div>
-              </div>
-
-              {/* Latest Posts */}
-              <div className="mb-16">
-                <div className="flex items-center justify-between mb-8">
-                  <div>
-                    <h2 className="text-responsive-lg font-bold text-gray-900 dark:text-white mb-2">
-                      Latest Posts
-                    </h2>
-                    <p className="text-gray-600 dark:text-gray-200">
-                      Recent Islamic discussions and insights
-                    </p>
+              {/* Most Read Section */}
+              <Card className="bg-white dark:bg-gray-800">
+                <CardHeader>
+                  <div className="flex items-center space-x-2">
+                    <TrendingUp className="w-6 h-6 text-purple-600" />
+                    <CardTitle className="text-xl">📊 Most Read</CardTitle>
                   </div>
-                  <Link href="/posts">
-                    <Button variant="outline" className="group">
-                      View All
-                      <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
-                    </Button>
-                  </Link>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {latestPosts.map((post) => (
-                    <PostCard key={post._id} post={post} />
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {mockData.posts.sort((a, b) => b.views - a.views).slice(0, 5).map((post, index) => (
+                    <Link key={post.id} href={`/posts/${post.id}`} className="block hover:bg-gray-50 dark:hover:bg-gray-700/50 p-2 rounded-lg transition-colors">
+                      <div className="flex items-start space-x-3">
+                        <span className="flex-shrink-0 w-6 h-6 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full flex items-center justify-center text-xs font-bold">
+                          {index + 1}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-medium text-gray-900 dark:text-white line-clamp-2 hover:text-purple-600 dark:hover:text-purple-400">
+                            {post.title}
+                          </h4>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <div className="flex items-center space-x-1 text-xs text-gray-500">
+                              <Eye className="w-3 h-3" />
+                              <span>{post.views.toLocaleString()}</span>
+                            </div>
+                            <span className="text-xs text-gray-400">•</span>
+                            <Badge variant="secondary" className="text-xs px-1.5 py-0">
+                              {post.category}
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
                   ))}
-                </div>
-              </div>
+                </CardContent>
+              </Card>
 
-              {/* Popular Questions */}
-              <div>
-                <div className="flex items-center justify-between mb-8">
-                  <div>
-                    <h2 className="text-responsive-lg font-bold text-gray-900 dark:text-white mb-2">
-                      Popular Questions
-                    </h2>
-                    <p className="text-gray-600 dark:text-gray-200">
-                      Common Islamic questions answered by scholars
-                    </p>
+              {/* Quick Stats */}
+              <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-700 border-blue-200 dark:border-gray-600">
+                <CardHeader>
+                  <CardTitle className="text-lg text-blue-800 dark:text-blue-300">📈 Platform Stats</CardTitle>
+                </CardHeader>
+                <CardContent className="grid grid-cols-2 gap-3">
+                  <div className="bg-white dark:bg-gray-800 p-3 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{mockData.stats.totalPosts}</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">Posts</div>
                   </div>
-                  <Link href="/questions">
-                    <Button variant="outline" className="group">
-                      View All
-                      <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
-                    </Button>
-                  </Link>
-                </div>
+                  <div className="bg-white dark:bg-gray-800 p-3 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-green-600 dark:text-green-400">{mockData.stats.totalArticles}</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">Articles</div>
+                  </div>
+                  <div className="bg-white dark:bg-gray-800 p-3 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{mockData.stats.totalQuestions}</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">Questions</div>
+                  </div>
+                  <div className="bg-white dark:bg-gray-800 p-3 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-amber-600 dark:text-amber-400">{mockData.stats.totalMedia}</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">Media</div>
+                  </div>
+                </CardContent>
+              </Card>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {popularQuestions.map((question) => (
-                    <QuestionCard key={question._id} question={question} />
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
+            </div>
+
+          </div>
         </div>
       </section>
+
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary via-primary to-primary/90">
-        <div className="container mx-auto container-padding text-center">
-          <h2 className="text-responsive-lg font-bold text-white mb-4">
-            Ready to Deepen Your Islamic Knowledge?
+      <section className="py-16 bg-gradient-to-r from-green-600 via-green-500 to-emerald-600 dark:from-green-800 dark:via-green-700 dark:to-emerald-800">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Ready to Start Your Islamic Learning Journey?
           </h2>
-          <p className="text-white/90 mb-8 max-w-2xl mx-auto">
-            Join thousands of Muslims worldwide who are expanding their
-            understanding of Islam through our comprehensive platform.
+          <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+            Join thousands of Muslims worldwide learning authentic Islamic knowledge from qualified scholars.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/dashboard">
+          <div className="flex justify-center">
+            <Link href="/articles">
               <Button
                 size="lg"
-                variant="secondary"
-                className="bg-white text-primary hover:bg-gray-100"
+                className="bg-white text-green-600 hover:bg-gray-100 shadow-lg"
               >
-                <User className="w-5 h-5 mr-2" />
-                Access Dashboard
-              </Button>
-            </Link>
-            <Link href="/questions/new">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-primary"
-              >
-                <HelpCircle className="w-5 h-5 mr-2" />
-                Ask a Question
+                <BookOpen className="w-5 h-5 mr-2" />
+                Explore Content
               </Button>
             </Link>
           </div>

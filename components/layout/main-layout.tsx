@@ -2,6 +2,7 @@
 
 import { Navbar } from "./navbar";
 import { Footer } from "./footer";
+import { PublicSidebar } from "./public-sidebar";
 import { useState, useEffect } from "react";
 import { ScrollToTop } from "../ui/scroll-to-top";
 
@@ -27,7 +28,8 @@ export function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-card/20 to-background dark:from-background dark:via-card/10 dark:to-background">
       <Navbar isScrolled={isScrolled} />
-      <main className="pt-16">{children}</main>
+      <PublicSidebar />
+      <main className="pt-16 lg:pl-64">{children}</main>
       <Footer />
       <ScrollToTop />
     </div>

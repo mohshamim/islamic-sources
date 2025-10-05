@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Post from '@/models/Post';
+import { fallbackPosts } from '@/lib/fallback-data';
 
 interface QueryFilter {
   category?: string;
@@ -57,10 +58,45 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching posts:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch posts' },
-      { status: 500 }
-    );
+    
+    // Return fallback data when database is not available
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '10');
+    const category = searchParams.get('category');
+    const status = searchParams.get('status');
+    const search = searchParams.get('search');
+    
+    let filteredPosts = [...fallbackPosts];
+    
+    // Apply filters to fallback data
+    if (category) {
+      filteredPosts = filteredPosts.filter(post => post.category === category);
+    }
+    if (status) {
+      filteredPosts = filteredPosts.filter(post => post.status === status);
+    }
+    if (search) {
+      const searchLower = search.toLowerCase();
+      filteredPosts = filteredPosts.filter(post => 
+        post.title.toLowerCase().includes(searchLower) ||
+        post.excerpt.toLowerCase().includes(searchLower) ||
+        post.content.toLowerCase().includes(searchLower)
+      );
+    }
+    
+    const skip = (page - 1) * limit;
+    const paginatedPosts = filteredPosts.slice(skip, skip + limit);
+    
+    return NextResponse.json({
+      posts: paginatedPosts,
+      pagination: {
+        page,
+        limit,
+        total: filteredPosts.length,
+        pages: Math.ceil(filteredPosts.length / limit),
+      },
+    });
   }
 }
 

@@ -1,0 +1,242 @@
+{
+  "stats": {
+    "totalPosts": 145,
+    "totalArticles": 89,
+    "totalQuestions": 234,
+    "totalMedia": 567
+  },
+  "posts": [
+    {
+      "id": 1,
+      "title": "The Importance of Prayer in Islam",
+      "category": "Worship",
+      "status": "published",
+      "author": "Sheikh Ahmed Ibrahim",
+      "date": "2025-01-15",
+      "views": 1250,
+      "excerpt": "Prayer (Salah) is the second pillar of Islam and a direct connection between the believer and Allah..."
+    },
+    {
+      "id": 2,
+      "title": "Understanding Zakat and Its Distribution",
+      "category": "Islamic Finance",
+      "status": "published",
+      "author": "Dr. Fatima Hassan",
+      "date": "2025-01-10",
+      "views": 890,
+      "excerpt": "Zakat is one of the five pillars of Islam, a mandatory act of charity that purifies wealth..."
+    },
+    {
+      "id": 3,
+      "title": "The Virtues of Ramadan",
+      "category": "Fasting",
+      "status": "draft",
+      "author": "Sheikh Mohammed Ali",
+      "date": "2025-01-08",
+      "views": 0,
+      "excerpt": "Ramadan is the ninth month of the Islamic calendar and the holiest month for Muslims..."
+    },
+    {
+      "id": 4,
+      "title": "Hajj: The Journey of a Lifetime",
+      "category": "Pilgrimage",
+      "status": "published",
+      "author": "Ustadh Yusuf Ahmed",
+      "date": "2025-01-05",
+      "views": 2100,
+      "excerpt": "Hajj is the annual Islamic pilgrimage to Mecca and one of the five pillars of Islam..."
+    },
+    {
+      "id": 5,
+      "title": "The Prophet's Character and Manners",
+      "category": "Seerah",
+      "status": "published",
+      "author": "Sheikh Ahmed Ibrahim",
+      "date": "2025-01-02",
+      "views": 1680,
+      "excerpt": "The Prophet Muhammad (peace be upon him) was known for his excellent character..."
+    }
+  ],
+  "articles": [
+    {
+      "id": 1,
+      "title": "Is Celebrating Prophet's Birthday Allowed in Islam?",
+      "category": "Fiqh",
+      "status": "published",
+      "author": "Islamic Scholars Committee",
+      "date": "2025-01-12",
+      "views": 3200,
+      "readTime": "8 min"
+    },
+    {
+      "id": 2,
+      "title": "The Month of Safar: Misconceptions and Facts",
+      "category": "Islamic Calendar",
+      "status": "published",
+      "author": "Dr. Abdullah Rahman",
+      "date": "2025-01-08",
+      "views": 1450,
+      "readTime": "5 min"
+    },
+    {
+      "id": 3,
+      "title": "Fasting on Ashura: Complete Guide",
+      "category": "Fasting",
+      "status": "published",
+      "author": "Sheikh Bilal Mahmoud",
+      "date": "2025-01-05",
+      "views": 2890,
+      "readTime": "10 min"
+    },
+    {
+      "id": 4,
+      "title": "What Are the Virtues of Muharram?",
+      "category": "Islamic Calendar",
+      "status": "draft",
+      "author": "Ustadha Aisha Khan",
+      "date": "2025-01-03",
+      "views": 0,
+      "readTime": "6 min"
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "Is it permissible to pray with shoes on?",
+      "category": "Prayer",
+      "status": "answered",
+      "askedBy": "Anonymous",
+      "answeredBy": "Sheikh Ahmed Ibrahim",
+      "date": "2025-01-14",
+      "views": 456
+    },
+    {
+      "id": 2,
+      "question": "What is the ruling on working in a conventional bank?",
+      "category": "Islamic Finance",
+      "status": "answered",
+      "askedBy": "Brother Khalid",
+      "answeredBy": "Dr. Fatima Hassan",
+      "date": "2025-01-13",
+      "views": 1234
+    },
+    {
+      "id": 3,
+      "question": "Can women lead prayer for other women?",
+      "category": "Women in Islam",
+      "status": "pending",
+      "askedBy": "Sister Maryam",
+      "answeredBy": null,
+      "date": "2025-01-12",
+      "views": 89
+    },
+    {
+      "id": 4,
+      "question": "What is the authenticity of the hadith about clean earth?",
+      "category": "Hadith",
+      "status": "answered",
+      "askedBy": "Brother Ibrahim",
+      "answeredBy": "Sheikh Mohammed Ali",
+      "date": "2025-01-11",
+      "views": 678
+    },
+    {
+      "id": 5,
+      "question": "Is it mandatory to grow a beard in Islam?",
+      "category": "Islamic Rulings",
+      "status": "answered",
+      "askedBy": "Brother Tariq",
+      "answeredBy": "Sheikh Ahmed Ibrahim",
+      "date": "2025-01-10",
+      "views": 2345
+    }
+  ],
+  "media": [
+    {
+      "id": 1,
+      "title": "Sahih Bukhari - Complete Collection",
+      "type": "PDF",
+      "category": "Hadith Books",
+      "size": "25.4 MB",
+      "downloads": 5432,
+      "uploadDate": "2024-12-01"
+    },
+    {
+      "id": 2,
+      "title": "Tafsir Ibn Kathir - English Translation",
+      "type": "PDF",
+      "category": "Quran Tafsir",
+      "size": "48.2 MB",
+      "downloads": 3456,
+      "uploadDate": "2024-11-15"
+    },
+    {
+      "id": 3,
+      "title": "The Sealed Nectar - Seerah of Prophet",
+      "type": "PDF",
+      "category": "Seerah",
+      "size": "12.8 MB",
+      "downloads": 7890,
+      "uploadDate": "2024-11-10"
+    },
+    {
+      "id": 4,
+      "title": "Quran Recitation by Sheikh Mishary",
+      "type": "Audio",
+      "category": "Quran Recitation",
+      "size": "856 MB",
+      "downloads": 12345,
+      "uploadDate": "2024-10-25"
+    },
+    {
+      "id": 5,
+      "title": "Fortress of the Muslim - Hisnul Muslim",
+      "type": "PDF",
+      "category": "Dua Books",
+      "size": "3.2 MB",
+      "downloads": 9876,
+      "uploadDate": "2024-10-20"
+    }
+  ],
+  "recentActivity": [
+    {
+      "id": 1,
+      "action": "Published new article",
+      "title": "Is Celebrating Prophet's Birthday Allowed in Islam?",
+      "user": "Admin",
+      "time": "2 hours ago"
+    },
+    {
+      "id": 2,
+      "action": "Answered question",
+      "title": "Is it permissible to pray with shoes on?",
+      "user": "Sheikh Ahmed",
+      "time": "4 hours ago"
+    },
+    {
+      "id": 3,
+      "action": "Uploaded media",
+      "title": "Sahih Bukhari - Complete Collection",
+      "user": "Admin",
+      "time": "1 day ago"
+    },
+    {
+      "id": 4,
+      "action": "Updated post",
+      "title": "The Importance of Prayer in Islam",
+      "user": "Admin",
+      "time": "2 days ago"
+    }
+  ],
+  "categories": [
+    { "id": 1, "name": "Worship", "count": 45 },
+    { "id": 2, "name": "Islamic Finance", "count": 23 },
+    { "id": 3, "name": "Fasting", "count": 18 },
+    { "id": 4, "name": "Pilgrimage", "count": 12 },
+    { "id": 5, "name": "Seerah", "count": 34 },
+    { "id": 6, "name": "Fiqh", "count": 56 },
+    { "id": 7, "name": "Hadith", "count": 67 },
+    { "id": 8, "name": "Quran Tafsir", "count": 89 }
+  ]
+}
+
