@@ -40,7 +40,7 @@ export default async function CoursesPage({ searchParams }: CoursesPageProps) {
 
   // Apply type filter
   if (params.type && params.type !== 'all') {
-    query = query.eq('type', params.type)
+    query = query.eq('type', params.type as 'free' | 'paid')
   }
 
   // Apply sorting
