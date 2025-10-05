@@ -87,13 +87,13 @@ export default async function CoursesPage({ searchParams }: CoursesPageProps) {
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                   <Input
                     placeholder="Search courses..."
-                    defaultValue={searchParams.search || ''}
+                    defaultValue={params.search || ''}
                     className="pl-10"
                   />
                 </div>
               </div>
               <div className="flex gap-4">
-                <Select defaultValue={searchParams.type || 'all'}>
+                <Select defaultValue={params.type || 'all'}>
                   <SelectTrigger className="w-32">
                     <Filter className="h-4 w-4 mr-2" />
                     <SelectValue placeholder="Type" />
@@ -104,7 +104,7 @@ export default async function CoursesPage({ searchParams }: CoursesPageProps) {
                     <SelectItem value="paid">Paid</SelectItem>
                   </SelectContent>
                 </Select>
-                <Select defaultValue={searchParams.sort || 'newest'}>
+                <Select defaultValue={params.sort || 'newest'}>
                   <SelectTrigger className="w-40">
                     <SelectValue placeholder="Sort by" />
                   </SelectTrigger>
