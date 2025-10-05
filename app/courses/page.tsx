@@ -14,15 +14,16 @@ type Course = Database['public']['Tables']['courses']['Row'] & {
 }
 
 interface CoursesPageProps {
-  searchParams: {
+  searchParams: Promise<{
     search?: string
     type?: string
     sort?: string
-  }
+  }>
 }
 
 export default async function CoursesPage({ searchParams }: CoursesPageProps) {
   const supabase = await createClient()
+  const params = await searchParams
   
   let query = supabase
     .from('courses')
@@ -33,17 +34,17 @@ export default async function CoursesPage({ searchParams }: CoursesPageProps) {
     .order('created_at', { ascending: false })
 
   // Apply search filter
-  if (searchParams.search) {
-    query = query.or(`title.ilike.%${searchParams.search}%,description.ilike.%${searchParams.search}%`)
+  if (params.search) {
+    query = query.or(`title.ilike.%${params.search}%,description.ilike.%${params.search}%`)
   }
 
   // Apply type filter
-  if (searchParams.type && searchParams.type !== 'all') {
-    query = query.eq('type', searchParams.type)
+  if (params.type && params.type !== 'all') {
+    query = query.eq('type', params.type)
   }
 
   // Apply sorting
-  switch (searchParams.sort) {
+  switch (params.sort) {
     case 'rating':
       query = query.order('rating', { ascending: false })
       break
