@@ -8,147 +8,193 @@
   "posts": [
     {
       "id": 1,
+      "slug": "importance-of-prayer-in-islam",
       "title": "The Importance of Prayer in Islam",
       "category": "Worship",
       "status": "published",
       "author": "Sheikh Ahmed Ibrahim",
       "date": "2025-01-15",
       "views": 1250,
-      "excerpt": "Prayer (Salah) is the second pillar of Islam and a direct connection between the believer and Allah..."
+      "excerpt": "Prayer (Salah) is the second pillar of Islam and a direct connection between the believer and Allah...",
+      "content": "<h2>The Second Pillar of Islam</h2><p>Prayer, or Salah, is one of the five pillars of Islam and serves as a direct connection between the believer and Allah. It is mentioned in the Quran numerous times and was emphasized by the Prophet Muhammad (peace be upon him) as the most important act of worship after the declaration of faith.</p><h3>Spiritual Benefits</h3><p>Regular prayer brings numerous spiritual benefits including inner peace, discipline, and a constant reminder of Allah's presence in our daily lives.</p>",
+      "tags": ["Prayer", "Worship", "Spirituality"]
     },
     {
       "id": 2,
+      "slug": "understanding-zakat-and-its-distribution",
       "title": "Understanding Zakat and Its Distribution",
       "category": "Islamic Finance",
       "status": "published",
       "author": "Dr. Fatima Hassan",
       "date": "2025-01-10",
       "views": 890,
-      "excerpt": "Zakat is one of the five pillars of Islam, a mandatory act of charity that purifies wealth..."
+      "excerpt": "Zakat is one of the five pillars of Islam, a mandatory act of charity that purifies wealth...",
+      "content": "<h2>The Third Pillar of Islam</h2><p>Zakat is a mandatory act of charity that purifies wealth and helps distribute resources fairly in society. It is calculated as 2.5% of one's annual savings and assets.</p><h3>Conditions for Zakat</h3><p>Zakat is obligatory on Muslims who meet specific criteria including reaching the nisab (minimum threshold) and having possessed the wealth for a full lunar year.</p>",
+      "tags": ["Zakat", "Charity", "Islamic Finance"]
     },
     {
       "id": 3,
+      "slug": "virtues-of-ramadan",
       "title": "The Virtues of Ramadan",
       "category": "Fasting",
-      "status": "draft",
+      "status": "published",
       "author": "Sheikh Mohammed Ali",
       "date": "2025-01-08",
       "views": 0,
-      "excerpt": "Ramadan is the ninth month of the Islamic calendar and the holiest month for Muslims..."
+      "excerpt": "Ramadan is the ninth month of the Islamic calendar and the holiest month for Muslims...",
+      "content": "<h2>The Blessed Month</h2><p>Ramadan is the ninth month of the Islamic calendar and is considered the holiest month for Muslims worldwide. It is a time of spiritual reflection, self-discipline, and increased devotion to Allah.</p><h3>Benefits of Fasting</h3><p>Fasting during Ramadan purifies the soul, teaches self-control, and brings believers closer to Allah through increased prayer and Quranic recitation.</p>",
+      "tags": ["Ramadan", "Fasting", "Spirituality"]
     },
     {
       "id": 4,
+      "slug": "hajj-journey-of-a-lifetime",
       "title": "Hajj: The Journey of a Lifetime",
       "category": "Pilgrimage",
       "status": "published",
       "author": "Ustadh Yusuf Ahmed",
       "date": "2025-01-05",
       "views": 2100,
-      "excerpt": "Hajj is the annual Islamic pilgrimage to Mecca and one of the five pillars of Islam..."
+      "excerpt": "Hajj is the annual Islamic pilgrimage to Mecca and one of the five pillars of Islam...",
+      "content": "<h2>The Fifth Pillar of Islam</h2><p>Hajj is the annual Islamic pilgrimage to Mecca that every able-bodied Muslim must perform at least once in their lifetime. It takes place during the month of Dhul Hijjah.</p><h3>Rituals of Hajj</h3><p>The pilgrimage includes various rituals such as Tawaf (circumambulation of the Kaaba), Sa'i (walking between Safa and Marwa), and standing at Arafat.</p>",
+      "tags": ["Hajj", "Pilgrimage", "Mecca"]
     },
     {
       "id": 5,
+      "slug": "prophets-character-and-manners",
       "title": "The Prophet's Character and Manners",
       "category": "Seerah",
       "status": "published",
       "author": "Sheikh Ahmed Ibrahim",
       "date": "2025-01-02",
       "views": 1680,
-      "excerpt": "The Prophet Muhammad (peace be upon him) was known for his excellent character..."
+      "excerpt": "The Prophet Muhammad (peace be upon him) was known for his excellent character...",
+      "content": "<h2>The Perfect Example</h2><p>The Prophet Muhammad (peace be upon him) was known for his excellent character, kindness, and exemplary manners. He serves as the perfect role model for all Muslims.</p><h3>Key Traits</h3><p>Among his many virtues were honesty, compassion, patience, humility, and justice. He treated everyone with respect and kindness, regardless of their background.</p>",
+      "tags": ["Prophet", "Character", "Manners", "Seerah"]
     }
   ],
   "articles": [
     {
       "id": 1,
+      "slug": "celebrating-prophets-birthday-in-islam",
       "title": "Is Celebrating Prophet's Birthday Allowed in Islam?",
       "category": "Fiqh",
       "status": "published",
       "author": "Islamic Scholars Committee",
       "date": "2025-01-12",
       "views": 3200,
-      "readTime": "8 min"
+      "readTime": "8 min",
+      "excerpt": "A comprehensive analysis of the scholarly opinions regarding the celebration of Prophet Muhammad's birthday (Mawlid).",
+      "content": "<h2>Introduction</h2><p>The celebration of Prophet Muhammad's birthday, known as Mawlid, has been a topic of discussion among Islamic scholars for centuries. This article examines the various scholarly opinions on this practice.</p><h3>Arguments in Favor</h3><p>Some scholars argue that celebrating the Prophet's birthday is a way to express love and gratitude towards him, and to educate people about his life and teachings.</p><h3>Arguments Against</h3><p>Other scholars maintain that the Prophet and his companions never celebrated birthdays, and introducing such practices constitutes bid'ah (innovation in religion).</p><h3>Conclusion</h3><p>The matter requires careful consideration of scholarly opinions and the intention behind such celebrations.</p>",
+      "tags": ["Mawlid", "Fiqh", "Prophet", "Celebration"]
     },
     {
       "id": 2,
+      "slug": "month-of-safar-misconceptions-and-facts",
       "title": "The Month of Safar: Misconceptions and Facts",
       "category": "Islamic Calendar",
       "status": "published",
       "author": "Dr. Abdullah Rahman",
       "date": "2025-01-08",
       "views": 1450,
-      "readTime": "5 min"
+      "readTime": "5 min",
+      "excerpt": "Clearing up common misconceptions about the month of Safar and its significance in Islamic tradition.",
+      "content": "<h2>Understanding Safar</h2><p>Safar is the second month of the Islamic calendar and has been subject to many superstitions and misconceptions throughout history.</p><h3>Common Misconceptions</h3><p>Many people believe that Safar is an unlucky month or that certain activities should be avoided during this time. These beliefs have no basis in authentic Islamic teachings.</p><h3>Islamic Perspective</h3><p>Islam teaches that all months and days are created by Allah and none are inherently good or bad. Superstitions about specific times are not part of authentic Islamic belief.</p>",
+      "tags": ["Safar", "Islamic Calendar", "Misconceptions", "Superstitions"]
     },
     {
       "id": 3,
+      "slug": "fasting-on-ashura-complete-guide",
       "title": "Fasting on Ashura: Complete Guide",
       "category": "Fasting",
       "status": "published",
       "author": "Sheikh Bilal Mahmoud",
       "date": "2025-01-05",
       "views": 2890,
-      "readTime": "10 min"
+      "readTime": "10 min",
+      "excerpt": "A comprehensive guide to fasting on the 10th of Muharram (Ashura) and its spiritual significance.",
+      "content": "<h2>The Significance of Ashura</h2><p>Ashura, the 10th day of Muharram, holds great significance in Islamic history and tradition. Fasting on this day is highly recommended.</p><h3>Historical Background</h3><p>Ashura commemorates several important events in Islamic history, including the day Allah saved Prophet Musa (Moses) and the Children of Israel from Pharaoh.</p><h3>How to Fast</h3><p>The Prophet Muhammad (peace be upon him) recommended fasting on the 9th and 10th of Muharram, or at least on the 10th if unable to fast both days.</p><h3>Rewards</h3><p>Fasting on Ashura expiates the sins of the previous year, as mentioned in authentic hadith.</p>",
+      "tags": ["Ashura", "Fasting", "Muharram", "Prophet Musa"]
     },
     {
       "id": 4,
+      "slug": "virtues-of-muharram",
       "title": "What Are the Virtues of Muharram?",
       "category": "Islamic Calendar",
-      "status": "draft",
+      "status": "published",
       "author": "Ustadha Aisha Khan",
       "date": "2025-01-03",
       "views": 0,
-      "readTime": "6 min"
+      "readTime": "6 min",
+      "excerpt": "Exploring the spiritual significance and virtues of the sacred month of Muharram.",
+      "content": "<h2>The Sacred Month</h2><p>Muharram is the first month of the Islamic calendar and is considered one of the four sacred months mentioned in the Quran.</p><h3>Virtues and Significance</h3><p>Muharram is a time for increased worship, reflection, and seeking forgiveness. It marks the beginning of the Islamic year and offers opportunities for spiritual renewal.</p><h3>Recommended Acts</h3><p>During Muharram, Muslims are encouraged to increase their prayers, Quranic recitation, and charitable acts. Fasting, especially on Ashura, is highly recommended.</p>",
+      "tags": ["Muharram", "Sacred Months", "Islamic Calendar", "Spirituality"]
     }
   ],
   "questions": [
     {
       "id": 1,
+      "slug": "is-it-permissible-to-pray-with-shoes-on",
       "question": "Is it permissible to pray with shoes on?",
       "category": "Prayer",
       "status": "answered",
       "askedBy": "Anonymous",
       "answeredBy": "Sheikh Ahmed Ibrahim",
       "date": "2025-01-14",
-      "views": 456
+      "views": 456,
+      "answer": "<h2>Praying with Shoes</h2><p>Yes, it is generally permissible to pray with shoes on, provided that the shoes are clean and the place where you are praying is also clean.</p><h3>Conditions for Praying with Shoes</h3><ul><li>The shoes must be clean and free from impurities</li><li>The floor or ground where you are praying must be clean</li><li>The shoes should not be made from materials that are considered impure in Islam</li></ul><h3>Preference</h3><p>While it is permissible, it is generally better to pray barefoot or in clean socks, as this was the practice of the Prophet Muhammad (peace be upon him).</p>",
+      "tags": ["Prayer", "Shoes", "Cleanliness", "Fiqh"]
     },
     {
       "id": 2,
+      "slug": "ruling-on-working-in-conventional-bank",
       "question": "What is the ruling on working in a conventional bank?",
       "category": "Islamic Finance",
       "status": "answered",
       "askedBy": "Brother Khalid",
       "answeredBy": "Dr. Fatima Hassan",
       "date": "2025-01-13",
-      "views": 1234
+      "views": 1234,
+      "answer": "<h2>Working in Conventional Banks</h2><p>The ruling on working in conventional banks depends on the specific role and the nature of the work involved.</p><h3>Generally Prohibited Roles</h3><ul><li>Direct involvement in interest-based transactions</li><li>Promoting or selling interest-based products</li><li>Managing interest-based accounts</li></ul><h3>Potentially Permissible Roles</h3><ul><li>IT support and technical roles</li><li>Security and maintenance</li><li>Administrative tasks not related to interest</li></ul><h3>Considerations</h3><p>Each case should be evaluated individually, considering the specific duties and whether they involve prohibited activities.</p>",
+      "tags": ["Banking", "Interest", "Employment", "Islamic Finance"]
     },
     {
       "id": 3,
+      "slug": "can-women-lead-prayer-for-other-women",
       "question": "Can women lead prayer for other women?",
       "category": "Women in Islam",
-      "status": "pending",
+      "status": "answered",
       "askedBy": "Sister Maryam",
-      "answeredBy": null,
+      "answeredBy": "Ustadha Aisha Khan",
       "date": "2025-01-12",
-      "views": 89
+      "views": 89,
+      "answer": "<h2>Women Leading Prayer</h2><p>Yes, women can lead other women in prayer according to the majority of Islamic scholars.</p><h3>Conditions for Women Leading Women</h3><ul><li>The congregation should consist only of women</li><li>The woman leading should be knowledgeable about prayer</li><li>She should stand in the same row as the other women, not in front</li></ul><h3>Historical Precedent</h3><p>There are reports of women leading other women in prayer during the time of the Prophet Muhammad (peace be upon him).</p><h3>Note</h3><p>Women cannot lead men in prayer, and mixed-gender congregations should be led by men.</p>",
+      "tags": ["Women", "Prayer", "Leadership", "Fiqh"]
     },
     {
       "id": 4,
+      "slug": "authenticity-of-hadith-about-clean-earth",
       "question": "What is the authenticity of the hadith about clean earth?",
       "category": "Hadith",
       "status": "answered",
       "askedBy": "Brother Ibrahim",
       "answeredBy": "Sheikh Mohammed Ali",
       "date": "2025-01-11",
-      "views": 678
+      "views": 678,
+      "answer": "<h2>Hadith About Clean Earth</h2><p>The hadith you are referring to is likely the one that mentions the earth being made clean for us as a means of purification.</p><h3>Authenticity</h3><p>This hadith is found in several authentic collections, including Sahih Muslim and Sahih Bukhari, making it a strong and reliable hadith.</p><h3>Text of the Hadith</h3><p>The Prophet Muhammad (peace be upon him) said: 'The earth has been made for me a place of worship and a means of purification.'</p><h3>Meaning</h3><p>This hadith indicates that the earth itself can serve as a place for prayer (when no other surface is available) and that soil can be used for tayammum (dry ablution) when water is not available.</p>",
+      "tags": ["Hadith", "Earth", "Purification", "Tayammum"]
     },
     {
       "id": 5,
+      "slug": "is-it-mandatory-to-grow-beard-in-islam",
       "question": "Is it mandatory to grow a beard in Islam?",
       "category": "Islamic Rulings",
       "status": "answered",
       "askedBy": "Brother Tariq",
       "answeredBy": "Sheikh Ahmed Ibrahim",
       "date": "2025-01-10",
-      "views": 2345
+      "views": 2345,
+      "answer": "<h2>Growing a Beard in Islam</h2><p>Growing a beard is considered mandatory (wajib) for men in Islam according to the majority of scholars.</p><h3>Evidence from Hadith</h3><p>The Prophet Muhammad (peace be upon him) said: 'Trim the mustache and let the beard grow.' This command indicates the obligation of growing a beard.</p><h3>Length Requirements</h3><p>The beard should be grown to a reasonable length, typically a fistful or more, as mentioned in various hadith.</p><h3>Exceptions</h3><p>There may be exceptions for medical reasons or in cases where it would cause significant hardship, but these should be evaluated by qualified scholars.</p><h3>Modern Considerations</h3><p>While growing a beard is recommended, the most important aspect is following the Sunnah with proper intention and understanding.</p>",
+      "tags": ["Beard", "Sunnah", "Men", "Appearance"]
     }
   ],
   "media": [

@@ -7,7 +7,10 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-// Dummy data for articles
+// Import mock data
+import mockData from "@/lib/mock-data.json";
+
+// Dummy data for articles (keeping existing ones for backward compatibility)
 const articles = {
   "islamic-finance-principles": {
     title: "Islamic Finance: Principles and Practices",
@@ -184,7 +187,14 @@ interface ArticlePageProps {
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
-  const article = articles[slug as keyof typeof articles];
+  
+  // First try to find in mock data
+  let article = mockData.articles.find(a => a.slug === slug);
+  
+  // If not found, try the old hardcoded articles
+  if (!article) {
+    article = articles[slug as keyof typeof articles] as any;
+  }
 
   if (!article) {
     notFound();

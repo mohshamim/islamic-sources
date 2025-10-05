@@ -1,66 +1,23 @@
+"use client";
+
 import { MainLayout } from "@/components/layout/main-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import {
-  BookOpen,
-  FileText,
-  HelpCircle,
   Download,
   ArrowRight,
-  Sparkles,
   Eye,
-  Calendar,
-  User,
-  TrendingUp,
 } from "lucide-react";
 import mockData from "@/lib/mock-data.json";
 
 export default function HomePage() {
+
   return (
     <MainLayout>
-      {/* Hero Section */}
-      <section className="relative py-16 bg-gradient-to-br from-green-50 via-white to-amber-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center space-x-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-4 py-2 rounded-full mb-6">
-              <Sparkles className="w-4 h-4" />
-              <span className="text-sm font-medium">
-                🌿 Authentic Islamic Learning Platform
-              </span>
-            </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-              Learn Islam with{" "}
-              <span className="text-green-600 dark:text-green-400">Authentic Sources</span>
-              <br />
-              From Qualified Scholars
-            </h1>
-
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Join our comprehensive Islamic learning platform featuring structured courses, 
-              expert instruction, and authentic knowledge from qualified scholars.
-            </p>
-
-            <div className="flex justify-center">
-              <Link href="/articles">
-                <Button
-                  size="lg"
-                  className="bg-green-600 hover:bg-green-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
-                >
-                  <BookOpen className="w-5 h-5 mr-2" />
-                  Start Learning
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Main Content Area - Two Column Layout */}
+      {/* Main Content Area - Two Column Layout - Updated */}
       <section className="py-8 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -72,10 +29,9 @@ export default function HomePage() {
               <Card className="bg-white dark:bg-gray-800">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <HelpCircle className="w-6 h-6 text-green-600" />
-                      <CardTitle className="text-2xl">🔥 Trending Questions</CardTitle>
-                    </div>
+                  <div className="flex items-center space-x-2">
+                    <CardTitle className="text-2xl">Trending Questions</CardTitle>
+                  </div>
                     <Link href="/questions">
                       <Button variant="ghost" size="sm" className="text-green-600 hover:text-green-700">
                         More
@@ -86,7 +42,7 @@ export default function HomePage() {
                 <CardContent className="space-y-4">
                   {mockData.questions.slice(0, 5).map((question) => (
                     <div key={question.id} className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-0">
-                      <Link href={`/questions/${question.id}`} className="block hover:bg-gray-50 dark:hover:bg-gray-700/50 p-3 rounded-lg transition-colors">
+                      <Link href={`/questions/${question.slug}`} className="block hover:bg-gray-50 dark:hover:bg-gray-700/50 p-3 rounded-lg transition-colors">
                         <h3 className="font-medium text-gray-900 dark:text-white mb-2 hover:text-green-600 dark:hover:text-green-400">
                           {question.question}
                         </h3>
@@ -99,7 +55,7 @@ export default function HomePage() {
                               <Eye className="w-4 h-4" />
                               <span>{question.views.toLocaleString()}</span>
                             </div>
-                            <span className="text-xs">{new Date(question.date).toLocaleDateString()}</span>
+                            <span className="text-xs">{new Date(question.date).toLocaleDateString('en-CA')}</span>
                           </div>
                         </div>
                       </Link>
@@ -113,8 +69,7 @@ export default function HomePage() {
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <BookOpen className="w-6 h-6 text-blue-600" />
-                      <CardTitle className="text-2xl">📰 Featured Articles</CardTitle>
+                      <CardTitle className="text-2xl">Featured Articles</CardTitle>
                     </div>
                     <Link href="/articles">
                       <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
@@ -126,7 +81,7 @@ export default function HomePage() {
                 <CardContent className="space-y-4">
                   {mockData.articles.map((article) => (
                     <div key={article.id} className="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-0">
-                      <Link href={`/articles/${article.id}`} className="block hover:bg-gray-50 dark:hover:bg-gray-700/50 p-3 rounded-lg transition-colors">
+                        <Link href={`/articles/${article.slug}`} className="block hover:bg-gray-50 dark:hover:bg-gray-700/50 p-3 rounded-lg transition-colors">
                         <div className="flex items-center justify-between mb-2">
                           <Badge className="bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
                             {article.category}
@@ -138,7 +93,6 @@ export default function HomePage() {
                         </h3>
                         <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
                           <div className="flex items-center space-x-2">
-                            <User className="w-3 h-3" />
                             <span>{article.author}</span>
                           </div>
                           <div className="flex items-center space-x-3">
@@ -146,7 +100,7 @@ export default function HomePage() {
                               <Eye className="w-3 h-3" />
                               <span>{article.views.toLocaleString()}</span>
                             </div>
-                            <span>{new Date(article.date).toLocaleDateString()}</span>
+                            <span>{new Date(article.date).toLocaleDateString('en-CA')}</span>
                           </div>
                         </div>
                       </Link>
@@ -160,12 +114,40 @@ export default function HomePage() {
             {/* Right Column - Sidebar (1/3 width) */}
             <div className="space-y-6">
               
+              {/* Course Announcement Card */}
+              <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 border-blue-200 dark:border-gray-600 overflow-hidden">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center space-x-2">
+                    <CardTitle className="text-xl text-blue-800 dark:text-blue-300">Latest Courses</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="relative">
+                    {/* Featured Course */}
+                    <div className="relative h-48 overflow-hidden">
+                      <div className="h-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center">
+                        <div className="text-center text-white p-4">
+                          <h3 className="font-bold text-lg mb-1">Quran & Tafsir</h3>
+                          <p className="text-sm opacity-90">Complete Study Course</p>
+                        </div>
+                      </div>
+                      
+                      {/* Enroll Now Button */}
+                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                        <Button className="bg-white text-blue-600 hover:bg-gray-100 font-semibold px-4 py-2 shadow-lg">
+                          Enroll Now
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
               {/* Books Section */}
               <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-700 border-green-200 dark:border-gray-600">
                 <CardHeader>
                   <div className="flex items-center space-x-2">
-                    <BookOpen className="w-6 h-6 text-green-600 dark:text-green-400" />
-                    <CardTitle className="text-2xl text-green-800 dark:text-green-300">📚 Books</CardTitle>
+                    <CardTitle className="text-2xl text-green-800 dark:text-green-300">Books</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -173,7 +155,7 @@ export default function HomePage() {
                     <div key={book.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                       <div className="flex space-x-3">
                         <div className="w-16 h-20 bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900 dark:to-amber-800 rounded flex items-center justify-center">
-                          <BookOpen className="w-8 h-8 text-amber-600 dark:text-amber-300" />
+                          <span className="text-amber-600 dark:text-amber-300 text-xs font-semibold">PDF</span>
                         </div>
                         <div className="flex-1">
                           <h4 className="font-semibold text-sm text-gray-900 dark:text-white mb-1 line-clamp-2 hover:text-green-600 dark:hover:text-green-400 cursor-pointer">
@@ -204,13 +186,12 @@ export default function HomePage() {
               <Card className="bg-white dark:bg-gray-800">
                 <CardHeader>
                   <div className="flex items-center space-x-2">
-                    <TrendingUp className="w-6 h-6 text-purple-600" />
-                    <CardTitle className="text-xl">📊 Most Read</CardTitle>
+                    <CardTitle className="text-xl">Most Read</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {mockData.posts.sort((a, b) => b.views - a.views).slice(0, 5).map((post, index) => (
-                    <Link key={post.id} href={`/posts/${post.id}`} className="block hover:bg-gray-50 dark:hover:bg-gray-700/50 p-2 rounded-lg transition-colors">
+                    <Link key={post.id} href={`/posts/${post.slug}`} className="block hover:bg-gray-50 dark:hover:bg-gray-700/50 p-2 rounded-lg transition-colors">
                       <div className="flex items-start space-x-3">
                         <span className="flex-shrink-0 w-6 h-6 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full flex items-center justify-center text-xs font-bold">
                           {index + 1}
@@ -239,7 +220,7 @@ export default function HomePage() {
               {/* Quick Stats */}
               <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-700 border-blue-200 dark:border-gray-600">
                 <CardHeader>
-                  <CardTitle className="text-lg text-blue-800 dark:text-blue-300">📈 Platform Stats</CardTitle>
+                  <CardTitle className="text-lg text-blue-800 dark:text-blue-300">Platform Stats</CardTitle>
                 </CardHeader>
                 <CardContent className="grid grid-cols-2 gap-3">
                   <div className="bg-white dark:bg-gray-800 p-3 rounded-lg text-center">

@@ -6,11 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import dbConnect from "@/lib/db";
-import Post from "@/models/Post";
+import mockData from "@/lib/mock-data.json";
 
 interface Post {
-  _id: string;
+  id: number;
+  slug: string;
   title: string;
   excerpt: string;
   content: string;
@@ -19,9 +19,7 @@ interface Post {
   status: string;
   author: string;
   views: number;
-  slug: string;
-  createdAt: string;
-  updatedAt: string;
+  date: string;
 }
 
 interface PostPageProps {
@@ -31,10 +29,8 @@ interface PostPageProps {
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  await dbConnect();
-
   const { slug } = await params;
-  const post = await Post.findOne({ slug: slug, status: "published" }).lean() as Post | null;
+  const post = mockData.posts.find(p => p.slug === slug && p.status === "published") as Post | undefined;
 
   if (!post) {
     notFound();
@@ -65,7 +61,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 <div>
                   <p className="font-medium">{post.author}</p>
                   <p className="text-sm text-muted-foreground">
-                    {new Date(post.createdAt).toLocaleDateString("en-US", {
+                    {new Date(post.date).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",

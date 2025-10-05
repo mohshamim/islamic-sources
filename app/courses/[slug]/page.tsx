@@ -1,4 +1,3 @@
-import { createClient } from '@/lib/supabase/server'
 import { MainLayout } from '@/components/layout/main-layout'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -6,17 +5,115 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { Star, Clock, Users, Play, CheckCircle, Lock } from 'lucide-react'
 import { notFound } from 'next/navigation'
-import { Database } from '@/lib/database.types.learning'
 
-type Course = Database['public']['Tables']['courses']['Row'] & {
-  instructor?: Database['public']['Tables']['profiles']['Row']
-  modules?: (Database['public']['Tables']['course_modules']['Row'] & {
-    items?: Database['public']['Tables']['module_items']['Row'][]
-  })[]
-  reviews?: (Database['public']['Tables']['course_reviews']['Row'] & {
-    user?: Database['public']['Tables']['profiles']['Row']
-  })[]
+interface Course {
+  id: string
+  title: string
+  description: string
+  type: 'free' | 'paid'
+  price: number | null
+  rating: number
+  review_count: number
+  duration: number
+  level: 'beginner' | 'intermediate' | 'advanced'
+  thumbnail_url: string | null
+  slug: string
+  objectives?: string[]
+  intro_video_url?: string
+  instructor?: {
+    full_name: string
+    avatar_url: string | null
+  }
+  modules?: Array<{
+    id: string
+    title: string
+    description?: string
+    estimated_time: number
+    order_index: number
+    items?: Array<{
+      id: string
+      title: string
+      type: string
+      order_index: number
+    }>
+  }>
+  reviews?: Array<{
+    id: string
+    rating: number
+    comment?: string
+    user?: {
+      full_name: string
+    }
+  }>
 }
+
+// Mock courses data
+const courses: Course[] = [
+  {
+    id: "1",
+    title: "Complete Quran Recitation Course",
+    description: "Learn to recite the Quran with proper Tajweed rules and pronunciation. This comprehensive course covers all aspects of Quranic recitation from basic to advanced levels.",
+    type: "free",
+    price: null,
+    rating: 4.8,
+    review_count: 156,
+    duration: 480,
+    level: "beginner",
+    thumbnail_url: null,
+    slug: "complete-quran-recitation-course",
+    objectives: [
+      "Master proper pronunciation of Arabic letters",
+      "Understand Tajweed rules and their application",
+      "Recite Quran with correct rhythm and melody",
+      "Memorize selected Surahs with proper recitation"
+    ],
+    intro_video_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    instructor: {
+      full_name: "Sheikh Ahmed Al-Rashid",
+      avatar_url: null
+    },
+    modules: [
+      {
+        id: "1",
+        title: "Introduction to Tajweed",
+        description: "Basic principles and importance of Tajweed",
+        estimated_time: 60,
+        order_index: 1,
+        items: [
+          { id: "1", title: "What is Tajweed?", type: "video", order_index: 1 },
+          { id: "2", title: "History of Tajweed", type: "video", order_index: 2 },
+          { id: "3", title: "Quiz: Tajweed Basics", type: "quiz", order_index: 3 }
+        ]
+      },
+      {
+        id: "2", 
+        title: "Arabic Letter Pronunciation",
+        description: "Learn correct pronunciation of all Arabic letters",
+        estimated_time: 120,
+        order_index: 2,
+        items: [
+          { id: "4", title: "Letter Recognition", type: "video", order_index: 1 },
+          { id: "5", title: "Pronunciation Practice", type: "exercise", order_index: 2 },
+          { id: "6", title: "Common Mistakes", type: "video", order_index: 3 }
+        ]
+      }
+    ],
+    reviews: [
+      {
+        id: "1",
+        rating: 5,
+        comment: "Excellent course! The instructor explains everything clearly and the pace is perfect for beginners.",
+        user: { full_name: "Ahmed Hassan" }
+      },
+      {
+        id: "2", 
+        rating: 4,
+        comment: "Very comprehensive and well-structured. Highly recommend!",
+        user: { full_name: "Fatima Ali" }
+      }
+    ]
+  }
+]
 
 interface CoursePageProps {
   params: Promise<{
@@ -25,48 +122,16 @@ interface CoursePageProps {
 }
 
 export default async function CoursePage({ params }: CoursePageProps) {
-  const supabase = await createClient()
   const { slug } = await params
 
-  // Get course with related data
-  const { data: course, error } = await supabase
-    .from('courses')
-    .select(`
-      *,
-      instructor:profiles!courses_instructor_id_fkey(*),
-      modules:course_modules(
-        *,
-        items:module_items(*)
-      ),
-      reviews:course_reviews(
-        *,
-        user:profiles(*)
-      )
-    `)
-    .eq('slug', slug)
-    .single()
+  // Find course by slug
+  const course = courses.find(c => c.slug === slug)
 
-  if (error || !course) {
+  if (!course) {
     notFound()
   }
 
-  // Check if user is enrolled (if authenticated)
-  const { data: { user } } = await supabase.auth.getUser()
-  let isEnrolled = false
-  
-  if (user) {
-    const { data: enrollment } = await supabase
-      .from('enrollments')
-      .select('id')
-      .eq('user_id', user.id)
-      .eq('course_id', course.id)
-      .single()
-    
-    isEnrolled = !!enrollment
-  }
-
-  const formatDuration = (minutes: number | null) => {
-    if (!minutes) return 'Duration not specified'
+  const formatDuration = (minutes: number) => {
     const hours = Math.floor(minutes / 60)
     const mins = minutes % 60
     if (hours > 0) {
@@ -140,7 +205,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
                 
                 {course.objectives && course.objectives.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">What you&apos;ll learn:</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">What you'll learn:</h3>
                     <ul className="space-y-2">
                       {course.objectives.map((objective, index) => (
                         <li key={index} className="flex items-start gap-2">
@@ -153,16 +218,9 @@ export default async function CoursePage({ params }: CoursePageProps) {
                 )}
                 
                 <div className="flex gap-4">
-                  {isEnrolled ? (
-                    <Button size="lg" className="flex items-center gap-2">
-                      <Play className="h-5 w-5" />
-                      Continue Learning
-                    </Button>
-                  ) : (
-                    <Button size="lg" className="flex items-center gap-2">
-                      Enroll Now
-                    </Button>
-                  )}
+                  <Button size="lg" className="flex items-center gap-2">
+                    Enroll Now
+                  </Button>
                 </div>
               </div>
               
@@ -211,14 +269,10 @@ export default async function CoursePage({ params }: CoursePageProps) {
                             <div className="space-y-2">
                               {module.items
                                 ?.sort((a, b) => a.order_index - b.order_index)
-                                .map((item, itemIndex) => (
+                                .map((item) => (
                                   <div key={item.id} className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded">
                                     <div className="flex-shrink-0">
-                                      {isEnrolled ? (
-                                        <Play className="h-4 w-4 text-blue-600" />
-                                      ) : (
-                                        <Lock className="h-4 w-4 text-gray-400" />
-                                      )}
+                                      <Lock className="h-4 w-4 text-gray-400" />
                                     </div>
                                     <div className="flex-1">
                                       <p className="text-sm font-medium text-gray-900">{item.title}</p>

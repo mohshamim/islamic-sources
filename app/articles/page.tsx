@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tag } from "@/components/ui/tag";
 import { Separator } from "@/components/ui/separator";
+import mockData from "@/lib/mock-data.json";
 
-// Dummy data for articles
-const articles = [
+// Dummy data for articles (keeping some for backward compatibility)
+const additionalArticles = [
   {
     slug: "islamic-finance-principles",
     title: "Islamic Finance: Principles and Practices",
@@ -49,46 +50,51 @@ const articles = [
   },
   {
     slug: "islamic-architecture",
-    title: "The Beauty of Islamic Architecture",
+    title: "Islamic Architecture: A Journey Through Time",
     excerpt:
-      "Discover the principles and aesthetics of Islamic architecture, from geometric patterns to spiritual symbolism in mosque design.",
-    author: "Dr. Fatima Al-Zahra",
+      "Discover the beauty and significance of Islamic architecture from the early mosques to modern structures. Learn about the principles and elements that define Islamic design.",
+    author: "Prof. Aisha Al-Mansouri",
     date: "Dec 4, 2024",
-    readTime: 14,
+    readTime: 18,
     category: "Culture",
   },
   {
-    slug: "women-islamic-history",
-    title: "Women in Islamic History: Scholars and Leaders",
+    slug: "women-rights-islam",
+    title: "Women's Rights in Islam: A Historical Perspective",
     excerpt:
-      "Celebrating the contributions of women scholars, leaders, and figures throughout Islamic history and their lasting impact.",
-    author: "Dr. Aisha Rahman",
+      "An in-depth look at the rights granted to women in Islam, challenging common misconceptions and highlighting the progressive nature of Islamic teachings.",
+    author: "Dr. Fatima Zahra",
     date: "Dec 2, 2024",
-    readTime: 18,
-    category: "History",
+    readTime: 14,
+    category: "Society",
   },
+];
+
+// Combine mock data with additional articles
+const allArticles = [
+  ...mockData.articles.map(article => ({
+    slug: article.slug,
+    title: article.title,
+    excerpt: article.excerpt,
+    author: article.author,
+    date: article.date,
+    readTime: parseInt(article.readTime),
+    category: article.category,
+  })),
+  ...additionalArticles
 ];
 
 const categories = [
   "All",
+  "Fiqh",
+  "Islamic Calendar", 
+  "Fasting",
   "Finance",
   "Family",
   "Health",
   "History",
   "Culture",
-  "Education",
-  "Spirituality",
-  "Science",
-];
-
-const authors = [
-  "All Authors",
-  "Dr. Ahmed Hassan",
-  "Umm Fatima",
-  "Dr. Sarah Khan",
-  "Sheikh Omar Abdullah",
-  "Dr. Fatima Al-Zahra",
-  "Dr. Aisha Rahman",
+  "Society",
 ];
 
 export default function ArticlesPage() {
@@ -99,8 +105,8 @@ export default function ArticlesPage() {
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-4">Islamic Articles</h1>
           <p className="text-muted-foreground text-lg">
-            In-depth scholarly articles covering various aspects of Islamic
-            knowledge, history, and contemporary issues.
+            Deep dive into Islamic knowledge with our comprehensive collection of articles
+            written by qualified scholars and experts.
           </p>
         </div>
 
@@ -126,35 +132,38 @@ export default function ArticlesPage() {
 
             <Card className="mt-6">
               <CardHeader>
-                <CardTitle>Authors</CardTitle>
+                <CardTitle>Featured Authors</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
-                {authors.map((author) => (
-                  <Button
-                    key={author}
-                    variant="ghost"
-                    className="w-full justify-start text-sm"
-                  >
-                    {author}
-                  </Button>
-                ))}
+              <CardContent className="space-y-3">
+                <div className="text-sm">
+                  <p className="font-medium">Dr. Ahmed Hassan</p>
+                  <p className="text-muted-foreground">Islamic Finance Expert</p>
+                </div>
+                <div className="text-sm">
+                  <p className="font-medium">Umm Fatima</p>
+                  <p className="text-muted-foreground">Family Counselor</p>
+                </div>
+                <div className="text-sm">
+                  <p className="font-medium">Sheikh Bilal Mahmoud</p>
+                  <p className="text-muted-foreground">Hadith Scholar</p>
+                </div>
               </CardContent>
             </Card>
 
             <Card className="mt-6">
               <CardHeader>
-                <CardTitle>Popular Topics</CardTitle>
+                <CardTitle>Popular Tags</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  <Tag>Finance</Tag>
-                  <Tag>Family</Tag>
-                  <Tag>History</Tag>
-                  <Tag>Health</Tag>
-                  <Tag>Culture</Tag>
-                  <Tag>Education</Tag>
-                  <Tag>Spirituality</Tag>
-                  <Tag>Women</Tag>
+                  <Tag>Mawlid</Tag>
+                  <Tag>Safar</Tag>
+                  <Tag>Ashura</Tag>
+                  <Tag>Muharram</Tag>
+                  <Tag>Fiqh</Tag>
+                  <Tag>Islamic Calendar</Tag>
+                  <Tag>Fasting</Tag>
+                  <Tag>Prophet</Tag>
                 </div>
               </CardContent>
             </Card>
@@ -162,51 +171,29 @@ export default function ArticlesPage() {
 
           {/* Main Content */}
           <div className="lg:col-span-3">
-            {/* Filters */}
-            <div className="flex flex-wrap items-center gap-4 mb-6">
-              <span className="text-sm text-muted-foreground">Sort by:</span>
-              <Button variant="outline" size="sm">
-                Latest
-              </Button>
-              <Button variant="ghost" size="sm">
-                Popular
-              </Button>
-              <Button variant="ghost" size="sm">
-                Most Read
-              </Button>
-              <Button variant="ghost" size="sm">
-                Longest
-              </Button>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold">
+                All Articles ({allArticles.length})
+              </h2>
             </div>
 
             <Separator className="mb-6" />
 
             {/* Articles Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {articles.map((article) => (
-                <ArticleCard key={article.slug} article={article} />
+              {allArticles.map((article) => (
+                <ArticleCard
+                  key={article.slug}
+                  article={article}
+                />
               ))}
             </div>
 
-            {/* Pagination */}
-            <div className="flex justify-center mt-12">
-              <div className="flex items-center space-x-2">
-                <Button variant="outline" size="sm" disabled>
-                  Previous
-                </Button>
-                <Button variant="outline" size="sm">
-                  1
-                </Button>
-                <Button variant="ghost" size="sm">
-                  2
-                </Button>
-                <Button variant="ghost" size="sm">
-                  3
-                </Button>
-                <Button variant="outline" size="sm">
-                  Next
-                </Button>
-              </div>
+            {/* Load More Button */}
+            <div className="mt-8 text-center">
+              <Button variant="outline" size="lg">
+                Load More Articles
+              </Button>
             </div>
           </div>
         </div>

@@ -6,21 +6,20 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import dbConnect from "@/lib/db";
-import Question from "@/models/Question";
+import mockData from "@/lib/mock-data.json";
 
 interface Question {
-  _id: string;
+  id: number;
+  slug: string;
   question: string;
   answer: string;
   category: string;
   tags: string[];
   status: string;
-  scholar: string;
+  askedBy: string;
+  answeredBy: string;
   views: number;
-  slug: string;
-  createdAt: string;
-  updatedAt: string;
+  date: string;
 }
 
 interface QuestionPageProps {
@@ -30,13 +29,8 @@ interface QuestionPageProps {
 }
 
 export default async function QuestionPage({ params }: QuestionPageProps) {
-  await dbConnect();
-
   const { slug } = await params;
-  const question = await Question.findOne({
-    slug: slug,
-    status: "published",
-  }).lean() as Question | null;
+  const question = mockData.questions.find(q => q.slug === slug && q.status === "answered") as Question | undefined;
 
   if (!question) {
     notFound();
@@ -60,13 +54,13 @@ export default async function QuestionPage({ params }: QuestionPageProps) {
               <div className="flex items-center gap-3">
                 <Avatar>
                   <AvatarFallback>
-                    {question.scholar.charAt(0).toUpperCase()}
+                    {question.answeredBy.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="font-medium">{question.scholar}</p>
+                  <p className="font-medium">{question.answeredBy}</p>
                   <p className="text-sm text-muted-foreground">
-                    {new Date(question.createdAt).toLocaleDateString("en-US", {
+                    {new Date(question.date).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
