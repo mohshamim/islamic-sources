@@ -6,9 +6,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import {
+  BookOpen,
+  FileText,
+  HelpCircle,
   Download,
   ArrowRight,
+  Sparkles,
   Eye,
+  Calendar,
+  User,
+  TrendingUp,
 } from "lucide-react";
 import mockData from "@/lib/mock-data.json";
 
@@ -29,9 +36,10 @@ export default function HomePage() {
               <Card className="bg-white dark:bg-gray-800">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <CardTitle className="text-2xl">Trending Questions</CardTitle>
-                  </div>
+                    <div className="flex items-center space-x-2">
+                      <HelpCircle className="w-6 h-6 text-green-600" />
+                      <CardTitle className="text-2xl">🔥 Trending Questions</CardTitle>
+                    </div>
                     <Link href="/questions">
                       <Button variant="ghost" size="sm" className="text-green-600 hover:text-green-700">
                         More
@@ -69,7 +77,8 @@ export default function HomePage() {
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <CardTitle className="text-2xl">Featured Articles</CardTitle>
+                      <BookOpen className="w-6 h-6 text-blue-600" />
+                      <CardTitle className="text-2xl">📰 Featured Articles</CardTitle>
                     </div>
                     <Link href="/articles">
                       <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
@@ -93,6 +102,7 @@ export default function HomePage() {
                         </h3>
                         <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
                           <div className="flex items-center space-x-2">
+                            <User className="w-3 h-3" />
                             <span>{article.author}</span>
                           </div>
                           <div className="flex items-center space-x-3">
@@ -118,6 +128,7 @@ export default function HomePage() {
               <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 border-blue-200 dark:border-gray-600 overflow-hidden">
                 <CardHeader className="pb-3">
                   <div className="flex items-center space-x-2">
+                    <BookOpen className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     <CardTitle className="text-xl text-blue-800 dark:text-blue-300">Latest Courses</CardTitle>
                   </div>
                 </CardHeader>
@@ -127,6 +138,7 @@ export default function HomePage() {
                     <div className="relative h-48 overflow-hidden">
                       <div className="h-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center">
                         <div className="text-center text-white p-4">
+                          <div className="text-2xl mb-2">📖</div>
                           <h3 className="font-bold text-lg mb-1">Quran & Tafsir</h3>
                           <p className="text-sm opacity-90">Complete Study Course</p>
                         </div>
@@ -147,7 +159,8 @@ export default function HomePage() {
               <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-700 border-green-200 dark:border-gray-600">
                 <CardHeader>
                   <div className="flex items-center space-x-2">
-                    <CardTitle className="text-2xl text-green-800 dark:text-green-300">Books</CardTitle>
+                    <BookOpen className="w-6 h-6 text-green-600 dark:text-green-400" />
+                    <CardTitle className="text-2xl text-green-800 dark:text-green-300">📚 Books</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -155,7 +168,7 @@ export default function HomePage() {
                     <div key={book.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                       <div className="flex space-x-3">
                         <div className="w-16 h-20 bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900 dark:to-amber-800 rounded flex items-center justify-center">
-                          <span className="text-amber-600 dark:text-amber-300 text-xs font-semibold">PDF</span>
+                          <BookOpen className="w-8 h-8 text-amber-600 dark:text-amber-300" />
                         </div>
                         <div className="flex-1">
                           <h4 className="font-semibold text-sm text-gray-900 dark:text-white mb-1 line-clamp-2 hover:text-green-600 dark:hover:text-green-400 cursor-pointer">
@@ -186,7 +199,8 @@ export default function HomePage() {
               <Card className="bg-white dark:bg-gray-800">
                 <CardHeader>
                   <div className="flex items-center space-x-2">
-                    <CardTitle className="text-xl">Most Read</CardTitle>
+                    <TrendingUp className="w-6 h-6 text-purple-600" />
+                    <CardTitle className="text-xl">📊 Most Read</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -220,7 +234,7 @@ export default function HomePage() {
               {/* Quick Stats */}
               <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-700 border-blue-200 dark:border-gray-600">
                 <CardHeader>
-                  <CardTitle className="text-lg text-blue-800 dark:text-blue-300">Platform Stats</CardTitle>
+                  <CardTitle className="text-lg text-blue-800 dark:text-blue-300">📈 Platform Stats</CardTitle>
                 </CardHeader>
                 <CardContent className="grid grid-cols-2 gap-3">
                   <div className="bg-white dark:bg-gray-800 p-3 rounded-lg text-center">

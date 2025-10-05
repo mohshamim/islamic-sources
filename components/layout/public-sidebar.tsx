@@ -5,8 +5,15 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
+  BookOpen,
+  FileText,
+  HelpCircle,
+  Music,
   ChevronDown,
   ChevronRight,
+  Home,
+  Folder,
+  FileArchive,
   Menu,
   X,
 } from "lucide-react";
@@ -17,12 +24,12 @@ export function PublicSidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const navigation = [
-    { name: "Home", href: "/" },
-    { name: "New Answers", href: "/questions", badge: "New" },
-    { name: "Articles", href: "/articles" },
-    { name: "Posts", href: "/posts" },
-    { name: "Media Library", href: "/media" },
-    { name: "Knowledge Files", href: "/media" },
+    { name: "Home", href: "/", icon: Home },
+    { name: "New Answers", href: "/questions", icon: HelpCircle, badge: "New" },
+    { name: "Articles", href: "/articles", icon: BookOpen },
+    { name: "Posts", href: "/posts", icon: FileText },
+    { name: "Media Library", href: "/media", icon: Music },
+    { name: "Knowledge Files", href: "/media", icon: FileArchive },
   ];
 
   return (
@@ -53,6 +60,7 @@ export function PublicSidebar() {
                 className="flex items-center justify-between px-3 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-green-200 dark:hover:bg-gray-700 rounded-lg transition-colors group"
               >
                 <div className="flex items-center space-x-3">
+                  <item.icon className="w-5 h-5 text-green-600 dark:text-green-400" />
                   <span className="font-medium">{item.name}</span>
                 </div>
                 {item.badge && (
@@ -73,6 +81,7 @@ export function PublicSidebar() {
               className="flex items-center justify-between w-full px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-green-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
             >
               <div className="flex items-center space-x-2 font-semibold">
+                <Folder className="w-5 h-5 text-green-600 dark:text-green-400" />
                 <span>Category wise</span>
               </div>
               {isCategoryOpen ? (

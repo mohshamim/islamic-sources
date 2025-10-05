@@ -2,6 +2,17 @@
 
 A comprehensive Next.js web application for managing and displaying authentic Islamic knowledge, guided by the methodology of the Salaf (righteous predecessors).
 
+## 📚 Documentation
+
+- **[PROJECT-DOCUMENTATION.md](./PROJECT-DOCUMENTATION.md)** - Complete project documentation with current status and next steps
+- **[CURSOR-CONTEXT.md](./CURSOR-CONTEXT.md)** - Quick context for Cursor AI and new developers
+
+## 🚀 Current Status
+
+✅ **Public Website**: 100% complete with mock data  
+🔄 **Next Phase**: Admin dashboard and backend integration  
+📊 **Progress**: Ready for backend development
+
 ## ✨ Features
 
 ### 🎯 Core Functionality
