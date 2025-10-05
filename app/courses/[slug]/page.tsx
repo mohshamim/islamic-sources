@@ -19,13 +19,14 @@ type Course = Database['public']['Tables']['courses']['Row'] & {
 }
 
 interface CoursePageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export default async function CoursePage({ params }: CoursePageProps) {
   const supabase = await createClient()
+  const { slug } = await params
 
   // Get course with related data
   const { data: course, error } = await supabase
@@ -42,7 +43,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
         user:profiles(*)
       )
     `)
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .single()
 
   if (error || !course) {
