@@ -1,5 +1,4 @@
 import { MainLayout } from "@/components/layout/main-layout";
-import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
 import { Tag } from "@/components/ui/tag";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -41,17 +40,9 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
-  const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    { label: "Posts", href: "/posts" },
-    { label: post.title },
-  ];
-
   return (
     <MainLayout>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <BreadcrumbNav items={breadcrumbItems} />
-
         <article className="max-w-4xl mx-auto">
           {/* Header */}
           <header className="mb-8">
