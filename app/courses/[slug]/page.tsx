@@ -205,7 +205,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
                 
                 {course.objectives && course.objectives.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">What you'll learn:</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">What you&apos;ll learn:</h3>
                     <ul className="space-y-2">
                       {course.objectives.map((objective, index) => (
                         <li key={index} className="flex items-start gap-2">

@@ -196,7 +196,7 @@ const articles = {
       
       <h2>Conclusion</h2>
       <p>Islamic family values provide a strong foundation for building healthy, loving relationships. By following these principles, families can create environments of peace, love, and mutual support that benefit both individuals and society as a whole.</p>
-    `,
+    ` as any,
     author: "Umm Fatima",
     date: "Dec 11, 2024",
     readTime: "10 min read",
