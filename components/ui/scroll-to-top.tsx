@@ -32,8 +32,9 @@ export function ScrollToTop() {
       {isVisible && (
         <Button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-primary text-white shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-fade-in-up"
+          className="fixed bottom-8 right-8 lg:right-8 z-50 w-14 h-14 rounded-full bg-primary-600 hover:bg-primary-700 text-white shadow-2xl hover:shadow-xl transform hover:scale-110 transition-all duration-300 border-2 border-white dark:border-neutral-700"
           size="icon"
+          title="Scroll to top"
         >
           <ChevronUp className="h-6 w-6" />
         </Button>

@@ -1,20 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import Question from '@/models/Question';
-
-interface QueryFilter {
-  category?: string;
-  status?: string;
-  $or?: Array<{
-    question?: { $regex: string; $options: string };
-    answer?: { $regex: string; $options: string };
-  }>;
-}
+import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { createAdminSupabaseClient } from '@/lib/supabase/admin';
 
 // GET all questions
 export async function GET(request: NextRequest) {
   try {
-    await dbConnect();
+    const supabase = await createServerSupabaseClient();
     
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');
@@ -23,34 +14,56 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status');
     const search = searchParams.get('search');
     
-    const skip = (page - 1) * limit;
+    const from = (page - 1) * limit;
+    const to = from + limit - 1;
     
-    const query: QueryFilter = {};
+    let query = supabase
+      .from('questions')
+      .select(`
+        *,
+        categories (
+          id,
+          name,
+          slug
+        ),
+        scholars (
+          id,
+          name,
+          title
+        )
+      `, { count: 'exact' });
     
-    if (category) query.category = category;
-    if (status) query.status = status;
-    if (search) {
-      query.$or = [
-        { question: { $regex: search, $options: 'i' } },
-        { answer: { $regex: search, $options: 'i' } },
-      ];
+    if (category) {
+      query = query.eq('categories.slug', category);
     }
     
-    const questions = await Question.find(query)
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .lean();
+    if (status) {
+      query = query.eq('status', status);
+    }
     
-    const total = await Question.countDocuments(query);
+    if (search) {
+      query = query.or(`question.ilike.%${search}%,answer.ilike.%${search}%`);
+    }
+    
+    const { data, error, count } = await query
+      .order('created_at', { ascending: false })
+      .range(from, to);
+    
+    if (error) {
+      console.error('Supabase error:', error);
+      return NextResponse.json(
+        { error: 'Failed to fetch questions', details: error.message },
+        { status: 500 }
+      );
+    }
     
     return NextResponse.json({
-      questions,
+      questions: data || [],
       pagination: {
         page,
         limit,
-        total,
-        pages: Math.ceil(total / limit),
+        total: count || 0,
+        pages: Math.ceil((count || 0) / limit),
       },
     });
   } catch (error) {
@@ -65,7 +78,7 @@ export async function GET(request: NextRequest) {
 // POST create new question
 export async function POST(request: NextRequest) {
   try {
-    await dbConnect();
+    const supabase = createAdminSupabaseClient();
     
     const body = await request.json();
     const { question, answer, category, tags, status, scholar } = body;
@@ -77,16 +90,52 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    const newQuestion = new Question({
-      question,
-      answer,
-      category,
-      tags: tags || [],
-      status: status || 'draft',
-      scholar: scholar || 'Admin',
-    });
+    // Generate slug from question
+    const slug = question
+      .toLowerCase()
+      .substring(0, 100)
+      .replace(/[^a-z0-9 -]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
     
-    await newQuestion.save();
+    // Get category ID
+    const { data: categoryData } = await supabase
+      .from('categories')
+      .select('id')
+      .eq('name', category)
+      .single();
+    
+    if (!categoryData) {
+      return NextResponse.json(
+        { error: 'Invalid category' },
+        { status: 400 }
+      );
+    }
+    
+    // Insert question
+    const { data: newQuestion, error } = await supabase
+      .from('questions')
+      .insert({
+        question,
+        answer,
+        slug,
+        category_id: categoryData.id,
+        tags: tags || [],
+        status: status || 'draft',
+        language: 'en',
+        published_at: status === 'published' ? new Date().toISOString() : null,
+      })
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Supabase insert error:', error);
+      return NextResponse.json(
+        { error: 'Failed to create question', details: error.message },
+        { status: 500 }
+      );
+    }
     
     return NextResponse.json(newQuestion, { status: 201 });
   } catch (error) {
@@ -96,4 +145,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-} 
+}

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { theme } from "./lib/theme";
 
 const config: Config = {
   darkMode: ["class"],
@@ -19,19 +20,22 @@ const config: Config = {
     },
     extend: {
       colors: {
+        // Our custom theme colors
+        primary: theme.primary,
+        secondary: theme.secondary,
+        accent: theme.accent,
+        neutral: theme.neutral,
+        success: theme.success,
+        warning: theme.warning,
+        error: theme.error,
+        info: theme.info,
+        
+        // Shadcn/ui compatibility
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -39,10 +43,6 @@ const config: Config = {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -57,6 +57,24 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        DEFAULT: theme.radius.md,
+      },
+      transitionProperty: {
+        'all': 'all',
+      },
+      transitionDuration: {
+        '150': '150ms',
+        '200': '200ms',
+        '300': '300ms',
+      },
+      transitionTimingFunction: {
+        'ease-in-out': 'ease-in-out',
+      },
+      boxShadow: {
+        'sm': theme.shadow.sm,
+        'md': theme.shadow.md,
+        'lg': theme.shadow.lg,
+        'xl': theme.shadow.xl,
       },
       keyframes: {
         "accordion-down": {

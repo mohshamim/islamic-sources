@@ -1,38 +1,40 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import Article from '@/models/Article';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { createAdminSupabaseClient } from '@/lib/supabase/admin';
 
-interface UpdateData {
-  title?: string;
-  excerpt?: string;
-  content?: string;
-  category?: string;
-  tags?: string[];
-  status?: string;
-  author?: string;
-  readTime?: number;
-}
-
-// GET single article by ID
+// GET single article
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await dbConnect();
-    
+    const supabase = await createServerSupabaseClient();
     const { id } = await params;
-    const article = await Article.findById(id).lean();
     
-    if (!article) {
+    const { data: article, error } = await supabase
+      .from('articles')
+      .select(`
+        *,
+        categories (
+          id,
+          name,
+          slug
+        ),
+        scholars (
+          id,
+          name,
+          title
+        )
+      `)
+      .eq('id', id)
+      .single();
+    
+    if (error) {
       return NextResponse.json(
-        { error: 'Article not found' },
+        { error: 'Article not found', details: error.message },
         { status: 404 }
       );
     }
-    
-    // Increment views
-    await Article.findByIdAndUpdate(id, { $inc: { views: 1 } });
     
     return NextResponse.json(article);
   } catch (error) {
@@ -50,32 +52,68 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await dbConnect();
-    
+    const supabase = createAdminSupabaseClient();
     const { id } = await params;
     const body = await request.json();
     const { title, excerpt, content, category, tags, status, author, readTime } = body;
     
-    const updateData: UpdateData = {};
-    if (title) updateData.title = title;
-    if (excerpt) updateData.excerpt = excerpt;
-    if (content) updateData.content = content;
-    if (category) updateData.category = category;
-    if (tags) updateData.tags = tags;
-    if (status) updateData.status = status;
-    if (author) updateData.author = author;
-    if (readTime) updateData.readTime = readTime;
-    
-    const article = await Article.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true, runValidators: true }
-    );
-    
-    if (!article) {
+    if (!title || !excerpt || !content) {
       return NextResponse.json(
-        { error: 'Article not found' },
-        { status: 404 }
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+    
+    // Generate new slug if title changed
+    const slug = title
+      .toLowerCase()
+      .replace(/[^a-z0-9 -]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+    
+    // Get category ID if category provided
+    let category_id = undefined;
+    if (category) {
+      const { data: categoryData } = await supabase
+        .from('categories')
+        .select('id')
+        .eq('name', category)
+        .single();
+      
+      if (categoryData) {
+        category_id = categoryData.id;
+      }
+    }
+    
+    const updateData: any = {
+      title,
+      slug,
+      content,
+      excerpt,
+      read_time: `${readTime || 5} min`,
+    };
+    
+    if (category_id) {
+      updateData.category_id = category_id;
+    }
+    
+    if (status === 'published') {
+      updateData.published_at = new Date().toISOString();
+    }
+    
+    const { data: article, error } = await supabase
+      .from('articles')
+      .update(updateData)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Supabase update error:', error);
+      return NextResponse.json(
+        { error: 'Failed to update article', details: error.message },
+        { status: 500 }
       );
     }
     
@@ -95,15 +133,19 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await dbConnect();
-    
+    const supabase = createAdminSupabaseClient();
     const { id } = await params;
-    const article = await Article.findByIdAndDelete(id);
     
-    if (!article) {
+    const { error } = await supabase
+      .from('articles')
+      .delete()
+      .eq('id', id);
+    
+    if (error) {
+      console.error('Supabase delete error:', error);
       return NextResponse.json(
-        { error: 'Article not found' },
-        { status: 404 }
+        { error: 'Failed to delete article', details: error.message },
+        { status: 500 }
       );
     }
     
@@ -115,4 +157,4 @@ export async function DELETE(
       { status: 500 }
     );
   }
-} 
+}

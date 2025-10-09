@@ -1,75 +1,99 @@
 {
   "stats": {
-    "totalPosts": 145,
     "totalArticles": 89,
     "totalQuestions": 234,
-    "totalMedia": 567
+    "totalMedia": 567,
+    "totalCourses": 12,
+    "totalBooks": 156
   },
-  "posts": [
+  "books": [
     {
       "id": 1,
-      "slug": "importance-of-prayer-in-islam",
-      "title": "The Importance of Prayer in Islam",
-      "category": "Worship",
-      "status": "published",
-      "author": "Sheikh Ahmed Ibrahim",
-      "date": "2025-01-15",
-      "views": 1250,
-      "excerpt": "Prayer (Salah) is the second pillar of Islam and a direct connection between the believer and Allah...",
-      "content": "<h2>The Second Pillar of Islam</h2><p>Prayer, or Salah, is one of the five pillars of Islam and serves as a direct connection between the believer and Allah. It is mentioned in the Quran numerous times and was emphasized by the Prophet Muhammad (peace be upon him) as the most important act of worship after the declaration of faith.</p><h3>Spiritual Benefits</h3><p>Regular prayer brings numerous spiritual benefits including inner peace, discipline, and a constant reminder of Allah's presence in our daily lives.</p>",
-      "tags": ["Prayer", "Worship", "Spirituality"]
+      "slug": "how-he-treated-them",
+      "title": "How He Treated Them",
+      "description": "Prophet Muhammad is beyond all doubt one of the most influential figures in world history, who brought the message of Islam, a religion with over one billion followers across the globe. The...",
+      "category": "Seerah",
+      "author": "Adil Salahi",
+      "size": "2.4 MB",
+      "downloads": 13042,
+      "thumbnail": "/books/how-he-treated-them.jpg"
     },
     {
       "id": 2,
-      "slug": "understanding-zakat-and-its-distribution",
-      "title": "Understanding Zakat and Its Distribution",
-      "category": "Islamic Finance",
-      "status": "published",
-      "author": "Dr. Fatima Hassan",
-      "date": "2025-01-10",
-      "views": 890,
-      "excerpt": "Zakat is one of the five pillars of Islam, a mandatory act of charity that purifies wealth...",
-      "content": "<h2>The Third Pillar of Islam</h2><p>Zakat is a mandatory act of charity that purifies wealth and helps distribute resources fairly in society. It is calculated as 2.5% of one's annual savings and assets.</p><h3>Conditions for Zakat</h3><p>Zakat is obligatory on Muslims who meet specific criteria including reaching the nisab (minimum threshold) and having possessed the wealth for a full lunar year.</p>",
-      "tags": ["Zakat", "Charity", "Islamic Finance"]
+      "slug": "interactions-of-greatest-leader",
+      "title": "Interactions Of The Greatest Leader",
+      "description": "Allaah granted his Prophet, sallallaahu 'alayhi wa sallam, qualities of perfection and noble characteristics which distinguished him from all other human beings. Consequently, he, sallallaahu 'alayhi...",
+      "category": "Seerah",
+      "author": "Muhammad Salih Al-Munajjid",
+      "size": "3.1 MB",
+      "downloads": 8881,
+      "thumbnail": "/books/interactions-greatest-leader.jpg"
     },
     {
       "id": 3,
-      "slug": "virtues-of-ramadan",
-      "title": "The Virtues of Ramadan",
-      "category": "Fasting",
-      "status": "published",
-      "author": "Sheikh Mohammed Ali",
-      "date": "2025-01-08",
-      "views": 0,
-      "excerpt": "Ramadan is the ninth month of the Islamic calendar and the holiest month for Muslims...",
-      "content": "<h2>The Blessed Month</h2><p>Ramadan is the ninth month of the Islamic calendar and is considered the holiest month for Muslims worldwide. It is a time of spiritual reflection, self-discipline, and increased devotion to Allah.</p><h3>Benefits of Fasting</h3><p>Fasting during Ramadan purifies the soul, teaches self-control, and brings believers closer to Allah through increased prayer and Quranic recitation.</p>",
-      "tags": ["Ramadan", "Fasting", "Spirituality"]
+      "slug": "33-ways-developing-khushu-in-salah",
+      "title": "33 Ways of developing Khushu` in Salah",
+      "description": "A book that discusses the issue of Khushu' (proper focus and humility in prayer) and the factors that will help the Muslim to pray with presence of mind and humility before Allah, may he be...",
+      "category": "Worship",
+      "author": "Muhammad Salih Al-Munajjid",
+      "size": "1.8 MB",
+      "downloads": 39720,
+      "thumbnail": "/books/33-ways-khushu.jpg"
     },
     {
       "id": 4,
-      "slug": "hajj-journey-of-a-lifetime",
-      "title": "Hajj: The Journey of a Lifetime",
-      "category": "Pilgrimage",
-      "status": "published",
-      "author": "Ustadh Yusuf Ahmed",
-      "date": "2025-01-05",
-      "views": 2100,
-      "excerpt": "Hajj is the annual Islamic pilgrimage to Mecca and one of the five pillars of Islam...",
-      "content": "<h2>The Fifth Pillar of Islam</h2><p>Hajj is the annual Islamic pilgrimage to Mecca that every able-bodied Muslim must perform at least once in their lifetime. It takes place during the month of Dhul Hijjah.</p><h3>Rituals of Hajj</h3><p>The pilgrimage includes various rituals such as Tawaf (circumambulation of the Kaaba), Sa'i (walking between Safa and Marwa), and standing at Arafat.</p>",
-      "tags": ["Hajj", "Pilgrimage", "Mecca"]
+      "slug": "prophets-methods-correcting-mistakes",
+      "title": "The Prophet's Methods for Correcting People's Mistakes",
+      "description": "Teaching people is one of the greatest good deeds whose benefits spread to others. It is the daiýahs and educators' share of the heritage of the Prophets and Messengers. Dealing with and...",
+      "category": "Seerah",
+      "author": "Muhammad Salih Al-Munajjid",
+      "size": "2.9 MB",
+      "downloads": 24004,
+      "thumbnail": "/books/correcting-mistakes.jpg"
     },
     {
       "id": 5,
-      "slug": "prophets-character-and-manners",
-      "title": "The Prophet's Character and Manners",
-      "category": "Seerah",
-      "status": "published",
-      "author": "Sheikh Ahmed Ibrahim",
-      "date": "2025-01-02",
-      "views": 1680,
-      "excerpt": "The Prophet Muhammad (peace be upon him) was known for his excellent character...",
-      "content": "<h2>The Perfect Example</h2><p>The Prophet Muhammad (peace be upon him) was known for his excellent character, kindness, and exemplary manners. He serves as the perfect role model for all Muslims.</p><h3>Key Traits</h3><p>Among his many virtues were honesty, compassion, patience, humility, and justice. He treated everyone with respect and kindness, regardless of their background.</p>",
-      "tags": ["Prophet", "Character", "Manners", "Seerah"]
+      "slug": "rulings-of-udhiyah",
+      "title": "Rulings of Udhiyah",
+      "description": "Udhiyah is one of the great rituals of Islaam, in which we remember the Unity of Allaah, His blessings upon us and the obedience of our father Ibraaheem, may Allaah exalt his mention, to his Lord. There is great goodness and many...",
+      "category": "Fiqh",
+      "author": "Muhammad Salih Al-Munajjid",
+      "size": "1.2 MB",
+      "downloads": 3219,
+      "thumbnail": "/books/rulings-udhiyah.jpg"
+    },
+    {
+      "id": 6,
+      "slug": "meanings-of-supplications",
+      "title": "The meanings of supplications",
+      "description": "The meanings of supplications",
+      "category": "Dua",
+      "author": "Various Scholars",
+      "size": "1.5 MB",
+      "downloads": 11349,
+      "thumbnail": "/books/meanings-supplications.jpg"
+    },
+    {
+      "id": 7,
+      "slug": "weakness-of-faith",
+      "title": "Weakness of Faith",
+      "description": "The phenomenon of weak faith has become very widespread among the Muslims, and many people complain about hardness of their hearts. So often we hear the words: 'I feel...",
+      "category": "Spirituality",
+      "author": "Muhammad Salih Al-Munajjid",
+      "size": "2.1 MB",
+      "downloads": 15678,
+      "thumbnail": "/books/weakness-faith.jpg"
+    },
+    {
+      "id": 8,
+      "slug": "means-of-steadfastness",
+      "title": "Means of Steadfastness: Standing Firm in Islam",
+      "description": "No one with understanding will doubt that the need of the Muslims today for means of steadfastness is greater than that of their brethren at the time of the salaf, and that the effort required to...",
+      "category": "Spirituality",
+      "author": "Muhammad Salih Al-Munajjid",
+      "size": "3.4 MB",
+      "downloads": 19234,
+      "thumbnail": "/books/means-steadfastness.jpg"
     }
   ],
   "articles": [
@@ -79,7 +103,7 @@
       "title": "Is Celebrating Prophet's Birthday Allowed in Islam?",
       "category": "Fiqh",
       "status": "published",
-      "author": "Islamic Scholars Committee",
+      "author": "Sheikh Abdul Aziz bin Baz",
       "date": "2025-01-12",
       "views": 3200,
       "readTime": "8 min",
@@ -93,7 +117,7 @@
       "title": "The Month of Safar: Misconceptions and Facts",
       "category": "Islamic Calendar",
       "status": "published",
-      "author": "Dr. Abdullah Rahman",
+      "author": "Sheikh Muhammad bin Salih al-Uthaymeen",
       "date": "2025-01-08",
       "views": 1450,
       "readTime": "5 min",
@@ -138,9 +162,10 @@
       "category": "Prayer",
       "status": "answered",
       "askedBy": "Anonymous",
-      "answeredBy": "Sheikh Ahmed Ibrahim",
+      "answeredBy": "Sheikh Abdul Aziz bin Baz",
       "date": "2025-01-14",
       "views": 456,
+      "summary": "Yes, it is permissible to pray with shoes on provided they are clean and the prayer area is clean. However, it is better to pray barefoot or in clean socks as was the practice of the Prophet (peace be upon him).",
       "answer": "<h2>Praying with Shoes</h2><p>Yes, it is generally permissible to pray with shoes on, provided that the shoes are clean and the place where you are praying is also clean.</p><h3>Conditions for Praying with Shoes</h3><ul><li>The shoes must be clean and free from impurities</li><li>The floor or ground where you are praying must be clean</li><li>The shoes should not be made from materials that are considered impure in Islam</li></ul><h3>Preference</h3><p>While it is permissible, it is generally better to pray barefoot or in clean socks, as this was the practice of the Prophet Muhammad (peace be upon him).</p>",
       "tags": ["Prayer", "Shoes", "Cleanliness", "Fiqh"]
     },
@@ -151,7 +176,7 @@
       "category": "Islamic Finance",
       "status": "answered",
       "askedBy": "Brother Khalid",
-      "answeredBy": "Dr. Fatima Hassan",
+      "answeredBy": "Sheikh Salih al-Fawzan",
       "date": "2025-01-13",
       "views": 1234,
       "answer": "<h2>Working in Conventional Banks</h2><p>The ruling on working in conventional banks depends on the specific role and the nature of the work involved.</p><h3>Generally Prohibited Roles</h3><ul><li>Direct involvement in interest-based transactions</li><li>Promoting or selling interest-based products</li><li>Managing interest-based accounts</li></ul><h3>Potentially Permissible Roles</h3><ul><li>IT support and technical roles</li><li>Security and maintenance</li><li>Administrative tasks not related to interest</li></ul><h3>Considerations</h3><p>Each case should be evaluated individually, considering the specific duties and whether they involve prohibited activities.</p>",
@@ -164,7 +189,7 @@
       "category": "Women in Islam",
       "status": "answered",
       "askedBy": "Sister Maryam",
-      "answeredBy": "Ustadha Aisha Khan",
+      "answeredBy": "Sheikh Muhammad bin Salih al-Uthaymeen",
       "date": "2025-01-12",
       "views": 89,
       "answer": "<h2>Women Leading Prayer</h2><p>Yes, women can lead other women in prayer according to the majority of Islamic scholars.</p><h3>Conditions for Women Leading Women</h3><ul><li>The congregation should consist only of women</li><li>The woman leading should be knowledgeable about prayer</li><li>She should stand in the same row as the other women, not in front</li></ul><h3>Historical Precedent</h3><p>There are reports of women leading other women in prayer during the time of the Prophet Muhammad (peace be upon him).</p><h3>Note</h3><p>Women cannot lead men in prayer, and mixed-gender congregations should be led by men.</p>",
@@ -177,7 +202,7 @@
       "category": "Hadith",
       "status": "answered",
       "askedBy": "Brother Ibrahim",
-      "answeredBy": "Sheikh Mohammed Ali",
+      "answeredBy": "Sheikh Muhammad Nasir-ud-Din al-Albani",
       "date": "2025-01-11",
       "views": 678,
       "answer": "<h2>Hadith About Clean Earth</h2><p>The hadith you are referring to is likely the one that mentions the earth being made clean for us as a means of purification.</p><h3>Authenticity</h3><p>This hadith is found in several authentic collections, including Sahih Muslim and Sahih Bukhari, making it a strong and reliable hadith.</p><h3>Text of the Hadith</h3><p>The Prophet Muhammad (peace be upon him) said: 'The earth has been made for me a place of worship and a means of purification.'</p><h3>Meaning</h3><p>This hadith indicates that the earth itself can serve as a place for prayer (when no other surface is available) and that soil can be used for tayammum (dry ablution) when water is not available.</p>",
@@ -190,7 +215,7 @@
       "category": "Islamic Rulings",
       "status": "answered",
       "askedBy": "Brother Tariq",
-      "answeredBy": "Sheikh Ahmed Ibrahim",
+      "answeredBy": "Sheikh Abdul Aziz bin Baz",
       "date": "2025-01-10",
       "views": 2345,
       "answer": "<h2>Growing a Beard in Islam</h2><p>Growing a beard is considered mandatory (wajib) for men in Islam according to the majority of scholars.</p><h3>Evidence from Hadith</h3><p>The Prophet Muhammad (peace be upon him) said: 'Trim the mustache and let the beard grow.' This command indicates the obligation of growing a beard.</p><h3>Length Requirements</h3><p>The beard should be grown to a reasonable length, typically a fistful or more, as mentioned in various hadith.</p><h3>Exceptions</h3><p>There may be exceptions for medical reasons or in cases where it would cause significant hardship, but these should be evaluated by qualified scholars.</p><h3>Modern Considerations</h3><p>While growing a beard is recommended, the most important aspect is following the Sunnah with proper intention and understanding.</p>",
@@ -283,6 +308,79 @@
     { "id": 6, "name": "Fiqh", "count": 56 },
     { "id": 7, "name": "Hadith", "count": 67 },
     { "id": 8, "name": "Quran Tafsir", "count": 89 }
+  ],
+  "scholars": [
+    {
+      "id": 1,
+      "name": "Sheikh Abdul Aziz bin Baz",
+      "slug": "sheikh-ibn-baz",
+      "title": "Grand Mufti of Saudi Arabia",
+      "count": 156,
+      "specialty": "Fiqh, Aqeedah, Hadith",
+      "bio": "Former Grand Mufti of Saudi Arabia and a prominent Islamic scholar known for his vast knowledge in various Islamic sciences."
+    },
+    {
+      "id": 2,
+      "name": "Sheikh Muhammad bin Salih al-Uthaymeen",
+      "slug": "sheikh-ibn-uthaymeen",
+      "title": "Islamic Scholar",
+      "count": 142,
+      "specialty": "Tafsir, Fiqh, Aqeedah",
+      "bio": "Renowned Islamic scholar from Saudi Arabia, known for his clear explanations and numerous works in Islamic jurisprudence and theology."
+    },
+    {
+      "id": 3,
+      "name": "Sheikh Muhammad Nasir-ud-Din al-Albani",
+      "slug": "sheikh-al-albani",
+      "title": "Muhaddith",
+      "count": 98,
+      "specialty": "Hadith Sciences",
+      "bio": "Prominent hadith scholar who specialized in authenticating and grading hadiths, contributing extensively to hadith literature."
+    },
+    {
+      "id": 4,
+      "name": "Sheikh Salih al-Fawzan",
+      "slug": "sheikh-al-fawzan",
+      "title": "Member of Senior Scholars Council",
+      "count": 89,
+      "specialty": "Fiqh, Aqeedah",
+      "bio": "Member of the Council of Senior Scholars in Saudi Arabia and a professor of Islamic jurisprudence."
+    },
+    {
+      "id": 5,
+      "name": "Sheikh Ibn Taymiyyah",
+      "slug": "sheikh-ibn-taymiyyah",
+      "title": "Islamic Scholar",
+      "count": 76,
+      "specialty": "Theology, Fiqh, Tafsir",
+      "bio": "Medieval Sunni Muslim theologian and jurist whose works greatly influenced Islamic thought and jurisprudence."
+    },
+    {
+      "id": 6,
+      "name": "Sheikh Muhammad bin Abdul Wahhab",
+      "slug": "sheikh-muhammad-ibn-abdul-wahhab",
+      "title": "Islamic Reformer",
+      "count": 67,
+      "specialty": "Aqeedah, Tawheed",
+      "bio": "Islamic scholar and reformer who emphasized the importance of Tawheed and returning to the pure understanding of Islam."
+    },
+    {
+      "id": 7,
+      "name": "Sheikh Abdul Muhsin al-Abbad",
+      "slug": "sheikh-al-abbad",
+      "title": "Hadith Scholar",
+      "count": 54,
+      "specialty": "Hadith, Fiqh",
+      "bio": "Prominent hadith scholar and former professor at the Islamic University of Madinah."
+    },
+    {
+      "id": 8,
+      "name": "Sheikh Abdur-Razzaq al-Badr",
+      "slug": "sheikh-al-badr",
+      "title": "Islamic Scholar",
+      "count": 43,
+      "specialty": "Aqeedah, Hadith",
+      "bio": "Contemporary Islamic scholar known for his lectures and writings on Islamic creed and hadith sciences."
+    }
   ]
 }
-

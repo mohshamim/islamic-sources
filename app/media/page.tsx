@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tag } from "@/components/ui/tag";
+import { Home, ChevronRight, FolderOpen } from "lucide-react";
+import Link from "next/link";
 
 // Dummy data for different media types
 const pdfs = [
@@ -183,176 +185,202 @@ export default function MediaPage() {
   return (
     <MainLayout>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">Media Resources</h1>
-          <p className="text-muted-foreground text-lg">
-            Access Islamic content in various formats including PDFs, audio
-            lectures, videos, and images.
-          </p>
+        <div className="max-w-7xl mx-auto">
+          {/* Breadcrumb - Outside Box */}
+          <nav className="flex items-center gap-2 mb-6 text-sm text-neutral-600 dark:text-neutral-400">
+            <Link
+              href="/"
+              className="hover:text-primary-600 dark:hover:text-primary-400 flex items-center gap-1"
+            >
+              <Home className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+            </Link>
+            <ChevronRight className="w-4 h-4" />
+            <span className="text-neutral-900 dark:text-neutral-100 font-medium">
+              Media Library
+            </span>
+          </nav>
+
+          {/* Container Box */}
+          <div className="bg-white dark:bg-neutral-800 rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-700 p-6 md:p-8">
+            {/* Header */}
+            <div className="mb-8">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <FolderOpen className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                </div>
+                <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+                  Media Resources
+                </h1>
+              </div>
+              <p className="text-neutral-600 dark:text-neutral-400 text-lg">
+                Access Islamic content in various formats including PDFs, audio
+                lectures, videos, and images.
+              </p>
+            </div>
+
+            <Tabs defaultValue="pdfs" className="w-full">
+              <TabsList className="grid w-full grid-cols-4">
+                <TabsTrigger value="pdfs">PDFs</TabsTrigger>
+                <TabsTrigger value="audio">Audio</TabsTrigger>
+                <TabsTrigger value="video">Video</TabsTrigger>
+                <TabsTrigger value="images">Images</TabsTrigger>
+              </TabsList>
+
+              {/* PDFs Tab */}
+              <TabsContent value="pdfs" className="mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {pdfs.map((pdf) => (
+                    <Card
+                      key={pdf.id}
+                      className="hover:shadow-md transition-shadow"
+                    >
+                      <CardHeader>
+                        <div className="flex items-center justify-between mb-2">
+                          <Tag variant="outline">{pdf.category}</Tag>
+                          <span className="text-xs text-muted-foreground">
+                            {pdf.size}
+                          </span>
+                        </div>
+                        <CardTitle className="text-lg">{pdf.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {pdf.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-muted-foreground">
+                            {pdf.downloads} downloads
+                          </span>
+                          <Button size="sm">Download</Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              {/* Audio Tab */}
+              <TabsContent value="audio" className="mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {audioFiles.map((audio) => (
+                    <Card
+                      key={audio.id}
+                      className="hover:shadow-md transition-shadow"
+                    >
+                      <CardHeader>
+                        <div className="flex items-center justify-between mb-2">
+                          <Tag variant="outline">{audio.category}</Tag>
+                          <span className="text-xs text-muted-foreground">
+                            {audio.duration}
+                          </span>
+                        </div>
+                        <CardTitle className="text-lg">{audio.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          By {audio.speaker}
+                        </p>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {audio.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-muted-foreground">
+                            {audio.plays} plays
+                          </span>
+                          <div className="flex space-x-2">
+                            <Button size="sm" variant="outline">
+                              Play
+                            </Button>
+                            <Button size="sm">Download</Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              {/* Video Tab */}
+              <TabsContent value="video" className="mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {videos.map((video) => (
+                    <Card
+                      key={video.id}
+                      className="hover:shadow-md transition-shadow"
+                    >
+                      <CardHeader>
+                        <div className="flex items-center justify-between mb-2">
+                          <Tag variant="outline">{video.category}</Tag>
+                          <span className="text-xs text-muted-foreground">
+                            {video.duration}
+                          </span>
+                        </div>
+                        <CardTitle className="text-lg">{video.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="bg-muted h-32 rounded-md mb-4 flex items-center justify-center">
+                          <span className="text-muted-foreground">
+                            Video Thumbnail
+                          </span>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          By {video.speaker}
+                        </p>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {video.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-muted-foreground">
+                            {video.views} views
+                          </span>
+                          <Button size="sm">Watch</Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              {/* Images Tab */}
+              <TabsContent value="images" className="mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {images.map((image) => (
+                    <Card
+                      key={image.id}
+                      className="hover:shadow-md transition-shadow"
+                    >
+                      <CardHeader>
+                        <div className="flex items-center justify-between mb-2">
+                          <Tag variant="outline">{image.category}</Tag>
+                          <span className="text-xs text-muted-foreground">
+                            {image.views} views
+                          </span>
+                        </div>
+                        <CardTitle className="text-lg">{image.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="bg-muted h-48 rounded-md mb-4 flex items-center justify-center">
+                          <span className="text-muted-foreground">
+                            Image Preview
+                          </span>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {image.caption}
+                        </p>
+                        <div className="flex space-x-2">
+                          <Button size="sm" variant="outline">
+                            View
+                          </Button>
+                          <Button size="sm">Download</Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
-
-        <Tabs defaultValue="pdfs" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="pdfs">PDFs</TabsTrigger>
-            <TabsTrigger value="audio">Audio</TabsTrigger>
-            <TabsTrigger value="video">Video</TabsTrigger>
-            <TabsTrigger value="images">Images</TabsTrigger>
-          </TabsList>
-
-          {/* PDFs Tab */}
-          <TabsContent value="pdfs" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {pdfs.map((pdf) => (
-                <Card
-                  key={pdf.id}
-                  className="hover:shadow-md transition-shadow"
-                >
-                  <CardHeader>
-                    <div className="flex items-center justify-between mb-2">
-                      <Tag variant="outline">{pdf.category}</Tag>
-                      <span className="text-xs text-muted-foreground">
-                        {pdf.size}
-                      </span>
-                    </div>
-                    <CardTitle className="text-lg">{pdf.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {pdf.description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground">
-                        {pdf.downloads} downloads
-                      </span>
-                      <Button size="sm">Download</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          {/* Audio Tab */}
-          <TabsContent value="audio" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {audioFiles.map((audio) => (
-                <Card
-                  key={audio.id}
-                  className="hover:shadow-md transition-shadow"
-                >
-                  <CardHeader>
-                    <div className="flex items-center justify-between mb-2">
-                      <Tag variant="outline">{audio.category}</Tag>
-                      <span className="text-xs text-muted-foreground">
-                        {audio.duration}
-                      </span>
-                    </div>
-                    <CardTitle className="text-lg">{audio.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      By {audio.speaker}
-                    </p>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {audio.description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground">
-                        {audio.plays} plays
-                      </span>
-                      <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">
-                          Play
-                        </Button>
-                        <Button size="sm">Download</Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          {/* Video Tab */}
-          <TabsContent value="video" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {videos.map((video) => (
-                <Card
-                  key={video.id}
-                  className="hover:shadow-md transition-shadow"
-                >
-                  <CardHeader>
-                    <div className="flex items-center justify-between mb-2">
-                      <Tag variant="outline">{video.category}</Tag>
-                      <span className="text-xs text-muted-foreground">
-                        {video.duration}
-                      </span>
-                    </div>
-                    <CardTitle className="text-lg">{video.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="bg-muted h-32 rounded-md mb-4 flex items-center justify-center">
-                      <span className="text-muted-foreground">
-                        Video Thumbnail
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      By {video.speaker}
-                    </p>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {video.description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground">
-                        {video.views} views
-                      </span>
-                      <Button size="sm">Watch</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          {/* Images Tab */}
-          <TabsContent value="images" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {images.map((image) => (
-                <Card
-                  key={image.id}
-                  className="hover:shadow-md transition-shadow"
-                >
-                  <CardHeader>
-                    <div className="flex items-center justify-between mb-2">
-                      <Tag variant="outline">{image.category}</Tag>
-                      <span className="text-xs text-muted-foreground">
-                        {image.views} views
-                      </span>
-                    </div>
-                    <CardTitle className="text-lg">{image.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="bg-muted h-48 rounded-md mb-4 flex items-center justify-center">
-                      <span className="text-muted-foreground">
-                        Image Preview
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {image.caption}
-                    </p>
-                    <div className="flex space-x-2">
-                      <Button size="sm" variant="outline">
-                        View
-                      </Button>
-                      <Button size="sm">Download</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-        </Tabs>
       </div>
     </MainLayout>
   );

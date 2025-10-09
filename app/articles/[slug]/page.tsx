@@ -1,11 +1,41 @@
+"use client";
+
 import { MainLayout } from "@/components/layout/main-layout";
 import { Tag } from "@/components/ui/tag";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Share2,
+  Search,
+  Globe,
+  Type,
+  Download,
+  Printer,
+  ChevronUp,
+  ChevronDown,
+  Calendar,
+  Eye,
+  Check,
+  Home,
+  ChevronRight,
+  Bookmark,
+} from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { use, useState } from "react";
 
 // Import mock data
 import mockData from "@/lib/mock-data.json";
@@ -185,141 +215,311 @@ interface ArticlePageProps {
   }>;
 }
 
-export default async function ArticlePage({ params }: ArticlePageProps) {
-  const { slug } = await params;
-  
+export default function ArticlePage({ params }: ArticlePageProps) {
+  const { slug } = use(params);
+  const [selectedLanguage, setSelectedLanguage] = useState("EN");
+
+  const languages = [
+    { code: "EN", name: "English" },
+    { code: "RM", name: "Roman" },
+    { code: "HI", name: "Hindi" },
+    { code: "NP", name: "Nepali" },
+    { code: "UR", name: "Urdu" },
+    { code: "AR", name: "Arabic" },
+  ];
+
   // First try to find in mock data
-  let article = mockData.articles.find(a => a.slug === slug);
-  
+  let article = mockData.articles.find((a) => a.slug === slug);
+
   // If not found, try the old hardcoded articles
   if (!article) {
-    article = articles[slug as keyof typeof articles] as any;
+    const hardcodedArticle = articles[slug as keyof typeof articles];
+    article = hardcodedArticle as (typeof mockData.articles)[0];
   }
 
   if (!article) {
     notFound();
   }
 
+  // Static table of contents (can be extracted from article metadata)
+  const tableOfContents = [
+    "Introduction to Islamic Finance",
+    "Core Principles of Islamic Finance",
+    "Common Islamic Financial Products",
+    "Benefits of Islamic Finance",
+    "Challenges and Considerations",
+    "Future of Islamic Finance",
+    "Conclusion",
+  ];
+
   return (
     <MainLayout>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <article className="max-w-4xl mx-auto">
-          {/* Header */}
-          <header className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <Tag variant="outline">{article.category}</Tag>
-              <span className="text-sm text-muted-foreground">
-                {article.readTime}
-              </span>
-            </div>
-            <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
-            <p className="text-xl text-muted-foreground mb-6">
-              {article.excerpt}
-            </p>
+        {/* Breadcrumb Navigation - Outside Box */}
+        <nav className="flex items-center gap-2 mb-6 max-w-4xl mx-auto text-sm text-neutral-600 dark:text-neutral-400">
+          <Link
+            href="/"
+            className="hover:text-primary-600 dark:hover:text-primary-400 flex items-center gap-1"
+          >
+            <Home className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+          </Link>
+          <ChevronRight className="w-4 h-4" />
+          <Link
+            href="/articles"
+            className="hover:text-primary-600 dark:hover:text-primary-400"
+          >
+            Articles
+          </Link>
+          <ChevronRight className="w-4 h-4" />
+          <Link
+            href={`/articles?category=${article.category.toLowerCase()}`}
+            className="hover:text-primary-600 dark:hover:text-primary-400"
+          >
+            {article.category}
+          </Link>
+          <ChevronRight className="w-4 h-4" />
+          <span className="text-neutral-500 dark:text-neutral-500 line-clamp-1">
+            {article.title}
+          </span>
+        </nav>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Avatar>
-                  <AvatarFallback>{article.authorInfo.avatar}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-medium">{article.author}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {article.authorInfo.credentials}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {article.date}
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm">
-                  Share
+        <div className="max-w-4xl mx-auto bg-white dark:bg-neutral-800 rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-700 p-6 md:p-8">
+          <article className="w-full">
+            {/* Utility Bar */}
+            <div className="mb-6">
+              <div className="flex items-stretch bg-gradient-to-r from-neutral-50 to-white dark:from-neutral-800 dark:to-neutral-800/80 rounded-xl border border-neutral-200 dark:border-neutral-700 shadow-md overflow-hidden">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex-1 flex items-center justify-center gap-2 text-neutral-600 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 px-4 py-3.5 rounded-none border-r border-neutral-200 dark:border-neutral-700 transition-all duration-200 group"
+                  title="Share this content"
+                >
+                  <Share2 className="w-4 h-4 transition-transform group-hover:scale-110" />
+                  <span className="text-sm font-medium">Share</span>
                 </Button>
-                <Button variant="outline" size="sm">
-                  Bookmark
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex-1 flex items-center justify-center gap-2 text-neutral-600 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 px-4 py-3.5 rounded-none border-r border-neutral-200 dark:border-neutral-700 transition-all duration-200 group"
+                  title="Search within content"
+                >
+                  <Search className="w-4 h-4 transition-transform group-hover:scale-110" />
+                  <span className="text-sm font-medium">Search</span>
                 </Button>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex-1 flex items-center justify-center gap-2 text-neutral-600 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 px-4 py-3.5 rounded-none border-r border-neutral-200 dark:border-neutral-700 transition-all duration-200 group"
+                  title="Text formatting options"
+                >
+                  <Type className="w-4 h-4 transition-transform group-hover:scale-110" />
+                  <span className="text-sm font-medium">Format</span>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex-1 flex items-center justify-center gap-2 text-neutral-600 dark:text-neutral-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 px-4 py-3.5 rounded-none border-r border-neutral-200 dark:border-neutral-700 transition-all duration-200 group"
+                  title="Save for later"
+                >
+                  <Bookmark className="w-4 h-4 transition-transform group-hover:scale-110" />
+                  <span className="text-sm font-medium">Save</span>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex-1 flex items-center justify-center gap-2 text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 px-4 py-3.5 rounded-none border-r border-neutral-200 dark:border-neutral-700 transition-all duration-200 group"
+                  title="Download content"
+                >
+                  <Download className="w-4 h-4 transition-transform group-hover:scale-110" />
+                  <span className="text-sm font-medium">Download</span>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex-1 flex items-center justify-center gap-2 text-neutral-600 dark:text-neutral-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 px-4 py-3.5 rounded-none border-r border-neutral-200 dark:border-neutral-700 transition-all duration-200 group"
+                  title="Print this page"
+                >
+                  <Printer className="w-4 h-4 transition-transform group-hover:scale-110" />
+                  <span className="text-sm font-medium">Print</span>
+                </Button>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="flex items-center justify-center gap-2 text-neutral-600 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 px-6 py-3.5 rounded-none transition-all duration-200 group min-w-[90px]"
+                      title="Change language"
+                    >
+                      <span className="text-sm font-semibold">
+                        {selectedLanguage}
+                      </span>
+                      <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="end"
+                    className="w-48 animate-none"
+                    sideOffset={8}
+                    alignOffset={0}
+                  >
+                    {languages.map((lang) => (
+                      <DropdownMenuItem
+                        key={lang.code}
+                        onClick={() => setSelectedLanguage(lang.code)}
+                        className="flex items-center justify-between cursor-pointer"
+                      >
+                        <span>{lang.name}</span>
+                        {selectedLanguage === lang.code && (
+                          <Check className="w-4 h-4 text-primary-600" />
+                        )}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
-          </header>
 
-          <Separator className="mb-8" />
+            {/* Date and Views */}
+            <div className="mb-6 space-y-2">
+              <div className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400">
+                <Calendar className="w-4 h-4" />
+                <span className="text-sm">{article.date}</span>
+              </div>
+              <div className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400">
+                <Eye className="w-4 h-4" />
+                <span className="text-sm">136,867 views</span>
+              </div>
+            </div>
 
-          {/* Content */}
-          <div className="prose prose-lg max-w-none mb-8">
-            <div dangerouslySetInnerHTML={{ __html: article.content }} />
-          </div>
+            {/* Title */}
+            <header className="mb-8">
+              <h1 className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 text-center mb-8">
+                {article.title}
+              </h1>
+            </header>
 
-          <Separator className="mb-8" />
-
-          {/* Author Bio */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-4">About the Author</h3>
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <Avatar className="h-16 w-16">
-                    <AvatarFallback className="text-lg">
-                      {article.authorInfo.avatar}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h4 className="font-semibold text-lg mb-2">
-                      {article.author}
-                    </h4>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {article.authorInfo.credentials}
-                    </p>
-                    <p className="text-sm">{article.authorInfo.bio}</p>
+            {/* Table of Contents */}
+            <Collapsible defaultOpen className="mb-8">
+              <div className="border border-neutral-200 dark:border-neutral-700 rounded-lg overflow-hidden">
+                <CollapsibleTrigger className="w-full">
+                  <div className="flex items-center justify-between p-4 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors">
+                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                      Table Of Contents
+                    </h3>
+                    <ChevronUp className="w-5 h-5 text-neutral-600 dark:text-neutral-400 transition-transform duration-200 group-data-[state=closed]:rotate-180" />
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <div className="p-4">
+                    <ul className="space-y-3">
+                      {tableOfContents.map((item, index) => (
+                        <li key={index}>
+                          <Link
+                            href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                            className="text-sm text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 hover:underline transition-colors"
+                          >
+                            {item}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </CollapsibleContent>
+              </div>
+            </Collapsible>
 
-          {/* Related Articles */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-4">Related Articles</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">
-                    <Link
-                      href="/articles/family-values-islam"
-                      className="hover:text-primary transition-colors"
-                    >
-                      Family Values in Islamic Tradition
-                    </Link>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    Exploring the importance of family bonds and relationships
-                    in Islamic teachings and culture.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">
-                    <Link
-                      href="/articles/mental-health-islam"
-                      className="hover:text-primary transition-colors"
-                    >
-                      Mental Health and Islamic Spirituality
-                    </Link>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    How Islamic practices and spirituality can contribute to
-                    mental well-being and peace of mind.
-                  </p>
-                </CardContent>
-              </Card>
+            <Separator className="mb-8" />
+
+            {/* Content */}
+            <div className="islamic-content mb-8 text-neutral-800 dark:text-neutral-200">
+              <div dangerouslySetInnerHTML={{ __html: article.content }} />
             </div>
-          </div>
-        </article>
+
+            <Separator className="mb-8" />
+
+            {/* Author Bio */}
+            {article.authorInfo && (
+              <div className="mb-8">
+                <h3 className="text-lg font-semibold mb-4 text-neutral-900 dark:text-neutral-100">
+                  About the Author
+                </h3>
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-4">
+                      <Avatar className="h-16 w-16">
+                        <AvatarFallback className="text-lg">
+                          {article.authorInfo.avatar}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <h4 className="font-semibold text-lg mb-2 text-neutral-900 dark:text-neutral-100">
+                          {article.author}
+                        </h4>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          {article.authorInfo.credentials}
+                        </p>
+                        <p className="text-sm text-neutral-700 dark:text-neutral-300">
+                          {article.authorInfo.bio}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
+            {/* Related Articles */}
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold mb-4 text-neutral-900 dark:text-neutral-100">
+                Related Articles
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base">
+                      <Link
+                        href="/articles/family-values-islam"
+                        className="hover:text-primary transition-colors"
+                      >
+                        Family Values in Islamic Tradition
+                      </Link>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                      Exploring the importance of family bonds and relationships
+                      in Islamic teachings and culture.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base">
+                      <Link
+                        href="/articles/mental-health-islam"
+                        className="hover:text-primary transition-colors"
+                      >
+                        Mental Health and Islamic Spirituality
+                      </Link>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                      How Islamic practices and spirituality can contribute to
+                      mental well-being and peace of mind.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
     </MainLayout>
   );

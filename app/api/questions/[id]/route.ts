@@ -1,36 +1,40 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import Question from '@/models/Question';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { createAdminSupabaseClient } from '@/lib/supabase/admin';
 
-interface UpdateData {
-  question?: string;
-  answer?: string;
-  category?: string;
-  tags?: string[];
-  status?: string;
-  scholar?: string;
-}
-
-// GET single question by ID
+// GET single question
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await dbConnect();
-    
+    const supabase = await createServerSupabaseClient();
     const { id } = await params;
-    const question = await Question.findById(id).lean();
     
-    if (!question) {
+    const { data: question, error } = await supabase
+      .from('questions')
+      .select(`
+        *,
+        categories (
+          id,
+          name,
+          slug
+        ),
+        scholars (
+          id,
+          name,
+          title
+        )
+      `)
+      .eq('id', id)
+      .single();
+    
+    if (error) {
       return NextResponse.json(
-        { error: 'Question not found' },
+        { error: 'Question not found', details: error.message },
         { status: 404 }
       );
     }
-    
-    // Increment views
-    await Question.findByIdAndUpdate(id, { $inc: { views: 1 } });
     
     return NextResponse.json(question);
   } catch (error) {
@@ -48,30 +52,72 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await dbConnect();
-    
+    const supabase = createAdminSupabaseClient();
     const { id } = await params;
     const body = await request.json();
     const { question, answer, category, tags, status, scholar } = body;
     
-    const updateData: UpdateData = {};
-    if (question) updateData.question = question;
-    if (answer) updateData.answer = answer;
-    if (category) updateData.category = category;
-    if (tags) updateData.tags = tags;
-    if (status) updateData.status = status;
-    if (scholar) updateData.scholar = scholar;
-    
-    const updatedQuestion = await Question.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true, runValidators: true }
-    );
-    
-    if (!updatedQuestion) {
+    if (!question && !answer && !category && !status) {
       return NextResponse.json(
-        { error: 'Question not found' },
-        { status: 404 }
+        { error: 'No fields to update' },
+        { status: 400 }
+      );
+    }
+    
+    const updateData: any = {};
+    
+    if (question) {
+      updateData.question = question;
+      // Generate new slug if question changed
+      updateData.slug = question
+        .toLowerCase()
+        .substring(0, 100)
+        .replace(/[^a-z0-9 -]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+    }
+    
+    if (answer) {
+      updateData.answer = answer;
+    }
+    
+    if (tags) {
+      updateData.tags = tags;
+    }
+    
+    if (status) {
+      updateData.status = status;
+      if (status === 'published') {
+        updateData.published_at = new Date().toISOString();
+      }
+    }
+    
+    // Get category ID if category provided
+    if (category) {
+      const { data: categoryData } = await supabase
+        .from('categories')
+        .select('id')
+        .eq('name', category)
+        .single();
+      
+      if (categoryData) {
+        updateData.category_id = categoryData.id;
+      }
+    }
+    
+    const { data: updatedQuestion, error } = await supabase
+      .from('questions')
+      .update(updateData)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Supabase update error:', error);
+      return NextResponse.json(
+        { error: 'Failed to update question', details: error.message },
+        { status: 500 }
       );
     }
     
@@ -91,15 +137,19 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await dbConnect();
-    
+    const supabase = createAdminSupabaseClient();
     const { id } = await params;
-    const question = await Question.findByIdAndDelete(id);
     
-    if (!question) {
+    const { error } = await supabase
+      .from('questions')
+      .delete()
+      .eq('id', id);
+    
+    if (error) {
+      console.error('Supabase delete error:', error);
       return NextResponse.json(
-        { error: 'Question not found' },
-        { status: 404 }
+        { error: 'Failed to delete question', details: error.message },
+        { status: 500 }
       );
     }
     
@@ -111,4 +161,4 @@ export async function DELETE(
       { status: 500 }
     );
   }
-} 
+}

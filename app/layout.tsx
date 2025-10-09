@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/components/providers/auth-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Islamic Sources - Knowledge & Guidance",
-  description: "A comprehensive platform for Islamic knowledge, Q&A, articles, and resources",
+  description:
+    "A comprehensive platform for Islamic knowledge, Q&A, articles, and resources",
   keywords: "islamic, knowledge, quran, hadith, fatwa, islamic sources",
 };
 
@@ -29,9 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background`}
       >
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        {children}
       </body>
     </html>
   );
