@@ -150,10 +150,24 @@ export async function POST(request: NextRequest) {
       status,
     } = body;
 
+    console.log('Course creation request:', {
+      title: !!title,
+      description: !!description,
+      instructorName: !!instructorName,
+      category: !!category,
+      hasServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY
+    });
+
     // Validate required fields
     if (!title || !description || !instructorName || !category) {
+      console.log('Missing required fields:', {
+        title: !!title,
+        description: !!description,
+        instructorName: !!instructorName,
+        category: !!category
+      });
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Missing required fields: title, description, instructorName, and category are required' },
         { status: 400 }
       );
     }

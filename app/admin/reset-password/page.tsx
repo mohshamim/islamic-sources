@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { updatePassword } from "@/lib/auth/auth-helpers";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
